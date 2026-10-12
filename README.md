@@ -2,7 +2,7 @@
 
 **Tracing Math-Verify Failures Through an RLVR Reward Pipeline**
 
-Yufeiyang Chen · manuscript revised 10 October 2026
+Yufeiyang Chen · manuscript revised 12 October 2026
 
 [Read the paper](paper.pdf) · [Download companion materials](rewardfail-companion.zip)
 
@@ -15,9 +15,14 @@ original raw-log archive.
 
 The study traces failure information from Math-Verify through a pinned verl
 reward wrapper, manager and batch aggregation. Controlled worker-failure tests
-show that the position of a failed row can determine whether its flag is lost
-or the batch raises an exception. A local union-and-fill prototype preserves
-rewards and aligned metadata in 21 regression fixtures.
+reproduce a known sparse-metadata problem: the position of a failed row can
+determine whether its flag is lost or the batch raises an exception.
+The manuscript cites the related upstream proposals
+[#6545](https://github.com/verl-project/verl/pull/6545) and
+[#7151](https://github.com/verl-project/verl/pull/7151).
+Its contribution is the specific wrapper-to-consumer failure trace and the
+paired corpus and timeout/recovery measurements. The local aggregation
+prototype supplies 21 regression fixtures, not a new repair algorithm.
 
 A pre-declared replay covers 93,733 stored mathematical responses. Longer
 checking limits recover one zero-to-one verdict and leave 18 responses
@@ -70,6 +75,6 @@ analysis were supplied by the cited dataset authors.
 SHA-256 of the distributed files:
 
 ```text
-c010b2a3f5e23f69a3f8b43a0dd194a8f40f8a77bba4b5b828f99b7c421d61fb  paper.pdf
-7e00b2fa4b1fcad6e82ad29b7d98587ff5a7e73d8dbddfa6d2488ae586113bf1  rewardfail-companion.zip
+8efbb3471d23a8b5396bc1605fb5cf29d4769ee6e0214ede8e63e76f69c46811  paper.pdf
+32cdea7d19181eff030707d96db360715231eff058c5add80133c6b1e0fdabdf  rewardfail-companion.zip
 ```
