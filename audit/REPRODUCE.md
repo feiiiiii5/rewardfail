@@ -1,5 +1,8 @@
 # Reproducing the 2026-11-03 audit
 
+Pinned states: analysis code and results at commit `da00bd6` (unchanged by later documentation commits); author input
+archive at commit `e29d296` (branch `author-inputs-20261103`, read only, not merged into `main`).
+
 Everything below ran on a **new Linux environment** (`audit/results/environment.json`):
 Ubuntu 24.04 container, x86-64, 4 vCPU, 15.7 GiB RAM, no GPU, CPython 3.12.8 (uv-managed).
 The historical measurements used macOS arm64 / CPython 3.12.8; nothing here replays that host.

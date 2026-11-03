@@ -85,3 +85,9 @@ Final cleanup: the number checker's two boundary defects (unscaled scientific-no
 table column) are fixed and covered by 21 counter-tests; three policy-analysis sentences were narrowed (M1-only
 no-signal increase, $r/(1+\epsilon)$ for a single survivor, partial-group wording). The offline analysis remains a
 fixed-sample simulation, not a training result or a natural failure rate; `u = 18` remains a report-only value.
+
+## Release state
+
+The reviewed state is merged into `main`. Review the current PDF (`paper/rewardfail-preprint-2026-11-03.pdf`), not the
+historical root `paper.pdf`. Analysis code and results: commit `da00bd6` (unchanged afterwards). Author input archive:
+commit `e29d296` on `author-inputs-20261103`, not merged. `u = 18` is a report value, not rebuilt from raw events.

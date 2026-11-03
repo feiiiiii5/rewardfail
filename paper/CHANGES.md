@@ -15,8 +15,9 @@ Compiling the original source unchanged (pdfLaTeX + BibTeX) gave 18 pages and te
 apart from ligatures, line-break hyphenation and float placement (the public PDF was built with XeTeX/tectonic).
 
 The revision was prepared with AI assistance and **awaits the author's review**. Authorship, affiliation,
-correspondence, licences (manuscript CC BY 4.0; code Apache-2.0) and the AI-use statement are retained; the
-footnote adds a sentence on this AI-assisted revision.
+correspondence and the stated licences (manuscript CC BY 4.0, companion code Apache-2.0; the author still has to
+confirm both for arXiv, and no licence is yet granted for `audit/`) are retained; the footnote states the same facts
+about AI assistance as the original, extended to this revision (condensed in the release pass).
 
 ## Substantive changes (evidence in brackets)
 
@@ -81,3 +82,25 @@ characterisations (`LITERATURE_CHECK.md`). Changes in this pass:
 | §8.2, Table 10 | table generated from result files (`make_policy_table.py`); two corrected cells (183.6, 1.4); new common-set columns (0→nz, nz→0, mean abs error) and caption explaining that "own disagree" uses each policy's own rows and includes zero changes; text: exact condition and M1/M2 scope (98–99%), M3 separately, no sign flips among survivors, same-draw 91–97% share, exclusion's costs | `audit/results/offline_policy/` |
 | §12 | conclusion qualified the same way | – |
 | `main.bbl` | regenerated | – |
+
+## Fifth pass (final cleanup, 2026-11-03)
+
+| Location | Change | Evidence |
+|---|---|---|
+| Abstract, §8.2, §12 | "exclusion leaves more groups without signal" restricted to independent failures (M1); under M2/M3 the count is the same for all policies | `results.json` no-signal means |
+| §8.2 | single survivor: advantage $r/(1+\epsilon)$ under verl's mean 0 / std 1 convention (was "raw score") | verl `0c4c3d4` `compute_grpo_outcome_advantage` |
+| §8.2 | partial groups: the statistics of their original eight-response groups cannot be reconstructed | – |
+| `check_paper_numbers.py` | exponent-scaled tolerance; strict table parsing (cell count, all 18 rows, duplicates, unknown labels, missing block); two new wording assertions; 21 counter-tests | `VALIDATION_FINAL_2026-11-03.md` |
+| PDF, `main.bbl`, arXiv package | rebuilt from the final source | – |
+
+## Release pass (merge into `main`, 2026-11-03)
+
+| Location | Change | Evidence |
+|---|---|---|
+| Author footnote | condensed without changing facts: the author selected the topic, direction and methodology and is responsible for the final content and all claims; Claude and Codex provided substantial assistance with implementation, experiments, analysis, the audit, the Linux re-executions, the offline policy analysis, and drafting and revision | – |
+| PDF, arXiv package | rebuilt (23 pages; package SHA-256 `fc21849f…`); `main.bbl` unchanged | `VALIDATION_FINAL_2026-11-03.md` |
+| `README.md` | top now links the current PDF and source package; `paper.pdf` labelled historical; reproduction snapshot `da00bd6` and author-input commit `e29d296` pinned; licence status stated as proposed | – |
+| `SUBMISSION_CHECKLIST.md` | category assessment (cs.SE primary with the author's endorsement, cs.LG cross-list, cs.AI optional), authorship check, CC BY 4.0 implications, code-licence proposal | – |
+| `audit/LICENSING_PLAN.md`, `audit/THESIS_SYNC.md` | new: licence/NOTICE proposal (not granted); thesis change list (not applied) | – |
+
+Analysis code, result files and the number checker are unchanged since `da00bd6`.

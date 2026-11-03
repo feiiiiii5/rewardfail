@@ -1,6 +1,6 @@
 # Final validation of the preprint package (2026-11-03)
 
-Final pass: fifth (cleanup) pass on top of `5d271ea`; all commands below were re-run in this pass unless marked otherwise.
+Last re-run: release pass on top of `da00bd6` (after the author-footnote edit); every command in the two tables below was re-run in that pass unless marked otherwise.
 
 Environment: Linux x86-64 container, CPython 3.12.8 (analysis venv from the companion lock), system Python 3.13 for
 standard-library scripts, TeX Live 2023 (pdfTeX 1.40.25). Author inputs read only from `e29d296`; companion =
@@ -11,7 +11,7 @@ standard-library scripts, TeX Live 2023 (pdfTeX 1.40.25). Author inputs read onl
 | Check | Result |
 |---|---|
 | `pdflatex → bibtex → pdflatex ×2` on `paper/main.tex` | 23 pages; 0 errors; 0 undefined references/citations; 0 BibTeX warnings; 0 overfull/underfull boxes (final pass, after the policy-section corrections) |
-| arXiv package `paper/arxiv/rewardfail-arxiv-source.tar.gz` (`make_arxiv_package.sh`) | contains `main.tex`, `main.bbl`, `refs.bib` (SHA-256 `7be31a42…`); compiles from a clean directory with pdfLaTeX and the shipped `.bbl` only (BibTeX not run, `refs.bib` removed): 23 pages, no errors; extracted text identical to the full build |
+| arXiv package `paper/arxiv/rewardfail-arxiv-source.tar.gz` (`make_arxiv_package.sh`) | contains `main.tex`, `main.bbl`, `refs.bib` (SHA-256 `fc21849f…`); compiles from a clean directory with pdfLaTeX and the shipped `.bbl` only (BibTeX not run, `refs.bib` removed): 23 pages, no errors; extracted text identical to the full build |
 | Fonts | 30 fonts, all embedded and subset (Latin Modern, Type 1) |
 | PDF metadata | Title, Author (Yufeiyang Chen), Keywords, Creator, Producer only |
 | Source comments | version/build notes only; no paths, credentials or internal discussion |
@@ -68,3 +68,22 @@ author-side check).
 | Partial groups | "the statistics of their original eight-response groups cannot be reconstructed" |
 | Author's independent recheck (original label CSV obtained and checked, 72 complete groups, 720 means and Monte Carlo standard errors recomputed with an independent algorithm, max difference about `1.11e-16`) | reported by the author; **not repeated here**. It supports the offline simulation on fixed samples only — not a training gain and not a natural failure rate |
 | Main experiment `u = 18` | unchanged: historical report value only (pre-correction rows reproduce `k = 1`, `u = 9,573`) |
+
+## Release pass (before merging into `main`)
+
+Re-run on the release tree: LaTeX build (23 pages; 0 errors, undefined references, box warnings or BibTeX
+warnings; `main.bbl` byte-identical to the committed one), arXiv package build from a clean directory (23 pages, text
+identical to the full build), fonts all embedded, title page inspected; number checker 168/168; counter-tests 21/21;
+table regeneration identical; offline unit tests 9/9; verl cross-check 288 cases, max difference 2.9e-7; recount
+tests 7/7 and recount output identical to the committed file; derived recount identical to the previous run;
+companion `check_artifacts` (724 files, 32 report values) and `audit_public_evidence` (status unchanged); redacted
+report comparison; author-input manifest 179/179; chain suite 30 passed / 3 skipped on the patched tree and the
+expected 75 failed / 22 passed on the base tree; all relative README links resolve. The same checks were repeated
+from `main` after the merge (see the pull request).
+
+Taken from earlier records, not re-run: 21 fixtures and C1c under real Ray on Linux, E3-L (22,176 trials), the 11
+heavy-input scenes, companion tests with the Linux patch, the 2,000-draw offline runs themselves (their outputs are
+checked, not regenerated), and the author's independent recheck of the offline statistics.
+
+Not executable here: corpus re-scoring (OpenR1 not reachable), training of any kind, reconstruction of the corrected
+`u = 18` from reference-pass events (not supplied), arXiv/metadata re-checks of citations (unreachable).
