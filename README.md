@@ -57,6 +57,24 @@ arm64 with CPython 3.12.8. A fresh installation and Linux have not been
 experimentally validated. Follow the archive's instructions in a fresh environment;
 do not overwrite retained original records or an existing measurement environment.
 
+## Public evidence clarification (3 November 2026)
+
+The manuscript PDF and its reported measurements are unchanged. The companion
+now includes EVIDENCE_STATUS.md and a read-only, standard-library audit:
+
+```sh
+python3 -B experiments/audit_public_evidence.py
+```
+
+This independently counts the distributed default-pass derived records and
+checks recorded regression outcomes. It is not a new scoring experiment or an
+independent raw-event replication. The corrected main reference records and
+complete historical reanalysis inputs remain unavailable in the public package,
+so k=1 and u=18 are reported values, not independently reconstructed by this audit.
+The note also distinguishes reference-protocol unresolved rows from all library
+execution failures and lists the evidence still needed. No training benefit or
+fresh-machine replication has been added.
+
 ## Contribution and assistance
 
 The author selected the research topic, research route and methods. AI agents
@@ -76,5 +94,6 @@ SHA-256 of the distributed files:
 
 ```text
 8efbb3471d23a8b5396bc1605fb5cf29d4769ee6e0214ede8e63e76f69c46811  paper.pdf
-32cdea7d19181eff030707d96db360715231eff058c5add80133c6b1e0fdabdf  rewardfail-companion.zip
+2aaf2113ebc11a5396dc17408a40534419bb14b70589de30a832c146a1381ae4  rewardfail-companion.zip
 ```
+
