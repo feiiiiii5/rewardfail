@@ -1,0 +1,91 @@
+{
+ "scene": "S5f",
+ "tree": "verl-fixed",
+ "exit": 0,
+ "wall": 48.09,
+ "intervention": null,
+ "max_scene_rss_bytes": 3978797056,
+ "min_mem_available_bytes": 10012893184,
+ "batches": [
+  {
+   "name": "test",
+   "scores": [
+    0,
+    0,
+    0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "extras": [
+    {
+     "acc": 0
+    },
+    {
+     "acc": 0
+    },
+    {
+     "acc": 0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    }
+   ],
+   "exception": null
+  },
+  {
+   "name": "following",
+   "scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "extras": [
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    }
+   ],
+   "exception": null
+  }
+ ]
+}

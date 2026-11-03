@@ -1,0 +1,91 @@
+{
+ "scene": "S3",
+ "tree": "verl-pr8015",
+ "exit": 0,
+ "wall": 28.54,
+ "intervention": null,
+ "max_scene_rss_bytes": 1905106944,
+ "min_mem_available_bytes": 15007629312,
+ "batches": [
+  {
+   "name": "test",
+   "scores": [
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "extras": [
+    {
+     "acc": 0.0
+    },
+    {
+     "acc": 0.0
+    },
+    {
+     "acc": 0.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    }
+   ],
+   "exception": null
+  },
+  {
+   "name": "following",
+   "scores": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "extras": [
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    },
+    {
+     "acc": 1.0
+    }
+   ],
+   "exception": null
+  }
+ ]
+}

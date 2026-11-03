@@ -1,27 +1,29 @@
-# Remaining gaps (2026-11-03)
+# Remaining gaps (updated 2026-11-03, after the author inputs at `e29d296`)
 
-Ordered by how much they limit the paper's claims. "Needs" lists the smallest thing that would close the gap.
+Ordered by how much they limit the claims. Paths are relative to the original run directory
+`stage2/runs/main-20261007-202545/` unless stated otherwise. Details: `audit/MAIN_METRIC.md`.
 
-| # | Gap | Effect on claims | Needs |
-|---|---|---|---|
-| G1 | Corrected main **reference-pass row records** (33,487 rows) are not public | k = 1 and u = 18 are report-only; the error-inclusive alternative (u = 34) cannot be row-verified | Release `main-20261007-202545/reference/rows.jsonl` (post-correction) or a row ledger `id, default_class, reference_class` |
-| G2 | **Reanalysis history** (`9a88991`, `6c416b2`, pre-correction rows) is not public | The 9,573 → 18 correction cannot be audited; `test_s2_budget.py` cannot run | Publish the experiment repository history or a diff of `analyze.py` before/after plus the pre-correction class ledger |
-| G3 | **Raw parent/child events** for changed and unresolved rows | Recounts are of derived records only, not an independent reproduction from raw data | Raw events for the 1 k row, 18 u rows, 16 reference error rows |
-| G4 | **Original LaTeX source** (`paper/main.tex`, `refs.bib`, `main.bbl`) | The editable source here is a reconstruction from the PDF | Author supplies the original source; then diff against `paper/main.tex` |
-| G5 | **OpenR1-Math-220k** not reachable from this session (Hugging Face blocked) | Main/complement replays, u18 diagnostics, shared-pool scenes not re-executed | Network access to `huggingface.co` (dataset is Apache-2.0); then run `get_data.sh` and the drivers in fresh directories |
-| G6 | **arXiv** not reachable from this session | Related-work characterisations not re-verified; no new arXiv citations added | Network access to `arxiv.org`, or the author re-checks |
-| G7 | Shared-pool scenes (§6) and heavy-input diagnostics (§5.4–5.5) **not re-run** on Linux | Timing/concurrency claims remain single-host (macOS) | Dataset access + porting the macOS memory guard (`rewardfail/s2/mem.py` uses `libproc.dylib`) |
-| G8 | Companion tests are **macOS-specific** in 6 scripts; `test_get_data.sh` uses BSD sed; `test_s2_stats` uses exact float equality | Linux users cannot run the full self-test | Platform-neutral memory sampling (e.g. psutil fallback), GNU/BSD-neutral sed, tolerance in the closed-form check |
-| G9 | **Full trainer** never run; generation always substituted | Consumer findings rely on the real `_validate` method with stub infrastructure, and on real Ray for reward workers only | A small CPU/GPU PPO run with validation over ≥2 batches and an injected sparse key |
-| G10 | **Exclusion policy** for flagged rows is undefined upstream | Preserving the flag changes no reward; no learning benefit can be claimed | A stated policy (mask / impute / keep zero) and a controlled training comparison |
-| G11 | `naive` manager still aborts the batch on a persistent worker death | The flagging contract applies only with `rate_limited` | Upstream decision; out of scope of the ported patches |
-| G12 | Missing key vs explicit `None` collapse after union-and-fill | A consumer cannot tell "no flag emitted" from "flag value None" | A presence mask or typed sentinel, if a consumer needs the distinction |
-| G13 | Cross-batch validation misalignment has not been reported upstream (limited search) | Patch `0002` exists only here | Author decides whether to open an upstream issue/PR (not done by this audit) |
-| G14 | Torch on Linux needed the CUDA runtime wheels (unused) because the lock is macOS-only | Environment differs from the lock by those extra wheels | A Linux lock file |
+| # | Gap | Status | Effect | Smallest input that closes it (path / format / use) |
+|---|---|---|---|---|
+| G1 | Corrected reference-pass classes behind `u = 18` | **partly closed**: pre-correction rows supplied; they reproduce `k = 1` and `u = 9,573`, and the reported changes reconcile in aggregate | `u = 18` remains a reported value (level A); row pairing of the 16 error zeros after correction unverified | `reference/obs-*.jsonl`, `reference/child_logs/child-*.jsonl`, `reference/guard*.jsonl`, `reference/results-*.jsonl`, `reference/warm-*.jsonl` (complete files, JSONL) — to run the final `analyze.py` (`f6e70c6c…`) and derive every corrected class. Run `audit/scripts/inventory_run_dir.py` first to list sizes/hashes |
+| G2 | Audit of the budget-attribution correction on real events | **partly closed**: old and new `analyze.py` versions available; synthetic test passes 18/18 on Linux | correction rule verified on synthetic events only | same files as G1 (old vs new `analyze.py` over identical events) |
+| G3 | Full eight-pass reproduction | open | limit2s/10s, replays, retest are report-only | all eight pass directories (≈2 GB) + `sample_map.tsv` + OpenR1 shards for re-execution |
+| G4 | Original LaTeX source | **closed**: `paper/main.tex`, `refs.bib` supplied and imported; build reproduces the public PDF | – | – |
+| G5 | `thesis_chain.py` driver (versions `3b3aa0…`, `6cce7c…`) | open | most of the thesis's 249 checks read driver-written flags; driver logic unauditable | `rewardfail/experiments/thesis_chain.py` at both hashes (Python source) |
+| G6 | Old test controls for `test_s2_flow.py` / `test_s2_stepguard.py` | open | two companion tests stop before their old-version comparison | `rewardfail/s2/report.py` at `42e4d63`; `rewardfail/s2/stepguard.py` at `99b086d` (single files) |
+| G7 | Redaction artifacts in author inputs | open (reported, not altered) | 7 row-id keys in `author-inputs/main-run/report.json` and one hash in `results/s2_e3/report.json` corrupted by the `<PHONE>` pattern | re-export those two files with a redactor that skips hex/id fields |
+| G8 | OpenR1-Math-220k not reachable here (Hugging Face blocked) | open | corpus replays, u18 diagnostics and dataset-control shared-pool scenes not re-executed on Linux | network access to `huggingface.co`, or the shards listed in `data_manifest.tsv` |
+| G9 | Diagnostic heavy-input abort on Linux | **tested, not reproduced** with substitute controls (0/4) | the abort is timing-dependent; whether it occurs with the paper's 8 dataset controls on Linux is unknown | the 8 dataset control texts of the E1 eight-row matrix (ids, `gt`, `out`), e.g. from `e1-eight-20261008-codex/specs.json` |
+| G10 | arXiv and docs sites not reachable from this environment | open | arXiv citations not re-verified here (author's 2 Nov URL audit exists) | access to `arxiv.org` or the author's check |
+| G11 | Full trainer never run | open | consumer findings rely on the real `_validate` with stub infrastructure | a small CPU/GPU PPO run with ≥ 2 validation batches and an injected sparse key |
+| G12 | Exclusion policy and training effect | open by design | no learning claim; flagged rows still enter statistics as zero | a defined policy and a controlled comparison (see offline-first plan) |
+| G13 | `naive` manager aborts on persistent worker death | open upstream | flag contract applies only with `rate_limited` | upstream decision |
+| G14 | Missing vs explicit `None` collapse | open | consumers cannot tell "no flag" from "flag = None" | presence mask or typed sentinel, if needed |
+| G15 | Validation misalignment not reported upstream | open (author's decision) | patch `0002` exists only here | an upstream issue/PR by the author |
+| G16 | Private planning notes and local folder names in the public author branch | open (author's decision) | privacy | move `context/` to a private repository; re-redact path segments after `<LOCAL_USER>` |
 
-## New experiments that were **not** run, and why
+## Not run, and why
 
-* Main-sample and complement re-scoring on Linux — dataset unreachable (G5).
-* Shared-pool heavy-input scenes — dataset inputs and macOS guard (G5, G7).
-* Any training run or training-benefit comparison — out of scope, no GPU, and the user asked not to default to long training.
-* Paid APIs — none used.
+* Main-sample and complement re-scoring on Linux — dataset unavailable (G8).
+* Training or training-benefit experiments — out of scope here, no GPU; the agreed plan is offline analysis first.
+* Paid APIs, model downloads — none used.

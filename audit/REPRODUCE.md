@@ -110,3 +110,63 @@ The script refuses a CSV whose SHA-256 is not `90fca106…` and a wrapper whose 
 | `audit/results/chain_verl-pr8015.*`, `chain_verl-fixed.*` | real-function suite (text + JUnit XML) |
 | `audit/results/c1c_linux/`, `c1c_linux_fixed/` | C1c per-case JSON and injection ledgers |
 | `audit/results/e3_linux/` | E3-L per-row records and report |
+
+## Second pass (author inputs, 2026-11-03)
+
+Fetch the author inputs read-only into a fresh directory (never into the working tree):
+
+```bash
+mkdir -p /tmp/rf/author && git archive e29d296c3b08ed6922b4384df438fbfe0650b5c4 author-inputs | tar -x -C /tmp/rf/author && chmod -R a-w /tmp/rf/author
+```
+
+Delivery manifest (hash, bytes, path):
+
+```bash
+cd /tmp/rf/author/author-inputs && python3 -I -c "import hashlib,os;r=[l.rstrip('\n').split('  ',2) for l in open('MANIFEST.sha256',encoding='utf-8')];print(sum(os.path.isfile(p) and hashlib.sha256(open(p,'rb').read()).hexdigest()==h and os.path.getsize(p)==int(n) for h,n,p in r),'/',len(r))"
+```
+
+Main metric from the supplied pre-correction rows (frozen `report.py` imported unchanged):
+
+```bash
+python3 -I -B audit/scripts/recount_main_prefix.py /tmp/rf/author/author-inputs /tmp/rf/companion
+```
+
+Report copies vs companion copies, and the thesis chain run:
+
+```bash
+python3 -I audit/scripts/compare_redacted_json.py /tmp/rf/companion/results/s2_e3/report.json /tmp/rf/author/author-inputs/results/s2_e3/report.json
+```
+
+```bash
+python3 -I audit/scripts/check_chain_manifest.py /tmp/rf/author/author-inputs/new-runs/2026-11-02-chain
+```
+
+```bash
+python3 -I audit/scripts/rederive_chain_exports.py /tmp/rf/author/author-inputs/new-runs/2026-11-02-chain
+```
+
+Companion tests on Linux with the portability patch (in a copy of the extracted companion):
+
+```bash
+cd /tmp/rf/companion && git apply <repo>/audit/companion_fixes/linux-portability.patch
+```
+
+```bash
+mkdir -p /tmp/rf/hist && tar -xzf /tmp/rf/author/author-inputs/history/9a88991/code.tar.gz -C /tmp/rf/hist
+```
+
+```bash
+cd /tmp/rf/companion && RF_OLD_ANALYZE=/tmp/rf/hist/rewardfail/s2/analyze.py /tmp/rf/venv/bin/python -I -B tests/test_s2_budget.py
+```
+
+```bash
+cd /tmp/rf/companion && bash tests/test_get_data.sh C.UTF-8 get_data.sh
+```
+
+Heavy-input scenes (protocol `audit/experiments/heavy_linux/PROTOCOL.md`; about 7 minutes; needs ≥ 12 GiB free):
+
+```bash
+/tmp/rf/venv/bin/python -B audit/experiments/heavy_linux/run_heavy_linux.py --companion /tmp/rf/companion --heavy /tmp/rf/author/author-inputs/new-runs/2026-11-02-p1/heavy/heavy_rows.json --base-verl /tmp/rf/companion/third_party/verl-pr8015 --fixed-verl /tmp/rf/verl-fixed --python /tmp/rf/venv/bin/python --out /tmp/rf/heavy_linux_new
+```
+
+Manuscript: see `paper/BUILD.md`.

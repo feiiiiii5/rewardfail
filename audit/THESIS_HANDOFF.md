@@ -54,3 +54,19 @@
 6. 若你持有：原始 `paper/main.tex`、`refs.bib`，以及主测量参照通道修正后的逐行记录（见 `audit/GAPS.md` G1–G4）。
 
 拿到 1–3 后才能逐段核对；拿到 6 才能把 k/u 从"仅报告"升级为"可重建"。
+
+## 三、第二轮更新（2026-11-03，已收到作者材料）
+
+已收到并核对：英文论文原始 LaTeX、毕设正文 `thesis/main.md`、开题稿、两次新实验（chain、P1）、主测量修正前的原始行记录。逐条核对结果见 `audit/THESIS_REVIEW.md`。其中必须改的有：
+
+* 两处摘要把 0.01755% 写成“32 条未裁定”的比例，实为 34/n 上端点；
+* 表 6-1 用了总体标准差，与第 105 行定义和 verl 默认（样本标准差）不一致；
+* u=18 的定义（参照侧报错不计入）和它只是报告值（行记录只能重现修正前 u=9 573）；
+* “249 项检查”的证据层级与缺失的驱动源码。
+
+仍需向你索取的最小材料（按优先级）：
+
+1. `rewardfail/experiments/thesis_chain.py` 的两个版本（SHA-256 以 `3b3aa0` 与 `6cce7c` 开头）。
+2. 主测量参照通道的完整事件文件：`stage2/runs/main-20261007-202545/reference/` 下的 `obs-*.jsonl`、`child_logs/child-*.jsonl`、`guard*.jsonl`、`results-*.jsonl`、`warm-*.jsonl`。可先运行 `audit/scripts/inventory_run_dir.py` 只列出大小和哈希，再决定是否上传。
+3. 导师或学院对题目、成果复用方式和 AI 使用披露的书面意见（如有）。
+4. 若希望在 Linux 上检验并发中止：E1 八行矩阵所用的 8 条数据集对照文本（id、gt、out）。

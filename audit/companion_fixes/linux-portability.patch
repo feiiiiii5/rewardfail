@@ -1,0 +1,209 @@
+diff --git a/rewardfail/s2/guard.py b/rewardfail/s2/guard.py
+index bef6459..511d332 100644
+--- a/rewardfail/s2/guard.py
++++ b/rewardfail/s2/guard.py
+@@ -14,6 +14,7 @@
+   条件变化时立刻记）带分角色的 footprint（调度、各测量进程、各进程池子进程、其他后代）、可用内存、交换区与负载。
+ """
+ import ctypes
++import sys
+ import ctypes.util
+ import json
+ import os
+@@ -28,15 +29,22 @@ GiB = 1 << 30
+ MiB = 1 << 20
+ _libc = ctypes.CDLL(ctypes.util.find_library("c"))
+ RED = 4
++PRESSURE_AVAILABLE = sys.platform == "darwin"  # macOS kern.memorystatus_vm_pressure_level; none on Linux
+ 
+ 
+ def sysctl_int(name):
++    if not hasattr(_libc, "sysctlbyname"):  # Linux glibc has no sysctlbyname
++        return None
+     v, sz = ctypes.c_int(0), ctypes.c_size_t(ctypes.sizeof(ctypes.c_int))
+     return v.value if _libc.sysctlbyname(name.encode(), ctypes.byref(v), ctypes.byref(sz), None, 0) == 0 else None
+ 
+ 
+ def pressure():
+-    """macOS 系统内存压力：1 正常，2 警告，4 严重；读不到返回 None。"""
++    """macOS 系统内存压力：1 正常，2 警告，4 严重；读不到返回 None。
++
++    Linux (2026-11-03 port): there is no equivalent of kern.memorystatus_vm_pressure_level, so this returns
++    None and the red-pressure (4) intervention never triggers. PSI (/proc/pressure/memory) measures stall
++    time, not the same quantity, and is deliberately not mapped onto the macOS levels."""
+     return sysctl_int("kern.memorystatus_vm_pressure_level")
+ 
+ 
+@@ -61,7 +69,7 @@ class Guard:
+         self.max_pressure = pressure() or 0
+         self.kills, self.red_kills, self.stops = 0, 0, 0
+         self.log("guard_start", rule="D135：只在内存压力变红（4）时降并发或暂停", child_limit=child_limit, kill_min=kill_min,
+-                 avail_start=self.avail_start, swap_start=self.swap_start, pressure=self.max_pressure, metric="phys_footprint")
++                 avail_start=self.avail_start, swap_start=self.swap_start, pressure=self.max_pressure, metric=mem.METRIC)
+ 
+     def log(self, ev, **kw):
+         kw.update(ev=ev, t=round(time.time(), 3))
+@@ -104,7 +112,8 @@ class Guard:
+                       "other": [[pid, ppid, fp] for pid, ppid, fp, _ in s["procs"]
+                                 if pid != me_pid and pid not in worker_pids and ppid not in worker_pids]}
+         s["pressure"] = pressure()
+-        if s["pressure"] is None:
++        # Linux port: no pressure level exists there, so its absence is not a read failure (on macOS it still is).
++        if s["pressure"] is None and PRESSURE_AVAILABLE:
+             s["read_fail"].append("内存压力")
+         try:
+             s["avail"] = psutil.virtual_memory().available
+diff --git a/rewardfail/s2/mem.py b/rewardfail/s2/mem.py
+index d5d8fbe..3e76847 100644
+--- a/rewardfail/s2/mem.py
++++ b/rewardfail/s2/mem.py
+@@ -14,6 +14,7 @@ import ctypes
+ import ctypes.util
+ import errno
+ import os
++import sys
+ 
+ _U64 = ctypes.c_uint64
+ _NAMES = ("user_time", "system_time", "pkg_idle_wkups", "interrupt_wkups", "pageins", "wired_size", "resident_size",
+@@ -31,21 +32,51 @@ class _RU4(ctypes.Structure):
+     _fields_ = [("uuid", ctypes.c_uint8 * 16)] + [(n, _U64) for n in _NAMES]
+ 
+ 
+-_lib = ctypes.CDLL(ctypes.util.find_library("proc") or "/usr/lib/libproc.dylib", use_errno=True)
+-_lib.proc_pid_rusage.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_void_p]
+-_lib.proc_pid_rusage.restype = ctypes.c_int
+-
+-
+ class Gone(Exception):
+     """进程已经不在了（ESRCH），不占内存。"""
+ 
+ 
+-def usage(pid=None):
+-    """返回 (footprint, 生命周期内最大 footprint, 常驻内存)，单位字节。进程不在了抛 Gone，其他失败抛 OSError。"""
+-    r = _RU4()
+-    if _lib.proc_pid_rusage(os.getpid() if pid is None else pid, RUSAGE_INFO_V4, ctypes.byref(r)) != 0:
+-        e = ctypes.get_errno()
+-        if e == errno.ESRCH:
++if sys.platform == "darwin":
++    METRIC = "phys_footprint"
++    _lib = ctypes.CDLL(ctypes.util.find_library("proc") or "/usr/lib/libproc.dylib", use_errno=True)
++    _lib.proc_pid_rusage.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_void_p]
++    _lib.proc_pid_rusage.restype = ctypes.c_int
++
++    def usage(pid=None):
++        """返回 (footprint, 生命周期内最大 footprint, 常驻内存)，单位字节。进程不在了抛 Gone，其他失败抛 OSError。"""
++        r = _RU4()
++        if _lib.proc_pid_rusage(os.getpid() if pid is None else pid, RUSAGE_INFO_V4, ctypes.byref(r)) != 0:
++            e = ctypes.get_errno()
++            if e == errno.ESRCH:
++                raise Gone(pid)
++            raise OSError(e, os.strerror(e))
++        return r.phys_footprint, r.lifetime_max_phys_footprint, r.resident_size
++
++elif sys.platform.startswith("linux"):
++    # Linux port (2026-11-03 audit). NOT the macOS metric: Linux has no phys_footprint. The proxy is
++    # VmRSS + VmSwap from /proc/<pid>/status (resident plus swapped-out anonymous pages); its lifetime
++    # maximum is VmHWM + current VmSwap (Linux keeps no swap high-water mark), so it can under-read the
++    # true peak. Budgets, thresholds and classifications were calibrated on macOS footprint and are not
++    # re-calibrated here; every record carries METRIC so the two are never pooled silently.
++    METRIC = "linux_vmrss_plus_vmswap"
++
++    def usage(pid=None):
++        """Linux: (VmRSS+VmSwap, VmHWM+VmSwap, VmRSS) in bytes; Gone if the process no longer exists."""
++        try:
++            with open(f"/proc/{os.getpid() if pid is None else pid}/status", encoding="ascii") as fh:
++                kv = dict(line.split(":", 1) for line in fh if ":" in line)
++        except FileNotFoundError:
+             raise Gone(pid)
+-        raise OSError(e, os.strerror(e))
+-    return r.phys_footprint, r.lifetime_max_phys_footprint, r.resident_size
++        except ProcessLookupError:
++            raise Gone(pid)
++
++        def kib(name):
++            v = kv.get(name)
++            return int(v.split()[0]) * 1024 if v else 0
++        rss, swap, hwm = kib("VmRSS"), kib("VmSwap"), kib("VmHWM")
++        if "VmRSS" not in kv:  # zombie: no memory lines left
++            raise Gone(pid)
++        return rss + swap, max(hwm, rss) + swap, rss
++
++else:
++    raise ImportError(f"rewardfail.s2.mem supports macOS and Linux, not {sys.platform}")
+diff --git a/tests/test_get_data.sh b/tests/test_get_data.sh
+index b071c1a..e4d5ead 100644
+--- a/tests/test_get_data.sh
++++ b/tests/test_get_data.sh
+@@ -40,11 +40,11 @@ rm -f repo/data; ln -s "$S/nowhere" repo/data
+ run /bin/bash repo/get_data.sh > o11.txt 2>&1; rc=$?
+ t "仓内 data 是悬空链接：不出错、给提示、不改链接" "[ $rc = 0 ] && grep -q '注意：仓内 data 链接指向' o11.txt && [ \"\$(readlink repo/data)\" = '$S/nowhere' ]"
+ printf 'c.txt\tfile://%s/src/none.txt\t5\tsha256\t%s\n' "$S" "$A_SHA" >> repo/data_manifest.tsv
+-sed -i '' 's/sleep 3/sleep 0/' repo/get_data.sh
++sed 's/sleep 3/sleep 0/' repo/get_data.sh > repo/get_data.sh.tmp && mv repo/get_data.sh.tmp repo/get_data.sh   # portable (GNU/BSD)
+ run /bin/bash repo/get_data.sh > o12.txt 2>&1; rc=$?
+ t "来源不可达：重试 5 次后报校验失败、退出码 1，其余文件不受影响" "[ $rc = 1 ] && grep -q '校验失败  c.txt' o12.txt && [ \$(grep -c '没下完整' o12.txt) = 4 ] && grep -q '通过 2 个，未通过 1 个' o12.txt"
+ # 带 CRLF 换行的文本文件：git 设了 core.autocrlf=input 时（本机全局就是这样），不加 --no-filters 的 git hash-object 会先转换换行再算（10-06 实跑人工标注集 CSV 时暴露）
+-mkdir -p repo2; cp repo/get_data.sh repo2/get_data.sh; sed -i '' 's/sleep 3/sleep 0/' repo2/get_data.sh   # 已在 $S 里，复制开头那份被测脚本
++mkdir -p repo2; cp repo/get_data.sh repo2/get_data.sh; sed 's/sleep 3/sleep 0/' repo2/get_data.sh > repo2/get_data.sh.tmp && mv repo2/get_data.sh.tmp repo2/get_data.sh   # 已在 $S 里，复制开头那份被测脚本
+ printf 'id,label\r\n1,correct\r\n2,wrong\r\n' > src/crlf.csv
+ printf '# rel\tsrc\tbytes\tkind\tdigest\ngold/crlf.csv\tfile://%s/src/crlf.csv\t%s\tgitblob\t%s\n' "$S" "$(wc -c < src/crlf.csv | tr -d ' ')" "$(blob src/crlf.csv)" > repo2/data_manifest.tsv
+ run2() { env -i HOME="$HOME" PATH=/usr/bin:/bin LANG="$L" LC_ALL="$L" REWARDFAIL_DATA="$S/dest2" GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.autocrlf GIT_CONFIG_VALUE_0=input "$@"; }
+diff --git a/tests/test_s2_budget.py b/tests/test_s2_budget.py
+index 8d94543..0694870 100644
+--- a/tests/test_s2_budget.py
++++ b/tests/test_s2_budget.py
+@@ -14,7 +14,9 @@
+ 类别要逐行相同（这些运行里被杀的子进程此前没有离终止 1 秒以上的完整返回，修订不该改变任何一行）；目录不在就跳过。
+ 运行：.venv/bin/python -I tests/test_s2_budget.py（在实验仓根目录）
+ """
++import hashlib
+ import importlib.util
++import os
+ import json
+ import shutil
+ import subprocess
+@@ -104,9 +106,21 @@ EXPECT = {"done": "1 分", "edge": "本机预算终止（未裁定）", "active"
+ OLD_EXPECT_BUDGET = {"done", "edge", "active", "lost", "nowait", "mismatch", "reuse"}
+ 
+ 
++OLD_ANALYZE_SHA256 = "a8fa21e2b041c327ac5fe2bd8144b3b1c3bc2cc8470cfe994c9550bb63248745"  # run lock of the main measurement
++
++
+ def old_analyze():
+-    src = subprocess.run(["git", "-C", str(ROOT), "show", f"{OLD_COMMIT}:rewardfail/s2/analyze.py"], capture_output=True,
+-                         text=True, check=True).stdout
++    # 2026-11-03: the experiment repository history is not public. RF_OLD_ANALYZE may point at the pre-correction
++    # analyze.py (e.g. author-inputs/history/9a88991/code.tar.gz); it must match the run lock's SHA-256.
++    path = os.environ.get("RF_OLD_ANALYZE")
++    if path:
++        raw = Path(path).read_bytes()
++        if hashlib.sha256(raw).hexdigest() != OLD_ANALYZE_SHA256:
++            raise SystemExit("RF_OLD_ANALYZE does not match the main run's locked analyze.py")
++        src = raw.decode("utf-8")
++    else:
++        src = subprocess.run(["git", "-C", str(ROOT), "show", f"{OLD_COMMIT}:rewardfail/s2/analyze.py"], capture_output=True,
++                             text=True, check=True).stdout
+     d = Path(tempfile.mkdtemp())
+     (d / "analyze_old.py").write_text(src, encoding="utf-8")
+     spec = importlib.util.spec_from_file_location("analyze_old", d / "analyze_old.py")
+diff --git a/tests/test_s2_stats.py b/tests/test_s2_stats.py
+index abf772b..dfb2ca2 100644
+--- a/tests/test_s2_stats.py
++++ b/tests/test_s2_stats.py
+@@ -136,9 +136,13 @@ def main():
+     a = 0.05
+     closed = []
+     for n in NS:
+-        closed.append({"n": n, "upper_k0": R.upper(0, n), "closed_upper_k0": 1 - a ** (1 / n),
+-                       "lower_kn": R.lower(n, n), "closed_lower_kn": a ** (1 / n)})
+-    check("零事件与全事件对上闭式解", all(abs(c["upper_k0"] - c["closed_upper_k0"]) <= 1e-12 * c["closed_upper_k0"] + 1e-15
++        # 2026-11-03 Linux port: 1 - a**(1/n) loses ~12 digits to cancellation for large n, so it is computed as
++        # -expm1(log(a)/n). The frozen bisection in report.py is accurate to ~5e-11 relative here; the old 1e-12
++        # relative tolerance passed on the macOS host but not on Linux libm. 1e-9 relative is still far below
++        # the 3 significant digits reported; report.py itself is unchanged.
++        closed.append({"n": n, "upper_k0": R.upper(0, n), "closed_upper_k0": -math.expm1(math.log(a) / n),
++                       "lower_kn": R.lower(n, n), "closed_lower_kn": math.exp(math.log(a) / n)})
++    check("零事件与全事件对上闭式解", all(abs(c["upper_k0"] - c["closed_upper_k0"]) <= 1e-9 * c["closed_upper_k0"]
+                                     and abs(c["lower_kn"] - c["closed_lower_kn"]) <= 1e-12 for c in closed), closed)
+     lo, up = R.lower(1000, 93_733), R.upper(1000, 93_733)
+     check("Codex 给的独立值：n=93,733、k=1,000", abs(lo - 0.01012254) < 5e-9 and abs(up - 0.01123725) < 5e-9,

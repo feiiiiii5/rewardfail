@@ -1,0 +1,5 @@
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<SCRATCH>/work/companion/experiments/s2_main.py", line 141, in file_sha
+    with open(path, "rb") as fh:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<SCRATCH>/work/home/.local/share/rewardfail/stage2/sample_map.tsv'

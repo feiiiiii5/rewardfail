@@ -1,3 +1,5 @@
+> **Superseded (2026-11-03, second pass):** the author's original LaTeX source is now in `paper/main.tex`. This directory keeps the earlier reconstruction from the public PDF for traceability only; paths below that say `paper/` refer to this directory.
+
 # Manuscript revision log (3 November 2026)
 
 `paper/main.tex` is an **editable reconstruction from the public `paper.pdf`** (12 October 2026,
