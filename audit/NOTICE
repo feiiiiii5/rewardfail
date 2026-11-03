@@ -1,0 +1,16 @@
+Copyright 2026 Yufeiyang Chen
+
+The original code, measurement records and documentation under audit/ are licensed under the Apache License,
+Version 2.0; see LICENSE.
+Substantial AI assistance (Claude, Codex) is disclosed in the manuscript's author contribution statement.
+
+This licence does not apply to the manuscript, to upstream software or datasets, or to the following:
+- audit/upstream_chain/patches/0001-*.patch ports verl pull request #7151 by keepkeen (head 96eead6) and
+  contains verl source code; it remains under verl's Apache-2.0 licence and copyright headers.
+- audit/upstream_chain/patches/0002-*.patch modifies verl source files; verl's copyright notices apply to the
+  unchanged context.
+- audit/experiments/e3_linux/e3_child.py follows the Math-Verify call sequence of verl PR #8015
+  (verl, Apache-2.0).
+- audit/results/heavy_linux/*/spec.json contain texts from OpenR1-Math-220k
+  (revision e4e141ec9dea9f8326f4d347be56105859b2bd68), whose data card declares Apache-2.0.
+- Results derived from the human-label CSV cite its repository, which declares MIT.

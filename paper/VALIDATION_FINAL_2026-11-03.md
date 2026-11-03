@@ -11,7 +11,7 @@ standard-library scripts, TeX Live 2023 (pdfTeX 1.40.25). Author inputs read onl
 | Check | Result |
 |---|---|
 | `pdflatex → bibtex → pdflatex ×2` on `paper/main.tex` | 23 pages; 0 errors; 0 undefined references/citations; 0 BibTeX warnings; 0 overfull/underfull boxes (final pass, after the policy-section corrections) |
-| arXiv package `paper/arxiv/rewardfail-arxiv-source.tar.gz` (`make_arxiv_package.sh`) | contains `main.tex`, `main.bbl`, `refs.bib` (SHA-256 `fc21849f…`); compiles from a clean directory with pdfLaTeX and the shipped `.bbl` only (BibTeX not run, `refs.bib` removed): 23 pages, no errors; extracted text identical to the full build |
+| arXiv package `paper/arxiv/rewardfail-arxiv-source.tar.gz` (`make_arxiv_package.sh`) | contains `main.tex`, `main.bbl`, `refs.bib` (SHA-256 `6bccf07b…`); compiles from a clean directory with pdfLaTeX and the shipped `.bbl` only (BibTeX not run, `refs.bib` removed): 23 pages, no errors; extracted text identical to the full build |
 | Fonts | 30 fonts, all embedded and subset (Latin Modern, Type 1) |
 | PDF metadata | Title, Author (Yufeiyang Chen), Keywords, Creator, Producer only |
 | Source comments | version/build notes only; no paths, credentials or internal discussion |
@@ -87,3 +87,12 @@ checked, not regenerated), and the author's independent recheck of the offline s
 
 Not executable here: corpus re-scoring (OpenR1 not reachable), training of any kind, reconstruction of the corrected
 `u = 18` from reference-pass events (not supplied), arXiv/metadata re-checks of citations (unreachable).
+
+## Author-confirmation pass
+
+After the author confirmed CC BY 4.0, Apache-2.0 for `audit/`, a public correspondence address and cs.SE + cs.LG,
+one appendix sentence changed ("Original companion and audit code is licensed under Apache-2.0"). Re-run: LaTeX
+build (23 pages; 0 errors, undefined references, box or BibTeX warnings; `main.bbl` unchanged), arXiv package
+(SHA-256 `6bccf07b…`, builds from a clean directory, text identical to the full build), fonts embedded, number
+checker 168/168 with output identical to the committed `paper_number_check.json`, counter-tests 21/21, offline unit
+tests 9/9, recount tests 7/7. Analysis code and results unchanged since `da00bd6`.

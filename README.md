@@ -13,7 +13,7 @@ LaTeX source also in [`paper/main.tex`](paper/main.tex)) ·
 
 This is a publicly available research manuscript. It has not been peer reviewed
 and has not been posted to arXiv; [`paper/SUBMISSION_CHECKLIST.md`](paper/SUBMISSION_CHECKLIST.md)
-lists the decisions the author still has to make before any submission. The companion
+records the author's confirmations (licences, authorship, categories). Posting is not yet authorised. The companion
 archive contains code and evidence for inspection; it does not contain model weights,
 upstream datasets or the complete original raw-log archive.
 
@@ -133,14 +133,14 @@ analysis were supplied by the cited dataset authors.
 
 ## Licences and fixed files
 
-- Manuscript: the text states [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); the
-  author is to confirm this choice before arXiv submission (`paper/SUBMISSION_CHECKLIST.md`).
+- Manuscript: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (confirmed by the author).
 - Original companion code and synthetic fixtures: Apache-2.0; see LICENSE and
-  NOTICE inside the archive. Third-party sources and datasets retain their own
-  licences and notices.
-- Files under `audit/` added on 3 November 2026: **no licence has been granted yet**; a proposed
-  scheme, separating author-licensable code from third-party code and data, is in
-  [`audit/LICENSING_PLAN.md`](audit/LICENSING_PLAN.md).
+  NOTICE inside the archive.
+- Original code, records and documentation under `audit/`: Apache-2.0; see
+  [`audit/LICENSE`](audit/LICENSE) and [`audit/NOTICE`](audit/NOTICE). The NOTICE lists the parts that keep
+  third-party terms (verl code in the two patches, OpenR1 texts in the heavy-scene specs, the MIT human-label
+  CSV); see [`audit/LICENSING_PLAN.md`](audit/LICENSING_PLAN.md).
+- Third-party sources and datasets retain their own licences and notices.
 
 SHA-256 of the distributed files (historical `paper.pdf` and companion archive):
 
