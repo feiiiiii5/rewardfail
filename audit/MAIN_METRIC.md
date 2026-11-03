@@ -1,7 +1,8 @@
 # Main measurement (n = 93,733): what is verified, and what each next step needs
 
 Recomputed 2026-11-03 with `audit/scripts/recount_main_prefix.py` (standard library, read-only), which imports
-the companion's frozen `rewardfail/s2/report.py` unchanged. Output: `audit/results/main_prefix_recount.json`.
+the companion's frozen `rewardfail/s2/report.py` unchanged. Historical output: `audit/results/main_prefix_recount.json` (retained unchanged).
+Population-scoped rerun: `audit/results/main_prefix_recount_scoped.json`.
 
 ## Four kinds of evidence (do not mix them)
 
@@ -20,8 +21,9 @@ the companion's frozen `rewardfail/s2/report.py` unchanged. Output: `audit/resul
 | Reference rows (supplied raw, pre-correction) | 33,487 + 7 warm-ups = 32,487 default non-one rows + 1,000 default-one controls; ids ⊂ default ids |
 | Frozen pairing on pre-correction classes | `k = 1` (`m-377a40b9adf29ef8`, same as the formal report), `u = 9,573` = 9,559 guard-stopped + 11 reference comparison timeouts + 2 interrupted twice + 1 reference-parse timeout |
 | Matches the 6c416b2 diagnostic's "official" metric | yes (`k = 1`, `u = 9,573`, identical `u_reasons`) |
+| Originally guard-stopped | 9,868 reference rows including warm-ups; 9,864 excluding warm-ups. These are not the reclassification counts. |
 | Reported correction | 9,866 reference rows reclassified (9,863 non-warm-up): 9,551 → normal 0, 308 → score 1, 3 → comparison timeout, 3 → comparison error, 1 → answer-parse error |
-| Aggregate reconciliation | pre-correction totals + reported changes = formal totals exactly, once the 7 warm-up rows are included in the change counts and excluded from the formal totals |
+| Aggregate reconciliation | The historical `false` compares non-warm-up starting counts with all-row changes. The new scoped check includes all seven observed warm-up rows and reproduces the diagnostic report totals. The difference from formal non-warm-up totals is six score-one rows and one guard-stopped row, consistent with seven warm-ups. Corrected individual warm-up classes are not independently reconstructed. |
 | Guard events | the reference pass recorded only 4 `budget_kill` events (6c416b2 diagnostic `resynth_stats`); the old rule attached each to every row the killed pool process had scored |
 | `ids_sha256` in `pass_spec.json` | not reproducible from file order or sorted order; it hashes the sampling order, which needs `sample_map.tsv` (not supplied) — no evidence of a data problem either way |
 | Error-inclusive sensitivity | pre-correction: 12 reference error zeros (row-level). Post-correction: 16 (formal aggregates only) → `u_err = 34`, `[1/n, 35/n] = [1.07e-5, 3.73e-4]`, binomial-model upper bound 4.95e-4, verdict unchanged |
@@ -77,3 +79,28 @@ Complete event directories of every pass, not only `reference/`: `default/`, `re
 `warm-*`, `interrupts.json`, `pass_spec.json`, `pass_done.json`), plus `run.json`, `report.json`, and for
 re-*execution* additionally `sample_map.tsv` and the OpenR1-Math-220k shards listed in `data_manifest.tsv`.
 This is the ~2 GB tree; it is not needed for ① or ②.
+
+## Population-scope regression checks
+
+The recount now preserves warm-up classes and compares like populations. The
+historical JSON and its `aggregate_reconciliation_matches_formal: false` remain
+unchanged for traceability; the rerun retains that field and explicitly labels
+its incompatible population scopes. The new nested reconciliation checks the
+observed all-row pre-correction counts against the diagnostic report, applies
+reported all-row transitions, and compares with the diagnostic report totals.
+It explicitly reports corrected row-level reconstruction as false.
+
+The source diagnostic is `author-inputs/reanalysis/budget_attribution_diag.json`
+at author-input commit `e29d296c3b08ed6922b4384df438fbfe0650b5c4`. Its SHA-256 is
+in the rerun output. The final `reference_classes` and reported change counts
+are from the unchanged formal report. None of these aggregate checks verifies
+`u = 18` independently of that report.
+
+```bash
+python3 -I -B audit/scripts/recount_main_prefix.py <author-inputs> <companion> > /tmp/main_prefix_recount_scoped.json
+python3 -I -B audit/scripts/test_recount_main_prefix.py
+```
+
+Seven tests cover warm-up detection and retention, duplicate IDs, invalid
+transition counts, preservation of negative mismatch counts, report mismatches,
+population-scoped reconciliation, and unchanged historical recount fields.

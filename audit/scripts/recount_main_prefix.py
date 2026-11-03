@@ -27,14 +27,15 @@ from pathlib import Path
 
 
 def rows(path):
-    out, warm, order = {}, [], []
+    out, warm, order, seen = {}, [], [], set()
     for line in path.read_text(encoding="utf-8").splitlines():
         r = json.loads(line)
-        if r.get("warm") or str(r["id"]).startswith("warm-"):
-            warm.append(r["id"])
-            continue
-        if r["id"] in out:
+        if r["id"] in seen:
             raise ValueError("duplicate id " + r["id"])
+        seen.add(r["id"])
+        if r.get("warm") or str(r["id"]).startswith("warm-"):
+            warm.append(r)
+            continue
         out[r["id"]] = r
         order.append(r["id"])
     return out, warm, order
@@ -42,6 +43,44 @@ def rows(path):
 
 def digest(ids):
     return hashlib.sha256("\n".join(ids).encode()).hexdigest()
+
+
+def apply_changes(counts, changes):
+    """Apply aggregate transitions without Counter's silent negative filtering."""
+    out = Counter(counts)
+    for transition, count in changes.items():
+        if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+            raise ValueError("transition count must be a nonnegative integer")
+        source, target = transition.split(" → ")
+        out[source] -= count
+        out[target] += count
+    return {key: value for key, value in out.items() if value != 0}
+
+
+def reconcile_reference(nonwarm_classes, warm_rows, changes, diagnostic, formal):
+    """Check all-row report arithmetic, not missing corrected row-level evidence."""
+    warm = Counter(row["class"] for row in warm_rows)
+    all_before = Counter(nonwarm_classes)
+    all_before.update(warm)
+    after = apply_changes(all_before, changes)
+    reported_after = diagnostic["reference_classes"]["diagnostic"]
+    # The residual below comes from two reports, NOT reconstructed warm-up rows.
+    residual = {key: after.get(key, 0) - formal.get(key, 0)
+                for key in set(after) | set(formal)}
+    residual = {key: value for key, value in sorted(residual.items()) if value}
+    return {
+        "evidence_level": "raw pre-correction counts plus reported aggregate transitions; not corrected per-row reconstruction",
+        "pre_correction_warmup_classes": dict(warm),
+        "pre_correction_all_row_classes": dict(all_before),
+        "pre_correction_all_rows_match_diagnostic_report": dict(all_before) == diagnostic["reference_classes"]["official"],
+        "reported_changes_match_diagnostic_report": changes == diagnostic["class_changes"],
+        "reconciled_all_row_classes": after,
+        "all_row_reconciliation_matches_diagnostic_report": after == reported_after,
+        "reported_all_rows_minus_formal_nonwarm_classes": residual,
+        "residual_is_nonnegative_and_has_warmup_count": all(value >= 0 for value in residual.values()) and sum(residual.values()) == len(warm_rows),
+        "corrected_warmup_classes_independently_reconstructed": False,
+        "corrected_nonwarm_classes_independently_reconstructed": False,
+    }
 
 
 def main():
@@ -56,10 +95,16 @@ def main():
     dspec = json.loads((A / "main-run/default/pass_spec.json").read_text())
     rspec = json.loads((A / "main-run/reference/pass_spec.json").read_text())
     formal = json.loads((A / "reanalysis/s2_main/report.json").read_text(encoding="utf-8"))
-    out = {"inputs_sha256": {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in (
+    diagnostic_path = A / "reanalysis/budget_attribution_diag.json"
+    diagnostic = json.loads(diagnostic_path.read_text(encoding="utf-8"))
+    def input_label(path):
+        root, label = (A, "<author-inputs>") if path.is_relative_to(A) else (C, "<companion>")
+        return label + "/" + path.relative_to(root).as_posix()
+
+    out = {"inputs_sha256": {input_label(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in (
         A / "main-run/default/rows.jsonl", A / "main-run/reference/rows.jsonl", C / "rewardfail/s2/report.py",
-        C / "rewardfail/s2/analyze.py", A / "reanalysis/s2_main/report.json")}}
-    out["counts"] = {"default_rows": len(d), "default_warmups": dwarm, "reference_rows": len(r), "reference_warmups": rwarm}
+        C / "rewardfail/s2/analyze.py", A / "reanalysis/s2_main/report.json", diagnostic_path)}}
+    out["counts"] = {"default_rows": len(d), "default_warmups": [x["id"] for x in dwarm], "reference_rows": len(r), "reference_warmups": [x["id"] for x in rwarm]}
     out["ids_sha256"] = {
         "default_file_order": digest(dorder) == dspec["ids_sha256"],
         "default_sorted": digest(sorted(dorder)) == dspec["ids_sha256"],
@@ -81,15 +126,21 @@ def main():
     out["uncorrected_reference_classes"] = dict(Counter(rcls.values()))
     out["formal_reference_classes"] = formal["reference_classes"]
     out["formal_class_changes_reported"] = formal["reanalysis"]["class_changes_by_pass"]["reference"]
-    # aggregate-only reconciliation: uncorrected minus reported changes should equal formal
+    # Legacy mixed-scope comparison retained alongside a scoped reconciliation.
     unc = Counter(rcls.values())
     changes = formal["reanalysis"]["class_changes_by_pass"]["reference"]
-    rec = Counter(unc)
-    for kv, nrows in changes.items():
-        a, b = kv.split(" → ")
-        rec[a] -= nrows
-        rec[b] += nrows
-    out["aggregate_reconciliation_matches_formal"] = {k: v for k, v in rec.items() if v} == formal["reference_classes"]
+    rec = apply_changes(unc, changes)
+    # Historical field retained: this deliberately mixes all-row changes with
+    # non-warm-up starting counts and is false. The scoped check follows.
+    out["aggregate_reconciliation_matches_formal"] = rec == formal["reference_classes"]
+    out["aggregate_reconciliation_scope"] = "nonwarm starting counts versus all-row transitions; intentionally incompatible scopes"
+    out["reference_aggregate_reconciliation"] = reconcile_reference(
+        unc, rwarm, changes, diagnostic, formal["reference_classes"])
+    out["reported_reference_rows_reclassified"] = {
+        "all_rows": sum(changes.values()),
+        "nonwarm_rows": formal["reanalysis"]["main_rows_changed_by_pass"]["reference"],
+        "warm_rows": sum(changes.values()) - formal["reanalysis"]["main_rows_changed_by_pass"]["reference"],
+    }
     budget_rows = sorted(i for i, c in rcls.items() if c == "本机预算终止（未裁定）")
     out["uncorrected_budget_killed_reference_rows"] = len(budget_rows)
     out["budget_rows_by_default_class"] = dict(Counter(dcls[i] for i in budget_rows))

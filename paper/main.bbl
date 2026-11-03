@@ -30,7 +30,7 @@ Xin-Qiang Cai, Wei Wang, Feng Liu, Tongliang Liu, Gang Niu, and Masashi
 \newblock Reinforcement learning with verifiable yet noisy rewards under
   imperfect verifiers.
 \newblock arXiv:2510.00915, 2025.
-\newblock URL \url{https://arxiv.org/abs/2510.00915}.
+\newblock URL \url{https://arxiv.org/abs/2510.00915v5}.
 \newblock Version 5.
 
 \bibitem[Clopper and Pearson(1934)]{clopper1934}
@@ -45,7 +45,7 @@ C.~J. Clopper and E.~S. Pearson.
 \newblock {DeepSeek-R1}: Incentivizing reasoning capability in {LLMs} via
   reinforcement learning.
 \newblock arXiv:2501.12948, 2025.
-\newblock URL \url{https://arxiv.org/abs/2501.12948}.
+\newblock URL \url{https://arxiv.org/abs/2501.12948v2}.
 
 \bibitem[Egashira et~al.(2026)Egashira, Vero, Dekoninck, Dorner, Staab, and
   Vechev]{egashira2026delay}
@@ -54,7 +54,7 @@ Kazuki Egashira, Mark Vero, Jasper Dekoninck, Florian~E. Dorner, Robin Staab,
 \newblock Delay, plateau, or collapse: Evaluating the impact of systematic
   verification error on {RLVR}.
 \newblock arXiv:2605.02909, 2026.
-\newblock URL \url{https://arxiv.org/abs/2605.02909}.
+\newblock URL \url{https://arxiv.org/abs/2605.02909v2}.
 \newblock Version 2; checked 2026-10-08.
 
 \bibitem[{fuergaosi233}(2026)]{verl6545}
@@ -79,14 +79,14 @@ Miaobo Hu, Shuhao Hu, Xiaobo Guo, Xin Wang, et~al.
 \newblock {ROUTEAUDIT}: Interaction-aware identification for budgeted
   multi-verifier routing.
 \newblock arXiv:2610.02808, 2026{\natexlab{a}}.
-\newblock URL \url{https://arxiv.org/abs/2610.02808}.
+\newblock URL \url{https://arxiv.org/abs/2610.02808v2}.
 
 \bibitem[Hu et~al.(2026{\natexlab{b}})Hu, Hu, Guo, Wang, et~al.]{hu2026vstress}
 Miaobo Hu, Shuhao Hu, Xiaobo Guo, Xin Wang, et~al.
 \newblock {VStress}: Correlation-aware auditing and adaptive budget allocation
   for repeated verifiers.
 \newblock arXiv:2609.36958, 2026{\natexlab{b}}.
-\newblock URL \url{https://arxiv.org/abs/2609.36958}.
+\newblock URL \url{https://arxiv.org/abs/2609.36958v2}.
 
 \bibitem[{Hugging Face}(n.d.{\natexlab{a}})]{mathverify}
 {Hugging Face}.
@@ -123,21 +123,21 @@ Miaobo Hu, Shuhao Hu, Xiaobo Guo, Xin Wang, et~al.
 Nathan Lambert, Jacob Morrison, Valentina Pyatkin, Shengyi Huang, et~al.
 \newblock Tulu 3: Pushing frontiers in open language model post-training.
 \newblock arXiv:2411.15124, 2024.
-\newblock URL \url{https://arxiv.org/abs/2411.15124}.
+\newblock URL \url{https://arxiv.org/abs/2411.15124v5}.
 
 \bibitem[Masters et~al.(2026)Masters, Liu, and
   Albrecht]{masters2026rolloutcards}
 Charlie Masters, Ziyuan Liu, and Stefano~V. Albrecht.
 \newblock Rollout cards: A reproducibility standard for agent research.
 \newblock arXiv:2605.12131, 2026.
-\newblock URL \url{https://arxiv.org/abs/2605.12131}.
+\newblock URL \url{https://arxiv.org/abs/2605.12131v1}.
 
 \bibitem[Nie et~al.(2026)Nie, Wu, Liu, Li, et~al.]{nie2026starvation}
 Wenhua Nie, Jianan Wu, Junlin Liu, Ziwei Li, et~al.
 \newblock Gradient starvation in binary-reward {GRPO}: Why group-mean centering
   fails and why the simplest fix works.
 \newblock arXiv:2605.07689, 2026.
-\newblock URL \url{https://arxiv.org/abs/2605.07689}.
+\newblock URL \url{https://arxiv.org/abs/2605.07689v1}.
 
 \bibitem[{NVIDIA NeMo RL contributors}(2026)]{nemorl2026masked}
 {NVIDIA NeMo RL contributors}.
@@ -160,21 +160,21 @@ Taiheng Pan.
 \newblock Probe the harness: Setup checks for stale-data {RL} comparisons in
   language models.
 \newblock arXiv:2610.02911, 2026.
-\newblock URL \url{https://arxiv.org/abs/2610.02911}.
+\newblock URL \url{https://arxiv.org/abs/2610.02911v1}.
 
 \bibitem[Plesner et~al.(2026)Plesner, Guzm{\'a}n, and
   Athalye]{plesner2026imperfect}
 Andreas Plesner, Francisco Guzm{\'a}n, and Anish Athalye.
 \newblock An imperfect verifier is good enough: Learning with noisy rewards.
 \newblock arXiv:2604.07666, 2026.
-\newblock URL \url{https://arxiv.org/abs/2604.07666}.
+\newblock URL \url{https://arxiv.org/abs/2604.07666v2}.
 \newblock Version 2; checked 2026-10-08.
 
 \bibitem[Ray(2026)]{ray2026fuzzing}
 Jaideep Ray.
 \newblock Before the model learns the bug: Fuzzing {RLVR} verifiers.
 \newblock arXiv:2606.01066, 2026.
-\newblock URL \url{https://arxiv.org/abs/2606.01066}.
+\newblock URL \url{https://arxiv.org/abs/2606.01066v1}.
 
 \bibitem[{Ray contributors}(n.d.)]{raytrl}
 {Ray contributors}.
@@ -190,7 +190,7 @@ Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, et~al.
 \newblock {DeepSeekMath}: Pushing the limits of mathematical reasoning in open
   language models.
 \newblock arXiv:2402.03300, 2024.
-\newblock URL \url{https://arxiv.org/abs/2402.03300}.
+\newblock URL \url{https://arxiv.org/abs/2402.03300v3}.
 
 \bibitem[{shaurya416} and {ChdDongyang}(2026)]{verl8015discussion}
 {shaurya416} and {ChdDongyang}.
@@ -207,14 +207,14 @@ Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, et~al.
 Guangming Sheng, Chi Zhang, Zilingfeng Ye, Xibin Wu, et~al.
 \newblock {HybridFlow}: A flexible and efficient {RLHF} framework.
 \newblock arXiv:2409.19256, 2024.
-\newblock URL \url{https://arxiv.org/abs/2409.19256}.
+\newblock URL \url{https://arxiv.org/abs/2409.19256v2}.
 
 \bibitem[Tian et~al.(2026)Tian, Li, Xu, Zou, et~al.]{tian2026stargrpo}
 Wan Tian, Zhongyi Li, Xiang Xu, Minhao Zou, et~al.
 \newblock {STAR-GRPO}: Canonical anchoring and reliability-first advantages
   against representation-dependent reward hacking.
 \newblock arXiv:2609.36900, 2026.
-\newblock URL \url{https://arxiv.org/abs/2609.36900}.
+\newblock URL \url{https://arxiv.org/abs/2609.36900v1}.
 
 \bibitem[{verl contributors}(2026{\natexlab{a}})]{verl5635}
 {verl contributors}.
@@ -266,14 +266,14 @@ Esther Xin.
 \newblock Are verifier errors independent within a {GRPO} group? evidence from
   {Qwen2.5} rollouts.
 \newblock arXiv:2609.06386, 2026{\natexlab{b}}.
-\newblock URL \url{https://arxiv.org/abs/2609.06386}.
+\newblock URL \url{https://arxiv.org/abs/2609.06386v1}.
 
 \bibitem[Xin(2026{\natexlab{c}})]{xin2026wherefails}
 Esther Xin.
 \newblock Where the verifier fails: A category-level audit of reward signals in
   {RLVR}.
 \newblock arXiv:2609.01354, 2026{\natexlab{c}}.
-\newblock URL \url{https://arxiv.org/abs/2609.01354}.
+\newblock URL \url{https://arxiv.org/abs/2609.01354v1}.
 
 \bibitem[Yang et~al.(2026{\natexlab{a}})Yang, Lyu, Liu, Zhang,
   et~al.]{yang2026icoder}
@@ -281,27 +281,27 @@ Cheng Yang, Jiayang Lyu, Shangyuan Liu, Guibin Zhang, et~al.
 \newblock {iCoder-27B}: Recursive {AI}-led development of frontier industrial
   coding model.
 \newblock arXiv:2609.29626, 2026{\natexlab{a}}.
-\newblock URL \url{https://arxiv.org/abs/2609.29626}.
+\newblock URL \url{https://arxiv.org/abs/2609.29626v1}.
 
 \bibitem[Yang et~al.(2026{\natexlab{b}})Yang, Chen, Wang, Lu,
   et~al.]{yang2026biased}
 Fengkai Yang, Zherui Chen, Xiaohan Wang, Xiaodong Lu, et~al.
 \newblock Your group-relative advantage is biased.
 \newblock arXiv:2601.08521, 2026{\natexlab{b}}.
-\newblock URL \url{https://arxiv.org/abs/2601.08521}.
+\newblock URL \url{https://arxiv.org/abs/2601.08521v3}.
 
 \bibitem[Zhang(2026)]{zhang2026leaky}
 Chuyifei Zhang.
 \newblock When the reward suite is leaky: A preregistered causal contrast of
   natural verifier false positives in {RLVR}.
 \newblock arXiv:2607.11022, 2026.
-\newblock URL \url{https://arxiv.org/abs/2607.11022}.
+\newblock URL \url{https://arxiv.org/abs/2607.11022v1}.
 
 \bibitem[Zhang et~al.(2026)Zhang, Jia, Zhai, Fang, et~al.]{zhang2026rftfailure}
 Lingzhe Zhang, Tong Jia, Yunpeng Zhai, Liancheng Fang, et~al.
 \newblock Towards robust {LLM} post-training: Automatic failure management for
   reinforcement fine-tuning.
 \newblock arXiv:2605.04431, 2026.
-\newblock URL \url{https://arxiv.org/abs/2605.04431}.
+\newblock URL \url{https://arxiv.org/abs/2605.04431v1}.
 
 \end{thebibliography}

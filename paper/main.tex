@@ -41,7 +41,8 @@ with implementation, experiment execution, code-based analysis and
 manuscript drafting. The author is responsible for the manuscript and its
 claims. The 3~November 2026 evidence revision (re-analysis of supplied raw
 rows, Linux re-executions, consumer-path tests and wording changes) was
-prepared with AI assistance (Claude) and awaits the author's review.}\\[2pt]
+prepared with AI assistance (Claude); the subsequent manuscript-clarity and
+literature check used Codex. Both await the author's review.}\\[2pt]
 School of Cyber Science and Technology, Sun Yat-sen University, Shenzhen, China\\
 Correspondence: \texttt{fei76161@gmail.com}}
 \date{12 October 2026; evidence revision 3 November 2026}
@@ -50,34 +51,30 @@ Correspondence: \texttt{fei76161@gmail.com}}
 \maketitle
 
 \begin{abstract}
-An unsuccessful mathematical verification can yield the same reward as
-a wrong answer. Preserving the distinction requires more than catching
-an exception at the scorer. We audit Math-Verify, its wrapper, a reward
-manager, batch aggregation and a validation consumer in a pinned verl
-configuration. Persistent-worker injections reproduce a previously
-reported sparse-metadata failure: moving the same failed row changes the
-outcome from a lost flag to a batch exception. A re-execution on Linux
-under real Ray reproduced all 13 recorded injection outcomes; porting the
-open upstream repair (\#7151) lets every rate-limited case complete with the
-flag, and a small change to validation accumulation fixes a cross-batch
-misalignment that remains after that repair. An internally frozen replay of
-93,733 stored responses observes 54 library-event rows. Under the declared
-reference rule, longer limits recover one zero-to-one verdict and leave 18
-rows unresolved, so the realised sample permits one to nineteen
-recoveries; counting 16 reference-side library errors, which that rule
-scores as zero, widens the range to one to thirty-five. The supplied raw
-rows reproduce the recovery and the uncorrected count of 9,573 unresolved
-rows; the correction to 18 is reported but cannot yet be rebuilt from
-public or supplied event records. Separate replays cover all 193,767 stored
-answers and a human-labelled answer set, whose 22,176 trial scores a new
-Linux replay reproduces. On the original host, matched shared-pool
-experiments connect natural heavy inputs to a batch abort under diagnostic
-60-second library and 30-second outer limits; default-limit and serial
-controls complete. A Linux re-run with shorter substitute controls matched
-the controls but did not abort, consistent with a timing-dependent reset
-race. Replay
-rates describe the fixed corpora and protocols, longer limits are not
-ground truth, and no training effect is inferred.
+A mathematical verifier can return zero because an answer is wrong or
+because verification did not finish. We study whether that distinction
+survives an RLVR reward pipeline, using a pinned, opt-in Math-Verify path in
+verl. Persistent-worker injections connect a known sparse-metadata defect
+to two position-dependent outcomes: a failure flag disappears, or batch
+assembly raises. All 13 injection cases reproduce on Linux under real Ray.
+Porting an upstream assembly repair preserves flags in all nine injected
+rate-limited failure cases; a further validation-accumulation patch is
+needed to preserve row alignment across batches. These are observability
+repairs, not reward corrections. Fixed-response replay provides a separate
+measurement: distributed records recount 54 library-event rows among
+93,733 responses and one zero-to-one change under longer limits. The
+historical report lists 18 unresolved rows, yielding a conditional range
+of one to nineteen recoveries, but its corrected unresolved count cannot
+yet be reconstructed from the supplied records. Counting reference-side
+library errors as unresolved widens that report-conditional range to one
+to thirty-five. A separate 22,176-trial replay of human-labelled extracted
+answers reproduces all historical scores on Linux. Finally, natural heavy
+inputs cause a shared-pool batch abort on the original host under relaxed
+diagnostic limits; a Linux run with substitute controls does not reproduce
+the abort. Together, the results motivate testing failure information at
+the wrapper, assembly and consumer boundaries. They neither estimate
+training-time incidence nor establish a learning benefit, and longer
+verification limits are not ground truth.
 \end{abstract}
 
 \noindent\textbf{Keywords:} reinforcement learning with verifiable rewards;
@@ -280,10 +277,12 @@ to exclude it from optimisation. We call
 behaviour a defect only when a pinned implementation states a contract in
 code comments, documentation or a pull-request description and its runtime
 behaviour departs from it. Where no contract is stated we report a
-\emph{contract ambiguity}. We also separate the \emph{default protocol}
-(library defaults, framework routing and platform as shipped) from
-\emph{diagnostic protocols} that change parameters to make failures visible;
-results under the latter are never reported as default behaviour.
+\emph{contract ambiguity}. Throughout the replay sections, \emph{default protocol} means the
+selected Math-Verify wrapper with its unchanged 5\,s library and 30\,s outer
+limits on the stated host; it does not mean verl's default scorer routing
+or a default training deployment. \emph{Diagnostic protocols} deliberately
+change limits, concurrency or inputs to expose mechanisms. Their outcomes
+are not reported as default-deployment behaviour.
 The uniform-key expectation stated in the discussion of \#6545
 \cite{verl6545} is relevant here: our question is how that assumption
 composes with a manager that emits failure-only keys. We test the
@@ -531,7 +530,7 @@ does not show that natural inputs reach the propagation path. The next
 section measures what natural inputs do.
 
 %% ---------------------------------------------------------------------------
-\section{How often: re-verifying 93,733 responses}
+\section{Fixed-corpus measurement: re-verifying 93,733 responses}
 \label{sec:prevalence}
 
 \subsection{Protocol}
@@ -597,14 +596,22 @@ Let $k$ be the number of rows scored $0$ by default and $1$ by the reference,
 and $u$ the number left unresolved under the rule of Table~\ref{tab:classes}
 (the reference itself timed out, the row was interrupted twice, or the local
 resource guard stopped it). A reference-side library error without a timeout
-is scored $0$ and is not in $u$. The denominator is always $n=93{,}733$. For the realised sample, the possible zero-to-one
-recovery share under this reference protocol is partially identified:
+is scored $0$ and is not in $u$. The denominator is always $n=93{,}733$. For the realised sample, the zero-to-one recovery share over completions of the recorded
+reference outcomes has the following worst-case range:
 \[
   \frac{k}{n}\ \leq\ q_{\mathrm{recover}}\ \leq\ \frac{k+u}{n}.
 \]
-These finite-sample bounds assign unresolved rows to either endpoint and
-need no assumption of independent, identically distributed problems: they
-describe this realised sample and nothing beyond it.
+Here a completion holds every resolved recorded score fixed and assigns
+each of the $u$ unresolved default-zero rows either score 0 or score 1.
+The endpoints follow by assigning all such rows 0 or all 1; every
+intermediate integer count is possible absent further information.
+This is a missing-outcome sensitivity calculation, not a prediction that
+more time will resolve these rows, nor a bound on the outcome of a new run
+in which already-resolved scores may also change. It needs no assumption
+of independent, identically distributed problems and describes only this
+realised sample. Numerical endpoints using the corrected $u$ remain
+conditional on the historical report until its event-level reconstruction
+is available.
 They concern score recovery under the specified verifier, not mathematical
 correctness. The pre-declared decision rule additionally uses binomial-model
 Clopper--Pearson bounds \cite{clopper1934}. These are working-model bounds
@@ -673,17 +680,22 @@ at 5\,s and 10\,s, and one (the $k$ row) scored $1$ only at 10\,s.
 \paragraph{What the supplied records reproduce.}
 The formal report is a re-analysis. The 7~October analysis attached every
 local resource-guard termination to all rows that the killed pool process
-had scored, so 9,866 reference rows (9,863 excluding warm-ups) were classed
-as guard-stopped; the corrected \path{analyze.py} (SHA-256
+had scored. The supplied rows contain 9,868 guard-stopped reference rows
+(9,864 excluding warm-ups); the report records 9,866 reclassifications
+(9,863 excluding warm-ups), leaving one non-warm-up row guard-stopped.
+The corrected \path{analyze.py} (SHA-256
 \texttt{f6e70c6c\ldots}) attaches a termination only to attempts whose result
 had not returned at least 1\,s before the kill. The supplied pre-correction
 rows (\emph{recounted}, 3~November) contain 93,733 default and 33,487
 reference rows (32,487 default zeros plus 1,000 controls); paired under the
 frozen rule they give $k=1$, with the same row as the formal report, and
 $u=9{,}573$, of which 9,559 are guard-stopped rows. The reference pass
-recorded only four guard termination events. Applying the reported class
-changes to the pre-correction totals reproduces the formal reference totals
-exactly once warm-up rows are accounted for. These are consistency checks:
+recorded only four guard termination events. Applying the reported all-row class
+changes to the pre-correction all-row totals reproduces the diagnostic
+report totals. Those totals exceed the formal non-warm-up totals by six
+score-one rows and one guard-stopped row, consistent with the seven warm-ups.
+This is aggregate, report-level reconciliation, not reconstruction of the
+corrected warm-up or measurement rows:
 the corrected per-row classes, and hence $u=18$, depend on parent, child and
 guard event timing that is not in the supplied compact rows, and we did not
 infer them from the formal report.
@@ -805,16 +817,19 @@ before replay.
 The complement contains one default-zero/reference-one change and fourteen
 undecided answers (thirteen comparison timeouts and one reference-parse
 timeout). All 1,000 controls remain one. Joining these \emph{counts} to the
-audited main counts gives two changes and 32 undecided answers in 193,767:
+historical main report gives two changes and 32 undecided answers in 193,767:
 the corresponding finite-corpus proportions are $2/n$ and $34/n$, or
 0.00103\% and 0.01755\%. These are descriptive endpoints, not confidence
-bounds, and do not apply the main sample's decision rule. The second change
+bounds, and do not apply the main sample's decision rule. They inherit the
+unverified event-level correction underlying the main report's $u=18$.
+The second change
 is another answer to the main sample's one limit-sensitive question;
 it is not a second distinct problem exhibiting that effect. Likewise the 32
 unresolved answers come from only 21 distinct questions (11 questions
 contribute one unresolved answer to each of the two samples); counted per
 question, the pooled endpoints are 1 and 21 of 93,733 questions
-(\emph{recounted}). Answer-level and question-level proportions answer
+(recounted from the reported unresolved identities, not reconstructed
+from corrected raw events). Answer-level and question-level proportions answer
 different questions and should not be mixed.
 
 The full default replay has 103 answers with an observed library failure
@@ -1029,10 +1044,12 @@ one. The diagnostic naive scene with the recovery wrapper at
 each, batch returned), including one on the patched tree. Its timeline shows
 that every control had returned about 20\,s before the three heavy waits
 expired within 10\,ms of each other, so each reset met only futures that had
-already timed out. The macOS abort required a reset to break a future that
-was still pending, which depends on timing and on how long the controls
-take. The Linux run therefore neither reproduces nor refutes the abort; it
-shows that the abort is not a property of the heavy inputs alone.
+already timed out. The observed macOS traceback is consistent with a reset breaking a
+still-pending future. That opportunity depends on scheduling and control
+duration. Because the Linux run changes both platform and control inputs,
+it does not isolate either cause of the discrepancy. It fails to reproduce
+the historical abort and shows that these heavy inputs do not guarantee
+an abort under the tested diagnostic limits.
 
 \subsection{Sequential parent calls and a longer outer wait}
 
@@ -1239,10 +1256,13 @@ that evaluation.
 \paragraph{Verifier errors in RLVR.}
 Cai et al.\ \cite{cai2025noisy} model an imperfect verifier as a noisy reward
 channel with false-negative and false-positive rates and give population-level
-results and corrections; a fixed broken scoring worker under uniform random
-assignment reduces to their channel, but their results are stated before
-GRPO's finite-sample normalisation, so they do not transfer to the default
-update unchanged. Egashira et al.\ \cite{egashira2026delay} inject systematic verification
+results and corrections. A fixed broken scoring worker under independent,
+uniform random assignment is a special case of such a channel. Their
+version~5 explicitly studies the bridge to group centering and implements
+corrections in a GRPO-style pipeline; it also distinguishes those guarantees
+from current-group standardisation and clipping (Appendices~A--B).
+Consequently, a channel-level correction cannot simply be assumed to retain
+its guarantee under the pinned default estimator used here. Egashira et al.\ \cite{egashira2026delay} inject systematic verification
 errors and observe delay, plateau or collapse; Plesner et al.\
 \cite{plesner2026imperfect} report modest mean performance losses in their
 multi-seed code experiments with resampled reward noise, while their
@@ -1254,7 +1274,7 @@ into a reward or a batch exception.
 
 \paragraph{Auditing verifiers and harnesses.}
 Xin \cite{xin2026wherefails} audits four verifiers with metamorphic tests and
-classifies verdicts as true, false, timeout, error and crash; a follow-up
+separates returned verdicts from timeouts, errors and crashes; a follow-up
 \cite{xin2026groupcorr} finds that verifier errors are correlated within GRPO
 groups and releases the human-labelled rollouts we reuse. Its discussion
 separates pooled dependence from prompt difficulty; our finite-corpus
@@ -1303,7 +1323,10 @@ the added evidence without treating a known failure class as a new concept.
 \paragraph{Failures in RL infrastructure.}
 Zhang et al.\ \cite{zhang2026rftfailure} inject training faults and detect
 them from training curves. iCoder-27B \cite{yang2026icoder} separates
-infrastructure from policy errors and normalises over valid samples. On the
+infrastructure from policy errors and excludes unjudgeable trajectories
+from both group statistics and loss normalisation (\S4.4.3). This is a
+concrete prior handling policy, whereas our patches preserve metadata
+without implementing exclusion. On the
 optimisation side, Nie et al.\ \cite{nie2026starvation} and Yang et al.\
 \cite{yang2026biased} analyse degenerate groups and the bias of group-relative
 advantages; any statement about how undecided zeros shift degenerate-group
@@ -1495,9 +1518,11 @@ interpreting a run. The inventory does not select redistribution licences
 or confer rights to upstream data or software. Source status was refreshed
 on 9 October 2026; the added sparse-metadata pull-request records were
 checked on 12 October 2026, and upstream pull-request status on 3~November
-2026. Cited-paper metadata was checked on 8 October 2026 (and URL
-reachability by the author on 2~November 2026); the 3~November revision could
-not re-check arXiv pages from its environment.
+2026. Cited-paper metadata was initially checked on 8 October 2026 (and URL
+reachability by the author on 2~November 2026). A subsequent 3~November
+manuscript check accessed primary arXiv records and the full text of the
+closest overlapping studies; its coverage and version pins are recorded
+in \path{paper/LITERATURE_CHECK.md}.
 Original companion code is licensed under Apache-2.0; this does not replace
 upstream licences. This manuscript is licensed under the Creative Commons
 Attribution 4.0 International licence
