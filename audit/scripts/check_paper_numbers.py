@@ -38,38 +38,72 @@ def load_sources(repo, comp, auth):
 
 
 def num(text):
-    """Parse a printed number: '93,733', '9{,}573', '2.9\\times10^{-7}', '0.007'."""
+    """Parse a printed number and return (value, tolerance).
+
+    '93,733' / '9{,}573' / '0.007' -> tolerance half a unit in the last printed place;
+    '2.9\\times10^{-7}' -> mantissa tolerance scaled by the printed power of ten (0.05e-7 here).
+    """
     t = text.replace("{,}", "").replace(",", "").strip()
-    m = re.fullmatch(r"(-?[0-9.]+)\s*\\times\s*10\^\{(-?\d+)\}", t)
+    m = re.fullmatch(r"(-?[0-9]+(?:\.[0-9]+)?)\s*\\times\s*10\^\{(-?\d+)\}", t)
     if m:
-        return float(m.group(1)) * 10 ** int(m.group(2)), len(m.group(1).split(".")[1]) if "." in m.group(1) else 0
+        mant, exp = m.group(1), int(m.group(2))
+        dec = len(mant.split(".")[1]) if "." in mant else 0
+        return float(mant) * 10.0 ** exp, 0.5 * 10.0 ** (-dec) * 10.0 ** exp
+    if not re.fullmatch(r"-?[0-9]+(?:\.[0-9]+)?", t):
+        raise ValueError(f"not a printed number: {text!r}")
     dec = len(t.split(".")[1]) if "." in t else 0
-    return float(t), dec
+    return float(t), 0.5 * 10.0 ** (-dec)
 
 
-def close(printed, decimals, value, exponent=0):
-    tol = 0.5 * 10 ** (-decimals) * 10 ** exponent + 1e-12
-    return abs(printed - value) <= tol
+def close(printed, tol, value):
+    """|printed - value| within the rounding tolerance of the printed digits (plus float slack)."""
+    return abs(printed - value) <= tol * (1 + 1e-9) + 1e-15
 
 
 def flat(tex):
     return re.sub(r"\s+", " ", tex)
 
 
+EXPECTED_ROWS = {(m, p, pol) for m in MECH for p in ("0.05", "0.25") for pol in POL}
+
+
 def policy_table(tex):
-    """Return {(mech, p, policy): [cells]} from the generated block, carrying forward blank row labels."""
-    a = tex.index("%% BEGIN GENERATED: policy table rows")
-    b = tex.index("%% END GENERATED: policy table rows")
+    """Strictly parse the generated block. Returns (rows, problems).
+
+    rows: {(mech, p, policy): [7 cells]}. problems: list of strings; any problem fails the check.
+    Blank mechanism/rate labels carry forward from the previous row (as typeset).
+    """
+    problems = []
+    begin, end = "%% BEGIN GENERATED: policy table rows", "%% END GENERATED: policy table rows"
+    if tex.count(begin) != 1 or tex.count(end) != 1 or tex.find(begin) > tex.find(end):
+        return {}, ["generated block missing or duplicated"]
+    block = tex[tex.index("\n", tex.index(begin)) + 1:tex.index(end)]  # rows start on the line after the marker
     rows, mech, p = {}, None, None
-    for line in tex[a:b].splitlines()[1:]:
+    for line in block.splitlines():
         line = line.strip()
+        if not line or line == "\\addlinespace":
+            continue
         if not line.endswith("\\\\"):
+            problems.append(f"unexpected line in block: {line[:60]!r}")
             continue
         cells = [c.strip() for c in line[:-2].split("&")]
+        if len(cells) != 3 + len(POLICY_COLUMNS):
+            problems.append(f"row has {len(cells)} cells, expected {3 + len(POLICY_COLUMNS)}: {line[:60]!r}")
+            continue
         mech = cells[0] or mech
         p = cells[1] or p
-        rows[(mech, p, cells[2])] = cells[3:]
-    return rows
+        key = (mech, p, cells[2])
+        if key not in EXPECTED_ROWS:
+            problems.append(f"unknown row label {key}")
+            continue
+        if key in rows:
+            problems.append(f"duplicate row {key}")
+            continue
+        rows[key] = cells[3:]
+    missing = EXPECTED_ROWS - set(rows)
+    if missing:
+        problems.append(f"missing rows {sorted(missing)}")
+    return rows, problems
 
 
 def run_checks(tex, src):
@@ -79,13 +113,17 @@ def run_checks(tex, src):
     def add(name, ok, printed=None, source=None):
         out.append({"check": name, "pass": bool(ok), "printed": printed, "source": source})
 
-    def sentence(name, pattern, value, group=1, exponent=0):
+    def sentence(name, pattern, value, group=1):
         m = re.search(pattern, F)
         if not m:
             add(name, False, None, value)
             return
-        printed, dec = num(m.group(group))
-        add(name, close(printed, dec, value, exponent if "times" not in m.group(group) else 0), m.group(group), value)
+        try:
+            printed, tol = num(m.group(group))
+        except ValueError:
+            add(name, False, m.group(group), value)
+            return
+        add(name, close(printed, tol, value), m.group(group), value)
 
     rc, pf, fm = src["recount"], src["prefix"], src["formal"]
     mm = fm["main_metric"]
@@ -132,15 +170,24 @@ def run_checks(tex, src):
     sentence("groups", r"we used the (\d+) groups of the labelled set", op["groups"])
     sentence("constant groups", r"(\d+) groups are constant", op["constant_groups"])
     sentence("verl cross-check", r"maximum difference \$([0-9.]+\\times10\^\{-?\d+\})\$", op["verl_crosscheck"]["max_abs_difference"])
-    table = policy_table(tex)
-    for (mech, p, pol), cells in sorted(table.items()):
+    table, problems = policy_table(tex)
+    add("Table policies: block structure (columns, labels, duplicates, all 18 rows)", not problems, problems or None)
+    for (mech, p, pol) in sorted(EXPECTED_ROWS):
+        cells = table.get((mech, p, pol))
         key = f"{MECH[mech]}|p={p}"
-        for col, cell in zip(POLICY_COLUMNS, cells):
+        for i, col in enumerate(POLICY_COLUMNS):
+            name = f"Table policies {mech} p={p} {pol} {col}"
             source = (supp if POLICY_SOURCE.get(col) == "supp" else op)["results"]
             value = source[key][POL[pol]][col]["mean"]
-            printed, dec = num(cell)
-            add(f"Table policies {mech} p={p} {pol} {col}", close(printed, dec, value), cell, value)
-    add("Table policies has 18 rows", len(table) == 18)
+            if cells is None:
+                add(name, False, None, value)
+                continue
+            try:
+                printed, tol = num(cells[i])
+            except ValueError:
+                add(name, False, cells[i], value)
+                continue
+            add(name, close(printed, tol, value), cells[i], value)
     keys = [f"{a}|p={p}" for a in MECH.values() for p in ("0.05", "0.25")]
     max_se = max(max(op["results"][k][pp][c]["mc_se"] for pp in POL.values() for c in POLICY_COLUMNS if c in op["results"][k][pp])
                  for k in keys)
@@ -169,12 +216,21 @@ def run_checks(tex, src):
     add("P2 new signal bound", bool(m) and z <= float(m.group(1)), m.group(1) if m else None, z)
     k05 = "M1_independent|p=0.05"
     m = re.search(r"\(([0-9.]+) versus ([0-9.]+) per draw at \$p=0.05\$\)", F)
-    add("P2 vs P0/P1 zeroed survivors at p=0.05", bool(m) and close(float(m.group(1)), 1, supp["results"][k05]["P2_exclude"]["common_nonzero_to_zero"]["mean"])
-        and close(float(m.group(2)), 1, supp["results"][k05]["P1_loss_mask_only"]["common_nonzero_to_zero"]["mean"]), m.group(0) if m else None)
+    add("P2 vs P0/P1 zeroed survivors at p=0.05", bool(m) and close(float(m.group(1)), 0.05, supp["results"][k05]["P2_exclude"]["common_nonzero_to_zero"]["mean"])
+        and close(float(m.group(2)), 0.05, supp["results"][k05]["P1_loss_mask_only"]["common_nonzero_to_zero"]["mean"]), m.group(0) if m else None)
     k25 = "M1_independent|p=0.25"
     m = re.search(r"\(([0-9.]+) versus ([0-9.]+) at \$p=0.25\$\)", F)
-    add("groups without signal at p=0.25", bool(m) and close(float(m.group(1)), 2, op["results"][k25]["P2_exclude"]["nonconstant_groups_without_signal"]["mean"])
-        and close(float(m.group(2)), 2, op["results"][k25]["P1_loss_mask_only"]["nonconstant_groups_without_signal"]["mean"]), m.group(0) if m else None)
+    add("groups without signal at p=0.25", bool(m) and close(float(m.group(1)), 0.005, op["results"][k25]["P2_exclude"]["nonconstant_groups_without_signal"]["mean"])
+        and close(float(m.group(2)), 0.005, op["results"][k25]["P1_loss_mask_only"]["nonconstant_groups_without_signal"]["mean"]), m.group(0) if m else None)
+    eq = all(len({round(op["results"][k][pp]["nonconstant_groups_without_signal"]["mean"], 12) for pp in POL.values()}) == 1
+             for k in op["results"] if k.startswith(("M2", "M3")))
+    m1_more = all(op["results"][k]["P2_exclude"]["nonconstant_groups_without_signal"]["mean"]
+                  > op["results"][k]["P0_zero_fill"]["nonconstant_groups_without_signal"]["mean"]
+                  for k in op["results"] if k.startswith("M1"))
+    add("no-signal: more under exclusion only for M1; equal for M2/M3", eq and m1_more
+        and F.count("the number of groups without signal is the same") >= 1
+        and "the number of such groups is the same under all three policies" in F)
+    add("single survivor advantage stated as r/(1+eps)", "$r/(1+\\epsilon)$" in F and "raw score as advantage" not in F)
     single = max(v["P2_exclude"]["single_survivor_groups"]["mean"] for v in op["results"].values())
     m = re.search(r"occurred in at most ([0-9.]+) groups per draw", F)
     add("single-survivor bound", bool(m) and single <= float(m.group(1)) + 0.005, m.group(1) if m else None, single)

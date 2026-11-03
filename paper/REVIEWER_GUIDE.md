@@ -78,3 +78,10 @@ The independent review's four points (abstract overclaim, string-only checker, t
 the 500-draw share) are addressed as listed in `VALIDATION_FINAL_2026-11-03.md`. The independent review's revised
 `dot` commit was not available on the remote at the time of this pass (branch still at `06688da`); the fixes were
 implemented independently and should be compared with it when it is pushed.
+
+## Status after the fifth pass
+
+Final cleanup: the number checker's two boundary defects (unscaled scientific-notation tolerance, silently dropped
+table column) are fixed and covered by 21 counter-tests; three policy-analysis sentences were narrowed (M1-only
+no-signal increase, $r/(1+\epsilon)$ for a single survivor, partial-group wording). The offline analysis remains a
+fixed-sample simulation, not a training result or a natural failure rate; `u = 18` remains a report-only value.

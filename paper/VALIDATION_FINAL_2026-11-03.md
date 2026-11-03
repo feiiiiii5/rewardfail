@@ -1,5 +1,7 @@
 # Final validation of the preprint package (2026-11-03)
 
+Final pass: fifth (cleanup) pass on top of `5d271ea`; all commands below were re-run in this pass unless marked otherwise.
+
 Environment: Linux x86-64 container, CPython 3.12.8 (analysis venv from the companion lock), system Python 3.13 for
 standard-library scripts, TeX Live 2023 (pdfTeX 1.40.25). Author inputs read only from `e29d296`; companion =
 `rewardfail-companion.zip` (SHA-256 `2aaf2113…`) extracted with `audit/scripts/safe_unzip.py`.
@@ -9,13 +11,13 @@ standard-library scripts, TeX Live 2023 (pdfTeX 1.40.25). Author inputs read onl
 | Check | Result |
 |---|---|
 | `pdflatex → bibtex → pdflatex ×2` on `paper/main.tex` | 23 pages; 0 errors; 0 undefined references/citations; 0 BibTeX warnings; 0 overfull/underfull boxes (final pass, after the policy-section corrections) |
-| arXiv package `paper/arxiv/rewardfail-arxiv-source.tar.gz` (`make_arxiv_package.sh`) | contains `main.tex`, `main.bbl`, `refs.bib` (SHA-256 `ba03dd50…`); compiles from a clean directory with pdfLaTeX and the shipped `.bbl` only (BibTeX not run, `refs.bib` removed): 23 pages, no errors; extracted text identical to the full build |
+| arXiv package `paper/arxiv/rewardfail-arxiv-source.tar.gz` (`make_arxiv_package.sh`) | contains `main.tex`, `main.bbl`, `refs.bib` (SHA-256 `7be31a42…`); compiles from a clean directory with pdfLaTeX and the shipped `.bbl` only (BibTeX not run, `refs.bib` removed): 23 pages, no errors; extracted text identical to the full build |
 | Fonts | 30 fonts, all embedded and subset (Latin Modern, Type 1) |
 | PDF metadata | Title, Author (Yufeiyang Chen), Keywords, Creator, Producer only |
 | Source comments | version/build notes only; no paths, credentials or internal discussion |
 | Visual check | all 23 pages rendered (contact sheets) and the two new tables at 70 dpi: no clipping, overlap or blank pages |
-| `audit/scripts/check_paper_numbers.py` (rewritten) | 166/166 checks: each compares a value read from its source file with the number extracted from a specific sentence or an addressed table cell (row labels + column), within half a unit of the printed last digit (`audit/results/paper_number_check.json`) |
-| `audit/scripts/test_check_paper_numbers.py` | 10/10 counter-tests: tampered source values (policy, supplement, main metric), edited sentences, the two old rounding errors, swapped cells, swapped policy rows and a missing row are all detected |
+| `audit/scripts/check_paper_numbers.py` (rewritten, tightened in the fifth pass) | 168/168 checks: each compares a value read from its source file with the number extracted from a specific sentence or an addressed table cell (row labels + column), within half a unit of the printed last digit; for `a\times10^{e}` the tolerance is scaled by `10^e`. The generated table block is parsed strictly: exactly 10 cells per row, every one of the 18 expected rows present, no duplicate, unknown or extra rows, and a missing BEGIN/END marker fails (`audit/results/paper_number_check.json`) |
+| `audit/scripts/test_check_paper_numbers.py` | 21/21 counter-tests (each corruption must make the checker fail): tampered source values (policy, supplement, main metric, cross-check), edited sentences, the two old rounding errors, swapped cells and rows, a missing row, a wrong exponent, a wrong mantissa, a dropped last column, an added column, a duplicated row, an unknown policy label, an unknown mechanism label, a removed generated block and a non-numeric cell. The fourth-pass checker (`5d271ea`) fails 8 and errors on 4 of these 21 |
 | `make_policy_table.py` | the table block in `main.tex` is byte-identical to a fresh generation from the result files |
 | Superseded checker (`superseded_check_paper_numbers_v1.py`) | only searched for hard-coded strings and missed two table cells wrong by double rounding (183.7 → 183.6, 1.5 → 1.4); the new checker rejects the previous manuscript |
 
@@ -55,3 +57,14 @@ author-side check).
 | Policies evaluated on different row sets; "sign disagreement" includes zero changes | caption and text now say so; added a common evaluation set and a flip / zero→non-zero / non-zero→zero decomposition (same draws); text no longer calls lower error alone "better" |
 | 91–96% came from a separate 500-draw sample | the manuscript now uses the same-draw decomposition (91–97%); the 500-draw file is labelled as separate |
 | Author's independent re-run of OP (CSV hash, 72 groups, 9 tests, 2,000-draw means and standard errors) | not repeated here; consistent with this environment's results. The real-verl torch cross-check was run here (not by the independent review) |
+
+## Fifth pass (final cleanup)
+
+| Item | Status here |
+|---|---|
+| Checker: exponent tolerance not scaled; `zip` silently dropped a deleted last column | fixed (see table above); 11 new counter-tests; old checker fails or errors on 12 of 21 |
+| "Exclusion leaves more groups without signal" | now stated only for independent failures (M1); for M2/M3 the no-signal count is identical across policies (asserted by the checker from the result file) |
+| Single surviving response | stated as advantage $r/(1+\epsilon)$ (raw score divided by $1+10^{-6}$), verl's mean 0 / std 1 convention; checker asserts the formula |
+| Partial groups | "the statistics of their original eight-response groups cannot be reconstructed" |
+| Author's independent recheck (original label CSV obtained and checked, 72 complete groups, 720 means and Monte Carlo standard errors recomputed with an independent algorithm, max difference about `1.11e-16`) | reported by the author; **not repeated here**. It supports the offline simulation on fixed samples only — not a training gain and not a natural failure rate |
+| Main experiment `u = 18` | unchanged: historical report value only (pre-correction rows reproduce `k = 1`, `u = 9,573`) |

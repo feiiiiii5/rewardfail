@@ -81,10 +81,74 @@ class CounterTests(unittest.TestCase):
         tex = self.tex.replace("exhaustive enumeration", "full analysis")
         self.assertIn("enumeration: condition holds", failed(tex, self.src))
 
+    STRUCT = "Table policies: block structure (columns, labels, duplicates, all 18 rows)"
+
+    def _row(self, prefix):
+        return next(l for l in self.tex.splitlines() if l.strip().startswith(prefix))
+
     def test_missing_table_row_detected(self):
-        line = next(l for l in self.tex.splitlines() if l.strip().startswith("&  & P2 & 432.1"))
+        line = self._row("&  & P2 & 432.1")
         tex = self.tex.replace(line + "\n", "", 1)
-        self.assertIn("Table policies has 18 rows", failed(tex, self.src))
+        self.assertIn(self.STRUCT, failed(tex, self.src))
+
+    def test_wrong_exponent_detected(self):
+        tex = self.tex.replace("2.9\\times10^{-7}", "2.9\\times10^{-3}", 1)
+        self.assertNotEqual(tex, self.tex)
+        self.assertIn("verl cross-check", failed(tex, self.src))
+
+    def test_wrong_mantissa_detected(self):
+        tex = self.tex.replace("2.9\\times10^{-7}", "3.1\\times10^{-7}", 1)
+        self.assertIn("verl cross-check", failed(tex, self.src))
+
+    def test_changed_crosscheck_source_detected(self):
+        src = copy.deepcopy(self.src)
+        src["op"]["verl_crosscheck"]["max_abs_difference"] = 2.9e-6
+        self.assertIn("verl cross-check", failed(self.tex, src))
+
+    def test_scientific_tolerance_scales(self):
+        v, tol = cpn.num("2.9\\times10^{-7}")
+        self.assertAlmostEqual(v, 2.9e-7)
+        self.assertAlmostEqual(tol, 0.05e-7)
+        self.assertTrue(cpn.close(v, tol, 2.9014589e-7))
+        self.assertFalse(cpn.close(*cpn.num("2.9\\times10^{-3}"), 2.9014589e-7))
+        self.assertFalse(cpn.close(v, tol, 3.0e-7))
+
+    def test_dropped_last_column_detected(self):
+        line = self._row("M1 independent & 0.05 & P0")
+        tex = self.tex.replace(line, line[:-2].rsplit("&", 1)[0].rstrip() + " \\\\", 1)
+        self.assertNotEqual(tex, self.tex)
+        self.assertIn(self.STRUCT, failed(tex, self.src))
+
+    def test_added_column_detected(self):
+        line = self._row("M1 independent & 0.05 & P0")
+        tex = self.tex.replace(line, line[:-2].rstrip() + " & 1.0 \\\\", 1)
+        self.assertIn(self.STRUCT, failed(tex, self.src))
+
+    def test_duplicate_row_detected(self):
+        line = self._row("&  & P1 & 547.2 & 40.4")
+        tex = self.tex.replace(line, line + "\n" + line, 1)
+        self.assertIn(self.STRUCT, failed(tex, self.src))
+
+    def test_unknown_label_detected(self):
+        line = self._row("&  & P1 & 547.2 & 40.4")
+        tex = self.tex.replace(line, line.replace("P1", "P9", 1), 1)
+        self.assertIn(self.STRUCT, failed(tex, self.src))
+
+    def test_unknown_mechanism_detected(self):
+        line = self._row("M3 whole group & 0.05 & P0")
+        tex = self.tex.replace(line, line.replace("M3 whole group", "M4 other", 1), 1)
+        self.assertIn(self.STRUCT, failed(tex, self.src))
+
+    def test_missing_generated_block_detected(self):
+        tex = self.tex.replace("%% BEGIN GENERATED: policy table rows", "%% BEGIN REMOVED", 1)
+        f = failed(tex, self.src)
+        self.assertIn(self.STRUCT, f)
+        self.assertTrue(sum("Table policies" in x for x in f) >= 18 * 7)
+
+    def test_non_numeric_cell_detected(self):
+        line = self._row("M1 independent & 0.05 & P0")
+        tex = self.tex.replace(line, line.replace("& 57.9 &", "& n/a &", 1), 1)
+        self.assertIn("Table policies M1 independent p=0.05 P0 sign_disagreements", failed(tex, self.src))
 
 
 if __name__ == "__main__":

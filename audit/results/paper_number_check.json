@@ -1,5 +1,5 @@
 {
- "checks": 166,
+ "checks": 168,
  "failed": [],
  "all": [
   {
@@ -175,6 +175,12 @@
    "pass": true,
    "printed": "2.9\\times10^{-7}",
    "source": 2.9014589397746704e-07
+  },
+  {
+   "check": "Table policies: block structure (columns, labels, duplicates, all 18 rows)",
+   "pass": true,
+   "printed": null,
+   "source": null
   },
   {
    "check": "Table policies M1 independent p=0.05 P0 loss_contributing",
@@ -933,12 +939,6 @@
    "source": 11.4945
   },
   {
-   "check": "Table policies has 18 rows",
-   "pass": true,
-   "printed": null,
-   "source": null
-  },
-  {
    "check": "caption: max Monte Carlo SE bound",
    "pass": true,
    "printed": "0.7",
@@ -996,6 +996,18 @@
    "check": "groups without signal at p=0.25",
    "pass": true,
    "printed": "(4.44 versus 1.26 at $p=0.25$)",
+   "source": null
+  },
+  {
+   "check": "no-signal: more under exclusion only for M1; equal for M2/M3",
+   "pass": true,
+   "printed": null,
+   "source": null
+  },
+  {
+   "check": "single survivor advantage stated as r/(1+eps)",
+   "pass": true,
+   "printed": null,
    "source": null
   },
   {

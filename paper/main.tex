@@ -74,8 +74,10 @@ did not abort. On 72 complete human-labelled response groups with synthetic
 failures, zero-filling gives a failed correct answer a negative advantage
 whenever a correct sibling survives (and zero otherwise); masking only the
 loss leaves the failed zero in its siblings' baseline; and excluding failed
-rows from the group statistics avoids that distortion but removes signal from
-more groups and shrinks the loss.
+rows from the group statistics avoids that distortion and shrinks the loss;
+when failures are independent of correctness it also leaves more groups
+without signal, whereas with correctness-correlated or whole-group failures
+the number of such groups is the same under all three policies.
 The results argue for testing failure information at the wrapper, assembly
 and consumer boundaries. They estimate neither training-time incidence nor
 a learning effect, and longer verification limits are not ground truth.
@@ -1253,8 +1255,8 @@ here illustrate conditional reward handling, not an optimizer update.
 The examples above use chosen vectors. To see how often such changes occur
 in realistic groups, we used the 72 groups of the labelled set
 (\S\ref{sec:labels}) that contain all eight responses to one prompt from the
-same 1.5B model; the other 2,969 groups are partial and cannot form GRPO
-statistics. Human labels serve as clean rewards; 26 groups are constant
+same 1.5B model; the other 2,969 groups are partial, so the statistics of
+their original eight-response groups cannot be reconstructed from them. Human labels serve as clean rewards; 26 groups are constant
 (9 all-wrong, 17 all-correct). We injected synthetic failures in three ways:
 independently per response (M1), only on label-1 responses (M2, failures that
 hide correct answers), and for whole groups (M3, a trigger in the reference
@@ -1339,11 +1341,15 @@ all-wrong before failure) and,
 less often, non-zero advantages that become zero. Third, excluding failed rows
 from the statistics creates essentially no new signal (at most 0.007 such
 changes per draw) and has the smallest mean advantage error on the common
-set, but it zeroes more surviving advantages when failures are independent
-(5.0 versus 1.2 per draw at $p=0.05$), leaves more groups with no signal
-(4.44 versus 1.26 at $p=0.25$) and shrinks the loss denominator; with
-exactly one surviving response verl's convention assigns it its raw score as
-advantage, which occurred in at most 0.03 groups per draw. Smaller error on
+set. It shrinks the loss denominator, and when failures are independent of
+correctness (M1) it zeroes more surviving advantages
+(5.0 versus 1.2 per draw at $p=0.05$) and leaves more groups with no signal
+(4.44 versus 1.26 at $p=0.25$); under correctness-correlated (M2) and
+whole-group (M3) failures, the number of groups without signal is the same
+for all three policies. With exactly one surviving response, verl's
+convention (mean~0, standard deviation~1) gives it the advantage
+$r/(1+\epsilon)$, its raw score divided by $1+10^{-6}$; this occurred in at
+most 0.03 groups per draw. Smaller error on
 retained rows is therefore not by itself a better policy: the policies keep
 different rows and differ in how much signal they discard. For whole-group
 failures the policies agree on rewards and differ only in whether the failed
@@ -1558,7 +1564,8 @@ aggregation and consumer boundaries together. Once a failure is observable,
 the choice of handling policy matters at the advantage level: zero-filling
 penalises a hidden correct answer whenever a correct sibling survives,
 loss-only masking still shifts the survivors' baselines, and exclusion avoids
-that shift at the cost of retained rows and of signal in more groups. The results do not
+that shift at the cost of retained rows and, when failures are independent of
+correctness, of signal in more groups. The results do not
 establish training incidence or a learning benefit from any of these
 policies.
 

@@ -25,7 +25,14 @@ technical checks:
    were checked here (`CHANGES.md`). Spot-check any you rely on heavily.
 9. **Offline policy analysis.** New in this version (§8.2). It uses the public MIT-licensed label CSV and synthetic
    failures; confirm you are comfortable presenting it as a mechanism analysis, not a training result. Its
-   numbers are now generated from and checked against the result files; your independent re-run of the 2,000-draw
-   statistics matched, and the real-verl estimator cross-check was run in this environment.
+   numbers are now generated from and checked against the result files. Your independent recheck (original label
+   CSV, 72 complete groups, 720 means and Monte Carlo standard errors, max difference about 1.11e-16) is yours and
+   was not repeated here; the real-verl estimator cross-check was run in this environment.
 10. **Thesis consistency.** The Chinese thesis has known mismatches with these results (`audit/THESIS_REVIEW.md`);
     keep the two documents consistent in numbers and in what each claims.
+11. **Code licence.** The scripts under `audit/` written in this PR carry no licence file. Choose one (for example
+    Apache-2.0, matching the companion and verl) before pointing readers to the repository. Third-party pieces keep
+    their own terms: OpenR1 data Apache-2.0, the human-label CSV MIT, port patch 0001 upstream verl code (Apache-2.0).
+12. **Package hash.** The arXiv source package in this commit has SHA-256
+    `7be31a42fd7216baf0e98136563759eaa9a77d7cd78d0b3a11a50f3cadb3def4`; rebuild with `make_arxiv_package.sh` after any
+    edit and re-run `check_paper_numbers.py` and its counter-tests.
