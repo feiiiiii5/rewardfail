@@ -1,0 +1,74 @@
+{
+  "case": "B2_row0",
+  "path": "B",
+  "manager": "rate_limited",
+  "failing_rows": [
+    0
+  ],
+  "prediction": "汇总 KeyError，整批中止",
+  "outcome": "completed",
+  "row_scores": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0
+  ],
+  "raw_reward_extra_info_column_present": false,
+  "raw_reward_extra_info_rows_with_error": null,
+  "reward_extra_keys": [
+    "error",
+    "acc"
+  ],
+  "non_tensor_keys": [
+    "__num_turns__",
+    "acc",
+    "agent_name",
+    "data_source",
+    "error",
+    "extra_info",
+    "extras",
+    "index",
+    "max_global_steps",
+    "min_global_steps",
+    "multi_modal_inputs",
+    "priority",
+    "raw_prompt",
+    "reward_model",
+    "tool_rewards",
+    "turn_scores"
+  ],
+  "extract_reward_columns": {
+    "error": [
+      "A process in the process pool was terminated abruptly while the future was running or pending.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "acc": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0
+    ]
+  },
+  "has_error_column": true,
+  "seconds": 15.26,
+  "worker_log_lines_reward_failed": [
+    "\u001b[36m(RewardLoopWorker pid=17010)\u001b[0m ERROR:2026-11-03 08:30:49,011:Reward computation failed for data_source=rewardfail_c1c: A process in the process pool was terminated abruptly while the future was running or pending.. Response preview: The answer is \\boxed{4}. [[INJECT_WORKER_DEATH]]#row=0..."
+  ],
+  "injected_worker_deaths_by_row": {
+    "0": 2
+  }
+}

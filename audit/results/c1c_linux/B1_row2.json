@@ -1,0 +1,62 @@
+{
+  "case": "B1_row2",
+  "path": "B",
+  "manager": "rate_limited",
+  "failing_rows": [
+    2
+  ],
+  "prediction": "完成；第 2 行由 1 变 0，训练器读到的列里没有 error",
+  "outcome": "completed",
+  "row_scores": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0
+  ],
+  "raw_reward_extra_info_column_present": false,
+  "raw_reward_extra_info_rows_with_error": null,
+  "reward_extra_keys": [
+    "acc"
+  ],
+  "non_tensor_keys": [
+    "__num_turns__",
+    "acc",
+    "agent_name",
+    "data_source",
+    "extra_info",
+    "extras",
+    "index",
+    "max_global_steps",
+    "min_global_steps",
+    "multi_modal_inputs",
+    "priority",
+    "raw_prompt",
+    "reward_model",
+    "tool_rewards",
+    "turn_scores"
+  ],
+  "extract_reward_columns": {
+    "acc": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0
+    ]
+  },
+  "has_error_column": false,
+  "seconds": 20.67,
+  "worker_log_lines_reward_failed": [
+    "\u001b[36m(RewardLoopWorker pid=9815)\u001b[0m ERROR:2026-11-03 08:23:49,252:Reward computation failed for data_source=rewardfail_c1c: A process in the process pool was terminated abruptly while the future was running or pending.. Response preview: \\boxed{0.5} [[INJECT_WORKER_DEATH]]#row=2..."
+  ],
+  "injected_worker_deaths_by_row": {
+    "2": 2
+  }
+}

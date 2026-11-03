@@ -1,0 +1,58 @@
+From e545dedffafbb5a3ac5f13062f90434f9797effd Mon Sep 17 00:00:00 2001
+From: audit <audit@localhost>
+Date: Tue, 3 Nov 2026 08:10:31 +0000
+Subject: [PATCH 2/2] [trainer] fix: keep sparse reward_extra_info aligned
+ across validation batches
+
+RayPPOTrainer._validate starts a new list when a reward_extra_info key first
+appears in a later validation batch and never pads keys missing from a batch,
+so the length assertion fails (or, after _merge_validation_results, values are
+shifted to the wrong samples). Back-fill and pad with None, the missing-value
+marker already used by sparse batch assembly.
+---
+ verl/trainer/ppo/ray_trainer.py | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/verl/trainer/ppo/ray_trainer.py b/verl/trainer/ppo/ray_trainer.py
+index 9352bcfa..f17c6e0a 100644
+--- a/verl/trainer/ppo/ray_trainer.py
++++ b/verl/trainer/ppo/ray_trainer.py
+@@ -676,13 +676,21 @@ class RayPPOTrainer:
+             sample_scores.extend(scores)
+ 
+             reward_extra_infos_dict["reward"].extend(scores)
++            # Keys may be sparse across validation batches (e.g. an "error" or "timeout"
++            # flag emitted only for failed rows). Keep every list aligned with
++            # sample_scores: back-fill earlier batches and pad keys absent from this batch
++            # with None, the same missing-value marker used by batch assembly.
++            n_prior = len(sample_scores) - len(scores)
+             for key, values in reward_extra_info.items():
+                 if key not in reward_extra_infos_dict:
+-                    reward_extra_infos_dict[key] = []
++                    reward_extra_infos_dict[key] = [None] * n_prior
+                 if isinstance(values, np.ndarray):
+                     reward_extra_infos_dict[key].extend(values.tolist())
+                 else:
+                     reward_extra_infos_dict[key].extend(values if isinstance(values, list) else [values])
++            for key, lst in reward_extra_infos_dict.items():
++                if len(lst) < len(sample_scores):
++                    lst.extend([None] * (len(sample_scores) - len(lst)))
+ 
+             # collect num_turns of each prompt
+             if "__num_turns__" in test_batch.non_tensor_batch:
+@@ -762,9 +770,10 @@ class RayPPOTrainer:
+ 
+         reward_extra_infos_dict = {}
+         all_keys = set(result_a["reward_extra_infos_dict"].keys()) | set(result_b["reward_extra_infos_dict"].keys())
++        n_a, n_b = len(result_a["sample_uids"]), len(result_b["sample_uids"])
+         for key in all_keys:
+-            list_a = result_a["reward_extra_infos_dict"].get(key, [])
+-            list_b = result_b["reward_extra_infos_dict"].get(key, [])
++            list_a = result_a["reward_extra_infos_dict"].get(key, [None] * n_a)
++            list_b = result_b["reward_extra_infos_dict"].get(key, [None] * n_b)
+             reward_extra_infos_dict[key] = list_a + list_b
+ 
+         return self._val_metrics_update(data_sources, sample_uids, reward_extra_infos_dict, sample_turns)
+-- 
+2.43.0
+

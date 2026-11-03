@@ -1,0 +1,2566 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="75" skipped="0" tests="99" time="26.193" timestamp="2026-11-03T08:32:45.868011+00:00" hostname="vm"><testcase classname="test_reward_chain.WrapperTests" name="test_w1_correct_and_wrong_answers" time="4.749" /><testcase classname="test_reward_chain.WrapperTests" name="test_w2_transient_worker_death_is_retried" time="5.029" /><testcase classname="test_reward_chain.WrapperTests" name="test_w3_persistent_worker_death_propagates" time="0.129" /><testcase classname="test_reward_chain.WrapperTests" name="test_w4_outer_timeout_returns_timeout_score_and_replaces_pool" time="2.004" /><testcase classname="test_reward_chain.WrapperTests" name="test_w5_ordinary_worker_exception_propagates_unchanged" time="0.059" /><testcase classname="test_reward_chain.WrapperTests" name="test_w6_library_timeout_exception_maps_to_timeout_score" time="0.400" /><testcase classname="test_reward_chain.ManagerTests" name="test_m1_rate_limited_flags_persistent_worker_death" time="4.435" /><testcase classname="test_reward_chain.ManagerTests" name="test_m2_rate_limited_flags_manager_timeout" time="0.205" /><testcase classname="test_reward_chain.ManagerTests" name="test_m3_naive_manager_aborts_batch_on_worker_death" time="0.118" /><testcase classname="test_reward_chain.BatchPathTests" name="test_a01_flag_at_every_position" time="0.449"><failure message="KeyError: 'error'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bb6b0b0&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="KeyError: 'timeout'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bb6abd0&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'timeout'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a01_flag_at_every_position&gt;
+
+    def test_a01_flag_at_every_position(self):
+        for kind, pos in itertools.product(("error", "timeout"), range(8)):
+            with self.subTest(kind=kind, pos=pos):
+                rows = normal()
+                rows[pos] = flagged(kind)
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure></testcase><testcase classname="test_reward_chain.BatchPathTests" name="test_a02_several_sparse_keys_in_different_rows" time="0.003"><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a02_several_sparse_keys_in_different_rows&gt;
+
+    def test_a02_several_sparse_keys_in_different_rows(self):
+        rows = normal(6)
+        rows[1] = flagged("error")
+        rows[4] = flagged("timeout")
+        rows[5] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "42"}}
+&gt;       self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:251: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure></testcase><testcase classname="test_reward_chain.BatchPathTests" name="test_a03_all_rows_without_extra_info" time="0.003" /><testcase classname="test_reward_chain.BatchPathTests" name="test_a04_all_rows_flagged" time="0.002" /><testcase classname="test_reward_chain.BatchPathTests" name="test_a05_single_row" time="0.004" /><testcase classname="test_reward_chain.BatchPathTests" name="test_a06_empty_batch_rejected_before_scoring" time="0.002" /><testcase classname="test_reward_chain.BatchPathTests" name="test_a06b_empty_extra_info_list_assembles" time="0.002"><failure message="AssertionError: compute_rm_score indexes reward_extra_infos[0] (IndexError on an empty list)">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a06b_empty_extra_info_list_assembles&gt;
+
+    def test_a06b_empty_extra_info_list_assembles(self):
+        """The assembly step itself must not index row 0 of an empty list."""
+        src = inspect.getsource(R.RewardLoopManager.compute_rm_score)
+        if "reward_extra_infos[0]" in src:
+&gt;           self.fail("compute_rm_score indexes reward_extra_infos[0] (IndexError on an empty list)")
+E           AssertionError: compute_rm_score indexes reward_extra_infos[0] (IndexError on an empty list)
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:275: AssertionError</failure></testcase><testcase classname="test_reward_chain.BatchPathTests" name="test_a07_row_permutation_equivariance" time="0.857"><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'timeout'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbf0b30&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'timeout'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'pred'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bb8faa0&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'pred'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'pred'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bb118b0&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'pred'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="KeyError: 'error'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bb8cc20&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'error'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbf4f20&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="KeyError: 'error'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbf4da0&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'timeout'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbf1f40&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'timeout'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'error'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbf7e90&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'timeout'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbf4140&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'timeout'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'pred'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbce930&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'pred'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']&#10;&#10;Second list contains 3 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error', 'pred', 'timeout']
+E   
+E   Second list contains 3 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error', 'pred', 'timeout'] : metadata keys lost or invented</failure><failure message="KeyError: 'pred'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a07_row_permutation_equivariance&gt;
+
+    def test_a07_row_permutation_equivariance(self):
+        base = normal(8)
+        base[2], base[5] = flagged("error"), flagged("timeout")
+        base[6] = {"reward_score": 1.0, "reward_extra_info": {"acc": 1.0, "pred": "7"}}
+        rng = random.Random(20261103)
+        for t in range(40):
+            perm = list(range(8))
+            rng.shuffle(perm)
+            rows = [base[i] for i in perm]
+            with self.subTest(trial=t, perm=perm):
+&gt;               self.assertContract(rows, assemble_batch_path(rows))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbceae0&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([8, 2]), device=cpu, dtype=to...rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}, {'rid': 7}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'pred'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure></testcase><testcase classname="test_reward_chain.BatchPathTests" name="test_a08_chunks_and_padding_across_workers" time="0.076"><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a08_chunks_and_padding_across_workers&gt;
+
+    def test_a08_chunks_and_padding_across_workers(self):
+        for n, workers, pos in [(7, 2, 6), (7, 3, 0), (5, 4, 4), (9, 2, 8)]:
+            rows = normal(n)
+            rows[pos] = flagged("error")
+            with self.subTest(n=n, workers=workers, pos=pos):
+&gt;               self.assertContract(rows, assemble_batch_path(rows, workers=workers))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:296: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="KeyError: 'error'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a08_chunks_and_padding_across_workers&gt;
+
+    def test_a08_chunks_and_padding_across_workers(self):
+        for n, workers, pos in [(7, 2, 6), (7, 3, 0), (5, 4, 4), (9, 2, 8)]:
+            rows = normal(n)
+            rows[pos] = flagged("error")
+            with self.subTest(n=n, workers=workers, pos=pos):
+&gt;               self.assertContract(rows, assemble_batch_path(rows, workers=workers))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:296: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbf6300&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([7, 2]), device=cpu, dtype=to...rid': 0}, {'rid': 1}, {'rid': 2}, {'rid': 3}, {'rid': 4},
+       {'rid': 5}, {'rid': 6}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a08_chunks_and_padding_across_workers&gt;
+
+    def test_a08_chunks_and_padding_across_workers(self):
+        for n, workers, pos in [(7, 2, 6), (7, 3, 0), (5, 4, 4), (9, 2, 8)]:
+            rows = normal(n)
+            rows[pos] = flagged("error")
+            with self.subTest(n=n, workers=workers, pos=pos):
+&gt;               self.assertContract(rows, assemble_batch_path(rows, workers=workers))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:296: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a08_chunks_and_padding_across_workers&gt;
+
+    def test_a08_chunks_and_padding_across_workers(self):
+        for n, workers, pos in [(7, 2, 6), (7, 3, 0), (5, 4, 4), (9, 2, 8)]:
+            rows = normal(n)
+            rows[pos] = flagged("error")
+            with self.subTest(n=n, workers=workers, pos=pos):
+&gt;               self.assertContract(rows, assemble_batch_path(rows, workers=workers))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:296: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure></testcase><testcase classname="test_reward_chain.BatchPathTests" name="test_a09_schema_split_between_workers" time="0.002"><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a09_schema_split_between_workers&gt;
+
+    def test_a09_schema_split_between_workers(self):
+        rows = normal(4) + [flagged("error") for _ in range(4)]
+&gt;       self.assertContract(rows, assemble_batch_path(rows, workers=2))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:300: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure></testcase><testcase classname="test_reward_chain.BatchPathTests" name="test_a10_fully_populated_column_keeps_numeric_dtype" time="0.002" /><testcase classname="test_reward_chain.BatchPathTests" name="test_a11_missing_and_explicit_none_are_indistinguishable" time="0.002"><failure message="KeyError: 'error'">self = &lt;test_reward_chain.BatchPathTests testMethod=test_a11_missing_and_explicit_none_are_indistinguishable&gt;
+
+    def test_a11_missing_and_explicit_none_are_indistinguishable(self):
+        """Documented limitation of None-fill (both #7151 and the paper's prototype)."""
+        rows = normal(3)
+        rows[0] = {"reward_score": 0.0, "reward_extra_info": {"acc": 0.0, "error": None}}
+        rows[1] = flagged("error")
+&gt;       _, cols = assemble_batch_path(rows)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.experimental.reward_loop.reward_loop.RewardLoopManager object at 0x7f1a5bbba480&gt;
+data = DataProto(batch=TensorDict(
+    fields={
+        attention_mask: Tensor(shape=torch.Size([3, 2]), device=cpu, dtype=to...d_truth': '1'}], dtype=object), 'extra_info': array([{'rid': 0}, {'rid': 1}, {'rid': 2}], dtype=object)}, meta_info={})
+
+    def compute_rm_score(self, data: DataProto) -&gt; DataProto:
+        if self.reward_model_manager is not None:
+            self.reward_model_manager.wake_up()
+    
+        num_workers = len(self.reward_loop_workers)
+        padded_data, pad_size = pad_dataproto_to_divisor(data, num_workers)
+        chunks = padded_data.chunk(num_workers)
+        outputs = ray.get(
+            [
+                worker.compute_score_batch.remote(chunk)
+                for worker, chunk in zip(self.reward_loop_workers, chunks, strict=True)
+            ]
+        )
+        outputs_flat = [item for sublist in outputs for item in sublist]
+        if pad_size &gt; 0:
+            outputs_flat = outputs_flat[: len(data)]
+    
+        # compute rm score
+        scores = [item["reward_score"] for item in outputs_flat]
+        rm_scores = self.reward_manager_cls.assemble_rm_scores(data, scores)
+        batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+    
+        reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        non_tensor_batch = {}
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py:369: KeyError</failure></testcase><testcase classname="test_reward_chain.PaperPrototypeTests" name="test_p1_keys_and_rewards_preserved" time="0.004" /><testcase classname="test_reward_chain.PaperPrototypeTests" name="test_p2_full_column_dtype" time="0.005"><failure message="AssertionError: dtype('O') != &lt;class 'numpy.float64'&gt; : prototype turns every column into dtype=object">self = &lt;test_reward_chain.PaperPrototypeTests testMethod=test_p2_full_column_dtype&gt;
+
+    def test_p2_full_column_dtype(self):
+        rows = normal(4)
+        rows[3] = flagged("error")
+        _, cols = assemble_batch_path(rows, method=self.method)
+&gt;       self.assertEqual(cols["acc"].dtype, np.float64, "prototype turns every column into dtype=object")
+E       AssertionError: dtype('O') != &lt;class 'numpy.float64'&gt; : prototype turns every column into dtype=object
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:371: AssertionError</failure></testcase><testcase classname="test_reward_chain.PaperPrototypeTests" name="test_p3_empty_batch" time="0.005"><failure message="RuntimeError: split_size must be a positive integer, but got 0.">self = &lt;test_reward_chain.PaperPrototypeTests testMethod=test_p3_empty_batch&gt;
+
+    def test_p3_empty_batch(self):
+        try:
+&gt;           assemble_batch_path([], method=self.method)
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:130: in assemble_batch_path
+    result = method(control, batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+&lt;paper-prototype&gt;:7: in compute_rm_score
+    ???
+companion/third_party/verl-pr8015/verl/protocol.py:877: in chunk
+    batch_lst = self.batch.chunk(chunks=chunks, dim=0)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/tensordict/_td.py:1822: in chunk
+    segments = _create_segments_from_int(split_size, max_size)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+split_size = 0, max_size = 0
+
+    def _create_segments_from_int(split_size, max_size):
+        if split_size &lt;= 0:
+&gt;           raise RuntimeError(
+                f"split_size must be a positive integer, but got {split_size}."
+            )
+E           RuntimeError: split_size must be a positive integer, but got 0.
+
+venv/lib/python3.12/site-packages/tensordict/utils.py:2850: RuntimeError</failure></testcase><testcase classname="test_reward_chain.GenerationPathTests" name="test_g1_flag_at_every_position_single_worker" time="0.125"><failure message="KeyError: 'error'">self = &lt;test_reward_chain.GenerationPathTests testMethod=test_g1_flag_at_every_position_single_worker&gt;
+
+    def test_g1_flag_at_every_position_single_worker(self):
+        for pos in range(4):
+            rows = normal(4)
+            rows[pos] = flagged("error")
+            with self.subTest(pos=pos):
+&gt;               self.assertContract(rows, generation_path(rows, workers=1))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:425: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:412: in generation_path
+    out = AL.AgentLoopManager.generate_sequences(mgr, prompts)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+companion/third_party/verl-pr8015/verl/utils/ray_utils.py:123: in wrapper
+    return asyncio.run(coro)
+           ^^^^^^^^^^^^^^^^^
+<PYTHON>/lib/python3.12/asyncio/runners.py:194: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+<PYTHON>/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<PYTHON>/lib/python3.12/asyncio/base_events.py:686: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+companion/third_party/verl-pr8015/verl/utils/skip/skip_manager.py:89: in async_wrapper
+    return await func(*args, **kwargs_inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py:1248: in generate_sequences
+    outputs = await asyncio.gather(
+<REPO>/audit/upstream_chain/test_reward_chain.py:404: in remote
+    return AL.AgentLoopWorker._postprocess(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;test_reward_chain._W object at 0x7f1a58a76630&gt;
+inputs = [_InternalAgentLoopOutput(prompt_ids=tensor([[101]]), response_ids=tensor([[11]]), response_mask=tensor([[1]]), respon...s=tensor([[0, 1]]), attention_mask=tensor([[1, 1]]), teacher_logprobs=None, teacher_ids=None, multi_modal_inputs=None)]
+input_non_tensor_batch = None, validate = False
+
+    def _postprocess(
+        self,
+        inputs: list[_InternalAgentLoopOutput],
+        input_non_tensor_batch: dict | None = None,
+        validate: bool = False,
+    ) -&gt; DataProto:
+        """Process the padded outputs from _run_agent_loop and combine them into a batch."""
+        # Convert lists back to tensors and stack them to create a batch.
+        prompt_ids = torch.cat([input.prompt_ids for input in inputs], dim=0)
+        response_ids = torch.cat([input.response_ids for input in inputs], dim=0)
+        response_mask = torch.cat([input.response_mask for input in inputs], dim=0)
+        attention_mask = torch.cat([input.attention_mask for input in inputs], dim=0)
+        input_ids = torch.cat([input.input_ids for input in inputs], dim=0)
+        position_ids = torch.cat([input.position_ids for input in inputs], dim=0)
+        optional_outputs = {}
+        if inputs[0].response_logprobs is not None:
+            optional_outputs["rollout_log_probs"] = torch.cat([input.response_logprobs for input in inputs], dim=0)
+        if inputs[0].routed_experts is not None:
+            optional_outputs["routed_experts"] = torch.cat([input.routed_experts for input in inputs], dim=0)
+        if inputs[0].teacher_logprobs is not None and inputs[0].teacher_ids is not None:
+            optional_outputs["teacher_logprobs"] = torch.cat([input.teacher_logprobs for input in inputs], dim=0)
+            optional_outputs["teacher_ids"] = torch.cat([input.teacher_ids for input in inputs], dim=0)
+        batch = TensorDict(
+            {
+                "prompts": prompt_ids,  # [bsz, prompt_length]
+                "responses": response_ids,  # [bsz, response_length]
+                "response_mask": response_mask,  # [bsz, response_length]
+                "input_ids": input_ids,  # [bsz, prompt_length + response_length]
+                "attention_mask": attention_mask,  # [bsz, prompt_length + response_length]
+                # position_ids: [bsz, 3, prompt_length + response_length] or [bsz, prompt_length + response_length]
+                "position_ids": position_ids,
+                **optional_outputs,
+            },
+            batch_size=len(inputs),
+        )
+    
+        scores = [input.reward_score for input in inputs]
+        if all(score is not None for score in scores):
+            prompt_length = prompt_ids.size(1)
+            response_length = attention_mask[:, prompt_length:].sum(dim=1) - 1
+            rm_scores = torch.zeros_like(response_mask, dtype=torch.float32)
+            rm_scores[torch.arange(response_mask.size(0)), response_length] = torch.tensor(scores, dtype=torch.float32)
+            batch["rm_scores"] = rm_scores
+    
+        non_tensor_batch = {
+            "__num_turns__": np.array([input.num_turns for input in inputs], dtype=np.int32),
+        }
+        if self.reward_loop_worker_handles is None and input_non_tensor_batch:
+            non_tensor_batch.update(input_non_tensor_batch)
+    
+        # add reward_extra_info to non_tensor_batch
+        reward_extra_infos = [input.extra_fields.get("reward_extra_info", {}) for input in inputs]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py:1111: KeyError</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.GenerationPathTests testMethod=test_g1_flag_at_every_position_single_worker&gt;
+
+    def test_g1_flag_at_every_position_single_worker(self):
+        for pos in range(4):
+            rows = normal(4)
+            rows[pos] = flagged("error")
+            with self.subTest(pos=pos):
+&gt;               self.assertContract(rows, generation_path(rows, workers=1))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:425: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.GenerationPathTests testMethod=test_g1_flag_at_every_position_single_worker&gt;
+
+    def test_g1_flag_at_every_position_single_worker(self):
+        for pos in range(4):
+            rows = normal(4)
+            rows[pos] = flagged("error")
+            with self.subTest(pos=pos):
+&gt;               self.assertContract(rows, generation_path(rows, workers=1))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:425: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'error']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'error'&#10;&#10;- ['acc']&#10;+ ['acc', 'error'] : metadata keys lost or invented">self = &lt;test_reward_chain.GenerationPathTests testMethod=test_g1_flag_at_every_position_single_worker&gt;
+
+    def test_g1_flag_at_every_position_single_worker(self):
+        for pos in range(4):
+            rows = normal(4)
+            rows[pos] = flagged("error")
+            with self.subTest(pos=pos):
+&gt;               self.assertContract(rows, generation_path(rows, workers=1))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:425: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'error']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'error'
+E   
+E   - ['acc']
+E   + ['acc', 'error'] : metadata keys lost or invented</failure></testcase><testcase classname="test_reward_chain.GenerationPathTests" name="test_g2_flag_only_in_second_worker" time="0.003"><failure message="AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']&#10;&#10;Second list contains 1 additional elements.&#10;First extra element 1:&#10;'timeout'&#10;&#10;- ['acc']&#10;+ ['acc', 'timeout'] : metadata keys lost or invented">self = &lt;test_reward_chain.GenerationPathTests testMethod=test_g2_flag_only_in_second_worker&gt;
+
+    def test_g2_flag_only_in_second_worker(self):
+        rows = normal(4)
+        rows[3] = flagged("timeout")
+&gt;       self.assertContract(rows, generation_path(rows, workers=2))
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:430: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:161: in assertContract
+    self.assertEqual(sorted(cols), sorted(exp_cols), "metadata keys lost or invented")
+E   AssertionError: Lists differ: ['acc'] != ['acc', 'timeout']
+E   
+E   Second list contains 1 additional elements.
+E   First extra element 1:
+E   'timeout'
+E   
+E   - ['acc']
+E   + ['acc', 'timeout'] : metadata keys lost or invented</failure></testcase><testcase classname="test_reward_chain.GenerationPathTests" name="test_g3_flag_only_in_first_worker" time="0.003"><failure message="KeyError: 'error'">self = &lt;test_reward_chain.GenerationPathTests testMethod=test_g3_flag_only_in_first_worker&gt;
+
+    def test_g3_flag_only_in_first_worker(self):
+        rows = normal(4)
+        rows[0] = flagged("error")
+&gt;       self.assertContract(rows, generation_path(rows, workers=2))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:435: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:412: in generation_path
+    out = AL.AgentLoopManager.generate_sequences(mgr, prompts)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+companion/third_party/verl-pr8015/verl/utils/ray_utils.py:123: in wrapper
+    return asyncio.run(coro)
+           ^^^^^^^^^^^^^^^^^
+<PYTHON>/lib/python3.12/asyncio/runners.py:194: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+<PYTHON>/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<PYTHON>/lib/python3.12/asyncio/base_events.py:686: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+companion/third_party/verl-pr8015/verl/utils/skip/skip_manager.py:89: in async_wrapper
+    return await func(*args, **kwargs_inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py:1248: in generate_sequences
+    outputs = await asyncio.gather(
+<REPO>/audit/upstream_chain/test_reward_chain.py:404: in remote
+    return AL.AgentLoopWorker._postprocess(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;test_reward_chain._W object at 0x7f1a58a77590&gt;
+inputs = [_InternalAgentLoopOutput(prompt_ids=tensor([[101]]), response_ids=tensor([[11]]), response_mask=tensor([[1]]), respon...s=tensor([[0, 1]]), attention_mask=tensor([[1, 1]]), teacher_logprobs=None, teacher_ids=None, multi_modal_inputs=None)]
+input_non_tensor_batch = None, validate = False
+
+    def _postprocess(
+        self,
+        inputs: list[_InternalAgentLoopOutput],
+        input_non_tensor_batch: dict | None = None,
+        validate: bool = False,
+    ) -&gt; DataProto:
+        """Process the padded outputs from _run_agent_loop and combine them into a batch."""
+        # Convert lists back to tensors and stack them to create a batch.
+        prompt_ids = torch.cat([input.prompt_ids for input in inputs], dim=0)
+        response_ids = torch.cat([input.response_ids for input in inputs], dim=0)
+        response_mask = torch.cat([input.response_mask for input in inputs], dim=0)
+        attention_mask = torch.cat([input.attention_mask for input in inputs], dim=0)
+        input_ids = torch.cat([input.input_ids for input in inputs], dim=0)
+        position_ids = torch.cat([input.position_ids for input in inputs], dim=0)
+        optional_outputs = {}
+        if inputs[0].response_logprobs is not None:
+            optional_outputs["rollout_log_probs"] = torch.cat([input.response_logprobs for input in inputs], dim=0)
+        if inputs[0].routed_experts is not None:
+            optional_outputs["routed_experts"] = torch.cat([input.routed_experts for input in inputs], dim=0)
+        if inputs[0].teacher_logprobs is not None and inputs[0].teacher_ids is not None:
+            optional_outputs["teacher_logprobs"] = torch.cat([input.teacher_logprobs for input in inputs], dim=0)
+            optional_outputs["teacher_ids"] = torch.cat([input.teacher_ids for input in inputs], dim=0)
+        batch = TensorDict(
+            {
+                "prompts": prompt_ids,  # [bsz, prompt_length]
+                "responses": response_ids,  # [bsz, response_length]
+                "response_mask": response_mask,  # [bsz, response_length]
+                "input_ids": input_ids,  # [bsz, prompt_length + response_length]
+                "attention_mask": attention_mask,  # [bsz, prompt_length + response_length]
+                # position_ids: [bsz, 3, prompt_length + response_length] or [bsz, prompt_length + response_length]
+                "position_ids": position_ids,
+                **optional_outputs,
+            },
+            batch_size=len(inputs),
+        )
+    
+        scores = [input.reward_score for input in inputs]
+        if all(score is not None for score in scores):
+            prompt_length = prompt_ids.size(1)
+            response_length = attention_mask[:, prompt_length:].sum(dim=1) - 1
+            rm_scores = torch.zeros_like(response_mask, dtype=torch.float32)
+            rm_scores[torch.arange(response_mask.size(0)), response_length] = torch.tensor(scores, dtype=torch.float32)
+            batch["rm_scores"] = rm_scores
+    
+        non_tensor_batch = {
+            "__num_turns__": np.array([input.num_turns for input in inputs], dtype=np.int32),
+        }
+        if self.reward_loop_worker_handles is None and input_non_tensor_batch:
+            non_tensor_batch.update(input_non_tensor_batch)
+    
+        # add reward_extra_info to non_tensor_batch
+        reward_extra_infos = [input.extra_fields.get("reward_extra_info", {}) for input in inputs]
+        reward_extra_keys = list(reward_extra_infos[0].keys())
+        for key in reward_extra_keys:
+&gt;           non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+                                              ^^^^^^^^^
+E           KeyError: 'error'
+
+companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py:1111: KeyError</failure></testcase><testcase classname="test_reward_chain.ConsumerTests" name="test_c1_validate_single_batch_with_sparse_flag" time="0.003" /><testcase classname="test_reward_chain.ConsumerTests" name="test_c2_validate_flag_appears_only_in_later_batch" time="0.004"><failure message="AssertionError: error: len(lst)=4, len(sample_scores)=8">self = &lt;test_reward_chain.ConsumerTests testMethod=test_c2_validate_flag_appears_only_in_later_batch&gt;
+
+    def test_c2_validate_flag_appears_only_in_later_batch(self):
+        b2 = normal(4)
+        b2[1] = flagged("error")
+&gt;       metrics = run_validate([normal(4), b2])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:494: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:481: in run_validate
+    return RayPPOTrainer._validate(me, merged=merged)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.trainer.ppo.ray_trainer.RayPPOTrainer object at 0x7f1a58a26ae0&gt;
+merged = False
+
+    def _validate(self, merged: bool = False):
+        data_source_lst = []
+        reward_extra_infos_dict: dict[str, list] = defaultdict(list)
+    
+        # Lists to collect samples for the table
+        sample_inputs = []
+        sample_outputs = []
+        sample_gts = []
+        sample_scores = []
+        sample_turns = []
+        sample_uids = []
+    
+        for test_data in self.val_dataloader:
+            test_batch = DataProto.from_single_dict(test_data)
+    
+            if "uid" not in test_batch.non_tensor_batch:
+                test_batch.non_tensor_batch["uid"] = np.array(
+                    [str(uuid.uuid4()) for _ in range(len(test_batch.batch))], dtype=object
+                )
+    
+            # repeat test batch
+            test_batch = test_batch.repeat(
+                repeat_times=self.config.actor_rollout_ref.rollout.val_kwargs.n, interleave=True
+            )
+    
+            ground_truths = [
+                item.non_tensor_batch.get("reward_model", {}).get("ground_truth", None) for item in test_batch
+            ]
+            sample_gts.extend(ground_truths)
+    
+            test_gen_batch = self._get_gen_batch(test_batch)
+            test_gen_batch.meta_info = {
+                "eos_token_id": self.tokenizer.eos_token_id,
+                "pad_token_id": self.tokenizer.pad_token_id,
+                "recompute_log_prob": False,
+                "do_sample": self.config.actor_rollout_ref.rollout.val_kwargs.do_sample,
+                "validate": True,
+                "global_steps": self.global_steps,
+            }
+            print(f"test_gen_batch meta info: {test_gen_batch.meta_info}")
+    
+            # pad to be divisible by dp_size
+            size_divisor = self.config.actor_rollout_ref.rollout.agent.num_workers
+            test_gen_batch_padded, pad_size = pad_dataproto_to_divisor(test_gen_batch, size_divisor)
+            test_output_gen_batch_padded = self.async_rollout_manager.generate_sequences(test_gen_batch_padded)
+    
+            if self.use_rm and "rm_scores" not in test_output_gen_batch_padded.batch.keys():
+                # for colocate reward models, we need to sleep rollout model
+                # to spare GPU memory for reward model
+                self.checkpoint_manager.sleep_replicas()
+                batch_reward = self._compute_reward_colocate(test_output_gen_batch_padded)
+                test_output_gen_batch_padded = test_output_gen_batch_padded.union(batch_reward)
+                # wake up rollout model
+                # replace with wake_up method once supported
+                self.checkpoint_manager.update_weights(self.global_steps)
+    
+            # unpad
+            test_output_gen_batch = unpad_dataproto(test_output_gen_batch_padded, pad_size=pad_size)
+    
+            print("validation generation end")
+    
+            # Store generated outputs
+            output_ids = test_output_gen_batch.batch["responses"]
+            output_texts = [self.tokenizer.decode(ids, skip_special_tokens=True) for ids in output_ids]
+            sample_outputs.extend(output_texts)
+    
+            test_batch = test_batch.union(test_output_gen_batch)
+            test_batch.meta_info["validate"] = True
+    
+            # Store original inputs
+            input_ids = test_batch.batch["prompts"]
+            # TODO: Can we keep special tokens except for padding tokens?
+            input_texts = [self.tokenizer.decode(ids, skip_special_tokens=True) for ids in input_ids]
+            sample_inputs.extend(input_texts)
+            sample_uids.extend(test_batch.non_tensor_batch["uid"])
+    
+            # evaluate using reward_function
+            reward_tensor, reward_extra_info = extract_reward(test_batch)
+    
+            scores = reward_tensor.sum(-1).cpu().tolist()
+            sample_scores.extend(scores)
+    
+            reward_extra_infos_dict["reward"].extend(scores)
+            for key, values in reward_extra_info.items():
+                if key not in reward_extra_infos_dict:
+                    reward_extra_infos_dict[key] = []
+                if isinstance(values, np.ndarray):
+                    reward_extra_infos_dict[key].extend(values.tolist())
+                else:
+                    reward_extra_infos_dict[key].extend(values if isinstance(values, list) else [values])
+    
+            # collect num_turns of each prompt
+            if "__num_turns__" in test_batch.non_tensor_batch:
+                sample_turns.append(test_batch.non_tensor_batch["__num_turns__"])
+    
+            data_source_lst.append(test_batch.non_tensor_batch.get("data_source", ["unknown"] * reward_tensor.shape[0]))
+    
+        self._maybe_log_val_generations(inputs=sample_inputs, outputs=sample_outputs, scores=sample_scores)
+    
+        # dump generations
+        val_data_dir = self.config.trainer.get("validation_data_dir", None)
+        if val_data_dir:
+            self._dump_generations(
+                inputs=sample_inputs,
+                outputs=sample_outputs,
+                gts=sample_gts,
+                scores=sample_scores,
+                reward_extra_infos_dict=reward_extra_infos_dict,
+                dump_path=val_data_dir,
+            )
+    
+        for key_info, lst in reward_extra_infos_dict.items():
+&gt;           assert len(lst) == 0 or len(lst) == len(sample_scores), f"{key_info}: {len(lst)=}, {len(sample_scores)=}"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: error: len(lst)=4, len(sample_scores)=8
+
+companion/third_party/verl-pr8015/verl/trainer/ppo/ray_trainer.py:708: AssertionError</failure></testcase><testcase classname="test_reward_chain.ConsumerTests" name="test_c3_validate_flag_only_in_earlier_batch" time="0.003"><failure message="AssertionError: timeout: len(lst)=4, len(sample_scores)=8">self = &lt;test_reward_chain.ConsumerTests testMethod=test_c3_validate_flag_only_in_earlier_batch&gt;
+
+    def test_c3_validate_flag_only_in_earlier_batch(self):
+        b1 = normal(4)
+        b1[1] = flagged("timeout")
+&gt;       metrics = run_validate([b1, normal(4)])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:500: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<REPO>/audit/upstream_chain/test_reward_chain.py:481: in run_validate
+    return RayPPOTrainer._validate(me, merged=merged)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;verl.trainer.ppo.ray_trainer.RayPPOTrainer object at 0x7f1a58a26990&gt;
+merged = False
+
+    def _validate(self, merged: bool = False):
+        data_source_lst = []
+        reward_extra_infos_dict: dict[str, list] = defaultdict(list)
+    
+        # Lists to collect samples for the table
+        sample_inputs = []
+        sample_outputs = []
+        sample_gts = []
+        sample_scores = []
+        sample_turns = []
+        sample_uids = []
+    
+        for test_data in self.val_dataloader:
+            test_batch = DataProto.from_single_dict(test_data)
+    
+            if "uid" not in test_batch.non_tensor_batch:
+                test_batch.non_tensor_batch["uid"] = np.array(
+                    [str(uuid.uuid4()) for _ in range(len(test_batch.batch))], dtype=object
+                )
+    
+            # repeat test batch
+            test_batch = test_batch.repeat(
+                repeat_times=self.config.actor_rollout_ref.rollout.val_kwargs.n, interleave=True
+            )
+    
+            ground_truths = [
+                item.non_tensor_batch.get("reward_model", {}).get("ground_truth", None) for item in test_batch
+            ]
+            sample_gts.extend(ground_truths)
+    
+            test_gen_batch = self._get_gen_batch(test_batch)
+            test_gen_batch.meta_info = {
+                "eos_token_id": self.tokenizer.eos_token_id,
+                "pad_token_id": self.tokenizer.pad_token_id,
+                "recompute_log_prob": False,
+                "do_sample": self.config.actor_rollout_ref.rollout.val_kwargs.do_sample,
+                "validate": True,
+                "global_steps": self.global_steps,
+            }
+            print(f"test_gen_batch meta info: {test_gen_batch.meta_info}")
+    
+            # pad to be divisible by dp_size
+            size_divisor = self.config.actor_rollout_ref.rollout.agent.num_workers
+            test_gen_batch_padded, pad_size = pad_dataproto_to_divisor(test_gen_batch, size_divisor)
+            test_output_gen_batch_padded = self.async_rollout_manager.generate_sequences(test_gen_batch_padded)
+    
+            if self.use_rm and "rm_scores" not in test_output_gen_batch_padded.batch.keys():
+                # for colocate reward models, we need to sleep rollout model
+                # to spare GPU memory for reward model
+                self.checkpoint_manager.sleep_replicas()
+                batch_reward = self._compute_reward_colocate(test_output_gen_batch_padded)
+                test_output_gen_batch_padded = test_output_gen_batch_padded.union(batch_reward)
+                # wake up rollout model
+                # replace with wake_up method once supported
+                self.checkpoint_manager.update_weights(self.global_steps)
+    
+            # unpad
+            test_output_gen_batch = unpad_dataproto(test_output_gen_batch_padded, pad_size=pad_size)
+    
+            print("validation generation end")
+    
+            # Store generated outputs
+            output_ids = test_output_gen_batch.batch["responses"]
+            output_texts = [self.tokenizer.decode(ids, skip_special_tokens=True) for ids in output_ids]
+            sample_outputs.extend(output_texts)
+    
+            test_batch = test_batch.union(test_output_gen_batch)
+            test_batch.meta_info["validate"] = True
+    
+            # Store original inputs
+            input_ids = test_batch.batch["prompts"]
+            # TODO: Can we keep special tokens except for padding tokens?
+            input_texts = [self.tokenizer.decode(ids, skip_special_tokens=True) for ids in input_ids]
+            sample_inputs.extend(input_texts)
+            sample_uids.extend(test_batch.non_tensor_batch["uid"])
+    
+            # evaluate using reward_function
+            reward_tensor, reward_extra_info = extract_reward(test_batch)
+    
+            scores = reward_tensor.sum(-1).cpu().tolist()
+            sample_scores.extend(scores)
+    
+            reward_extra_infos_dict["reward"].extend(scores)
+            for key, values in reward_extra_info.items():
+                if key not in reward_extra_infos_dict:
+                    reward_extra_infos_dict[key] = []
+                if isinstance(values, np.ndarray):
+                    reward_extra_infos_dict[key].extend(values.tolist())
+                else:
+                    reward_extra_infos_dict[key].extend(values if isinstance(values, list) else [values])
+    
+            # collect num_turns of each prompt
+            if "__num_turns__" in test_batch.non_tensor_batch:
+                sample_turns.append(test_batch.non_tensor_batch["__num_turns__"])
+    
+            data_source_lst.append(test_batch.non_tensor_batch.get("data_source", ["unknown"] * reward_tensor.shape[0]))
+    
+        self._maybe_log_val_generations(inputs=sample_inputs, outputs=sample_outputs, scores=sample_scores)
+    
+        # dump generations
+        val_data_dir = self.config.trainer.get("validation_data_dir", None)
+        if val_data_dir:
+            self._dump_generations(
+                inputs=sample_inputs,
+                outputs=sample_outputs,
+                gts=sample_gts,
+                scores=sample_scores,
+                reward_extra_infos_dict=reward_extra_infos_dict,
+                dump_path=val_data_dir,
+            )
+    
+        for key_info, lst in reward_extra_infos_dict.items():
+&gt;           assert len(lst) == 0 or len(lst) == len(sample_scores), f"{key_info}: {len(lst)=}, {len(sample_scores)=}"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: timeout: len(lst)=4, len(sample_scores)=8
+
+companion/third_party/verl-pr8015/verl/trainer/ppo/ray_trainer.py:708: AssertionError</failure></testcase><testcase classname="test_reward_chain.ConsumerTests" name="test_c4_merge_validation_results_keeps_alignment" time="0.004"><failure message="AssertionError: Lists differ: ['A process in the process pool was terminated abruptly', None] != [None, None, 'A process in the process pool was terminated abruptly', None]&#10;&#10;First differing element 0:&#10;'A process in the process pool was terminated abruptly'&#10;None&#10;&#10;Second list contains 2 additional elements.&#10;First extra element 2:&#10;'A process in the process pool was terminated abruptly'&#10;&#10;- ['A process in the process pool was terminated abruptly', None]&#10;+ [None, None, 'A process in the process pool was terminated abruptly', None]&#10;?  ++++++++++++">self = &lt;test_reward_chain.ConsumerTests testMethod=test_c4_merge_validation_results_keeps_alignment&gt;
+
+    def test_c4_merge_validation_results_keeps_alignment(self):
+        b1 = normal(2)
+        b2 = [flagged("error"), normal(1)[0]]
+        ra = run_validate([b1], merged=True)
+        rb = run_validate([b2], merged=True)
+        me = object.__new__(RayPPOTrainer)
+        merged = {}
+        me._val_metrics_update = lambda ds, uids, infos, turns: merged.update(infos) or {}
+        RayPPOTrainer._merge_validation_results(me, ra, rb)
+&gt;       self.assertEqual(merged["error"], [None, None, flagged("error")["reward_extra_info"]["error"], None])
+E       AssertionError: Lists differ: ['A process in the process pool was terminated abruptly', None] != [None, None, 'A process in the process pool was terminated abruptly', None]
+E       
+E       First differing element 0:
+E       'A process in the process pool was terminated abruptly'
+E       None
+E       
+E       Second list contains 2 additional elements.
+E       First extra element 2:
+E       'A process in the process pool was terminated abruptly'
+E       
+E       - ['A process in the process pool was terminated abruptly', None]
+E       + [None, None, 'A process in the process pool was terminated abruptly', None]
+E       ?  ++++++++++++
+
+<REPO>/audit/upstream_chain/test_reward_chain.py:512: AssertionError</failure></testcase><testcase classname="test_reward_chain.ConsumerTests" name="test_c5_process_validation_metrics_with_none_filled_flags" time="0.022" /><testcase classname="test_reward_chain.ConsumerTests" name="test_c6_flag_does_not_change_reward_or_acc" time="0.003" /></testsuite></testsuites>

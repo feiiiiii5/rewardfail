@@ -1,0 +1,122 @@
+{
+ "input_sha256": {
+  "records/main-20261007-202545/default/rows.jsonl": "4ed2fd2b4782354463dcc4d5a471d73ee2ceacb5d2ef102deffea75876ce76c3",
+  "records/e2-complement-20261008-codex/default/rows.jsonl": "50fcf564f9ee7f0f84b35c719a76b9c7f6855c4b5f9072e9b78eb3b6acf41e3a",
+  "results/s2_main/report.json": "604945f71b6ed910e11088f4b09a41257aecea88ac2b7796eff6832c3cfad8be",
+  "results/s2_e2/report.json": "696d11cf2793087be714a48f19bf203ffa0bc92c7f8d820065aae46cbe5b0c21"
+ },
+ "warmups_excluded": {
+  "main": 1,
+  "complement": 1
+ },
+ "main": {
+  "n": 93733,
+  "stored_classes": {
+   "正常 0": 32442,
+   "1 分": 61246,
+   "0 分：比较出错": 12,
+   "0 分：比较超时": 27,
+   "0 分：回答侧解析出错": 4,
+   "0 分：回答侧解析超时": 1,
+   "0 分：标准答案侧解析超时": 1
+  },
+  "derived_classes": {
+   "正常 0": 32442,
+   "1 分": 61246,
+   "0 分：比较出错": 12,
+   "0 分：比较超时": 27,
+   "0 分：回答侧解析出错": 4,
+   "0 分：回答侧解析超时": 1,
+   "0 分：标准答案侧解析超时": 1
+  },
+  "class_mismatches": [],
+  "n_class_mismatches": 0,
+  "rows_with_multiple_attempts": 0,
+  "event_rows": 54,
+  "event_rows_score_one": 9,
+  "max_wall": 5.235
+ },
+ "complement": {
+  "n": 100034,
+  "stored_classes": {
+   "正常 0": 32664,
+   "1 分": 67330,
+   "0 分：比较出错": 11,
+   "0 分：比较超时": 26,
+   "0 分：回答侧解析出错": 2,
+   "0 分：标准答案侧解析超时": 1
+  },
+  "derived_classes": {
+   "正常 0": 32664,
+   "1 分": 67330,
+   "0 分：比较出错": 11,
+   "0 分：比较超时": 26,
+   "0 分：回答侧解析出错": 2,
+   "0 分：标准答案侧解析超时": 1
+  },
+  "class_mismatches": [],
+  "n_class_mismatches": 0,
+  "rows_with_multiple_attempts": 0,
+  "event_rows": 49,
+  "event_rows_score_one": 9,
+  "max_wall": 5.3699
+ },
+ "identity": {
+  "main_ids_unique_16hex_prefixes": true,
+  "main_complement_id_overlap": 0,
+  "complement_ids_not_matching_a_main_question": 0,
+  "questions_with_duplicate_complement_index": 0,
+  "max_complement_index_exceeds_size": 0,
+  "question_sizes": {
+   "1": 1446,
+   "2": 88456,
+   "3": 49,
+   "4": 3706,
+   "5": 18,
+   "6": 58
+  },
+  "n_answers": 193767,
+  "eligible_multi_answer_questions": 92287
+ },
+ "pairs": {
+  "event_questions_among_eligible": 59,
+  "multiple_event_questions": 42,
+  "directed_pairs": 103,
+  "both_event_pairs": 84
+ },
+ "published_ids_vs_default_records": {
+  "main_k_ids_default_class": {
+   "m-377a40b9adf29ef8": "0 分：比较超时"
+  },
+  "main_u_ids_default_class_matches_report": true,
+  "main_u_ids_all_default_zero": true,
+  "main_u_count": 18,
+  "ext_k_ids_default_score": {
+   "e2-377a40b9adf29ef8-1": 0.0
+  },
+  "ext_u_ids_all_default_zero": true,
+  "ext_u_count": 14,
+  "reference_classes_sum": 33487,
+  "expected_reference_rows": 33487
+ },
+ "error_inclusive_sensitivity_from_report_aggregates": {
+  "reference_error_zero_rows_counted_as_score_0_by_frozen_rule": 16,
+  "premise": "all 1,000 default-1 control rows were 1 under reference, so these error zeros are default-0 rows and are disjoint from k and u (one reference class per row)",
+  "row_pairing_verified": false,
+  "k": 1,
+  "u_frozen": 18,
+  "u_error_inclusive": 34,
+  "upper_endpoint_frozen": 0.00020270342355413782,
+  "upper_endpoint_error_inclusive": 0.00037340104338920123
+ },
+ "agreement_with_e2_report": {
+  "question_sizes": true,
+  "eligible": true,
+  "event_questions": true,
+  "multiple_event_questions": true,
+  "directed_pairs": true,
+  "both_event_pairs": true,
+  "combined_classes": true,
+  "main_table2": true
+ }
+}

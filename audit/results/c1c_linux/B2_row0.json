@@ -1,0 +1,28 @@
+{
+  "case": "B2_row0",
+  "path": "B",
+  "manager": "rate_limited",
+  "failing_rows": [
+    0
+  ],
+  "prediction": "汇总 KeyError，整批中止",
+  "outcome": "aborted",
+  "exception_type": "KeyError",
+  "exception_mro": [
+    "KeyError",
+    "LookupError",
+    "Exception",
+    "BaseException",
+    "object"
+  ],
+  "exception_message_head": "'error'",
+  "traceback": "Traceback (most recent call last):\n  File \"<SCRATCH>/work/companion/experiments/c1c_chain.py\", line 223, in run_case\n    out = gen.union(rlm.compute_rm_score(gen))\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py\", line 369, in compute_rm_score\n    non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])\n                                      ~~~~^^^^^\nKeyError: 'error'\n",
+  "raise_site": "verl/experimental/reward_loop/reward_loop.py:369",
+  "seconds": 16.65,
+  "worker_log_lines_reward_failed": [
+    "\u001b[36m(RewardLoopWorker pid=10326)\u001b[0m ERROR:2026-11-03 08:24:17,473:Reward computation failed for data_source=rewardfail_c1c: A process in the process pool was terminated abruptly while the future was running or pending.. Response preview: The answer is \\boxed{4}. [[INJECT_WORKER_DEATH]]#row=0..."
+  ],
+  "injected_worker_deaths_by_row": {
+    "0": 2
+  }
+}
