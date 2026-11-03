@@ -1,0 +1,74 @@
+{
+ "pass": "default",
+ "mode": "observe",
+ "extra": [],
+ "tasks": 93733,
+ "P": 1,
+ "P_info": {
+  "budget_gib": 3.027,
+  "available_gib": 4.527,
+  "supervisor_gib": 0.248,
+  "pipeline_gib_from_pilot": 0.839,
+  "child_base_gib_from_pilot": 0.298,
+  "child_limit_gib": 3.0,
+  "formula_P": 0,
+  "max_P": 1,
+  "pilot_report": "results/s2_rev1/pilot/report.json",
+  "override": "用户 2026-10-07 指示：公式 P=0 时仍按 P=1 试跑，用户自行监控；整机保护照常（experiments/s2_main_userP1.py）"
+ },
+ "supervise": {
+  "aborted": null,
+  "history": [
+   {
+    "launch": 1,
+    "P": 1,
+    "codes": [
+     0
+    ],
+    "stopped": false,
+    "interrupted": 0,
+    "orphans_killed": 0
+   }
+  ],
+  "seconds": 892.0,
+  "guard": {
+   "budget": 3250077696,
+   "child_limit": 3221225472,
+   "avail_start": 4860690432,
+   "swap_start": 1154547712,
+   "swap_base_end": 1154547712,
+   "peak_total_fp": 2141180536,
+   "min_avail": 4423172096,
+   "max_pressure": 1,
+   "budget_kills": 0,
+   "hard_stops": 0
+  }
+ },
+ "stats": {
+  "rows": 93733,
+  "warm_rows": 1,
+  "pools": {
+   "default1w0": 1
+  },
+  "exit_codes": {
+   "0": 1
+  },
+  "budget_kills": 0,
+  "hard_stops": 0,
+  "interrupted_rows": 0,
+  "file_problems": {
+   "workers": {},
+   "pids": {}
+  },
+  "dup_results": []
+ },
+ "seconds": 915.1,
+ "load": {
+  "status_records": 89,
+  "load1_p50": 3.67,
+  "load1_max": 4.77,
+  "pressure_max": 1,
+  "avail_min_gib": 4.251,
+  "swap_max_gib": 1.075
+ }
+}

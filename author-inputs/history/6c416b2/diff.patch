@@ -1,0 +1,235 @@
+diff --git a/README.md b/README.md
+index 796080c..efc21bc 100644
+--- a/README.md
++++ b/README.md
+@@ -198,7 +198,7 @@ bash get_data.sh --check    # 只核对已有文件：不下载，不建目录
+ .venv/bin/python -I tests/test_s2_stepguard.py       # 约 40 秒
+ .venv/bin/python -I experiments/s2_rev1_recheck.py
+ .venv/bin/python -I experiments/s2_rev1_switch_repeat.py   # 约 30 秒
+-# Codex 审核修订并经用户确认后才跑：.venv/bin/python -I experiments/s2_main.py --source main --confirm-main
++# 主测量（10-07 已跑，见本文末）：.venv/bin/python -I experiments/s2_main.py --source main --confirm-main --P 1
+ ```
+ 
+ **自检**（`results/s2_selftest/report.json`）：70 项全过，用时 267 秒。G 保护逻辑 12、G2 真实内存读数 2、A 顺序注入 22、B 并发连带 7、C 开关对照 11、R 参照时限 4、D 整项停止 6、E 中断重跑与调度不在 6。同日第一次完整自检 58 项里 D 段 3 项未过：每秒采样的进程合计 RSS 峰值 1.15 GiB（`peak_total_rss`），低于那次 1.32 GiB 的预算，整项停止没有触发（0.88 GiB 只是第 10 秒的合计读数，不是峰值，也不是单行占用）。改按 footprint 后通过。RSS 下降而 footprint 保持的证据是独立探针 `results/s2_selftest/footprint_probe.*`（600 MiB：RSS 从 621 掉到 350 MiB，footprint 一直 612 MiB）；G2 那次 RSS 没有下降，只证明 400 MiB 的存续占用按 footprint 计入。
+@@ -236,3 +236,31 @@ bash get_data.sh --check    # 只核对已有文件：不下载，不建目录
+ - 真实入口（`main_test/resume_e2e.json`，8 项全过）：在主测量脚本测试的副本里删掉 retest 段和报告，用真实入口续跑，“构建任务与生成版本锁”做完后注入停止：退出码 7，没有核对版本锁、没有派发 retest、没有写报告，副本里原有文件逐个不变；之后不注入照常续跑，只重跑 retest，各表与第一次相同。
+ - 版本锁日志。“构建任务与核对版本”改名“构建任务与生成版本锁”；比较单独成“核对版本锁”一块，拒绝续跑时它的结束记录写 `outcome=error`，`error` 里列出不同项。
+ - 测量进程收尾的退出码。第二次修订后第一次重跑主测量脚本测试时，外层超时那行恰好是测量进程的最后一行：收尾离杀子进程只有 0.1 毫秒，读不到退出码，那行在默认和第二次重放里记成“观测不完整（未裁定）”，合成行核对因此不过（结果留在 `main_test/attempt1-70dc00e/`）。这个时序问题从 `99b086d` 起就有。`obs.py` 的收尾改为先等还没有退出码的子进程，合计最多 5 秒（`6c6cf9b`）。重跑后 16 个测量进程收尾都记到了退出码，注入行与 300 行真实回答的结果与第一次修订后的测试相同，只有耗时数值不同（`main_test/report.json`）。因为改了测量进程，完整自检重跑：90 项，通过 89，未通过 0，未验证 1（仍是 G2，RSS 没降；`selftest/report.json`）。续跑单元测试 25 项全过（`resume_check.json`）。资源试跑和开关对照没有重跑。
++
++## 第二阶段主测量（10-07 晚，待 Codex 审核）
++
++Codex 第二次修订复核（申请季方案第 17 节）放行后，10-07 20:25–22:28 对主样本 93,733 行跑完，代码是 `9a88991`，版本锁续跑核对每次一致。结果在 `results/s2_main/report.json`；原始记录在 `~/.local/share/rewardfail/stage2/runs/main-20261007-202545/`，每次启动、停止与资源调整记在同级的 `main-20261007-202545-attempts.log`。
++
++调度偏离 Codex 第 17.5 节“公式给出 P=0 就停”（用户 10-07 指示，申请季 D132、D135）：
++- `experiments/s2_main_userP1.py`：只把调度用的 `choose_P` 换成“公式 P=0 时仍取 P=1”，跑完默认一遍。
++- `experiments/s2_main_sched.py`：参照段先开 3 条，被保护停下后由续跑脚本降到 2 条、1 条。其余各段 1 条，与默认一遍同条件。
++- 判分、分类、指标与门槛的代码都没改；每段 `pass_done.json` 的 `P_info` 记着公式值和 override。
++
++**正式报告有一处归因错误，必须先看诊断。** 参照段 9,864 行记成“本机预算终止（未裁定）”，实际被杀的只有 2 行：`m-8364284f555502b7` 和 `m-2a2cbb703cd7d47a`，每行两次，每次 3–4 GiB。原因是 `analyze.py` 按子进程 pid 和池代次归因：同一个子进程此前正常判完的几千行，也被一起记成预算终止。
++
++`experiments/s2_diag_budget.py` 在临时副本上只改这一处归因，重新合成并重算，结果写在 `results/s2_main/budget_attribution_diag.json`。这份诊断未经审核，正式报告原样保留。
++
++| | 正式报告 | 诊断 |
++|---|---|---|
++| k（默认 0、参照 1） | 1 | 1（同一行） |
++| u（未裁定） | 9,573 | 18 |
++| 主指标单侧 95% 上界（k+u） | 10.4% | 0.0297% |
++| 参照核查默认得 1 的 1,000 行 | 695 行为 1，305 行未裁定 | 1,000 行都是 1 |
++| 判定 | 介于之间 | 介于之间（继续三条都不成立；上界不低于万分之一，不满足停止） |
++
++其他结果：
++- 默认一遍：没有外层超时、池损坏、最终异常或单行超过 10 秒。库内比较超时 27 行，比较出错 21 行。
++- 唯一的 k 行是默认比较超时 5 秒记 0，参照约 7.6 秒判出 1。
++- 时限 2/5/10 秒的 928 行里，3 行时限敏感。
++- 三次重放 9,898 行全部与默认一致。重放集合因上面的归因错误扩大了，多出的行不影响结论。
++- 1% 重测 963 行没有变化；没有条件实验候选。
+diff --git a/experiments/s2_diag_budget.py b/experiments/s2_diag_budget.py
+new file mode 100644
+index 0000000..0ea5727
+--- /dev/null
++++ b/experiments/s2_diag_budget.py
+@@ -0,0 +1,97 @@
++"""诊断（Claude 2026-10-07，未经审核，不是正式报告）：主测量参照段“本机预算终止”的归因。
++
++正式规则（方案第 6 节；rewardfail/s2/guard.py 文件头）：单个进程池子进程超过上限被杀，“那一行记未裁定”。
++rewardfail/s2/analyze.py 按子进程 pid（budget_killed）和池代次（gen_budget_kills）归因：参照段一个子进程连续判几千行，
++它后来在某一行上超限被杀，此前已正常结束的几千行也都被记成“本机预算终止（未裁定）”。
++
++这里把参照段复制到临时目录，在副本上重新合成逐行记录，只改一处：一次尝试的子进程已经写出 task_end（这一行在它被杀之前
++已经判完），且结局不是池损坏或外层超时，就不再记预算终止。其余合成、分类、主指标与判定代码原样调用。原始运行目录只读。
++输出：results/s2_main/budget_attribution_diag.json。
++
++用法：.venv/bin/python -I experiments/s2_diag_budget.py [运行目录]
++"""
++import hashlib
++import json
++import shutil
++import sys
++import tempfile
++from collections import Counter
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT))
++
++from rewardfail.s2 import analyze, report  # noqa: E402
++
++RUN = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.home() / ".local/share/rewardfail/stage2/runs/main-20261007-202545"
++OUT = ROOT / "results/s2_main/budget_attribution_diag.json"
++fixed = Counter()
++
++
++def fix(row):
++    for a in row["attempts"]:
++        c = a.get("child")
++        if c and c.get("task_end") is not None and a.get("outcome") not in ("broken_pool", "outer_timeout"):
++            if c.get("budget_killed") or a.get("gen_budget_kills"):
++                fixed[row["id"]] += 1
++            c["budget_killed"] = False
++            a["gen_budget_kills"] = []
++    return row
++
++
++def classes(path):
++    out = {}
++    with open(path, encoding="utf-8") as fh:
++        for line in fh:
++            r = json.loads(line)
++            out[r["id"]] = r["class"]
++    return out
++
++
++def manifest(run):
++    files = sorted(p for p in run.rglob("*") if p.is_file())
++    lines = [f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(run)}" for p in files]
++    return len(files), hashlib.sha256("\n".join(lines).encode()).hexdigest()
++
++
++def main():
++    n_before, m_before = manifest(RUN)
++    _check, _classify = analyze.check_row, analyze.classify
++    analyze.check_row = lambda row: _check(fix(row))
++    analyze.classify = lambda row: _classify(fix(row))
++    with tempfile.TemporaryDirectory() as tmp:
++        copy = Path(tmp) / "reference"
++        shutil.copytree(RUN / "reference", copy)
++        stats = analyze.summarize_stream(copy, copy / "rows-diag.jsonl")
++        rcls_new = classes(copy / "rows-diag.jsonl")
++    rcls_old = classes(RUN / "reference/rows.jsonl")
++    dcls = classes(RUN / "default/rows.jsonl")
++    ids = [i for i in dcls if not i.startswith("warm-")]
++    m_old, k_old, _ = report.main_metric(ids, dcls, rcls_old)
++    m_new, k_new, u_new = report.main_metric(ids, dcls, rcls_new)
++    ones = [i for i in rcls_new if not i.startswith("warm-") and report.default_verdict(dcls.get(i)) == 1]
++    changed = Counter((rcls_old[i], rcls_new.get(i)) for i in rcls_old if rcls_old[i] != rcls_new.get(i))
++    n_after, m_after = manifest(RUN)
++    out = {"what": "诊断：参照段预算终止只记被杀时仍在判的那一行，重新合成后重算主指标（未经审核，不是正式报告）",
++           "run_dir": str(RUN), "rows_with_fixed_attempts": len(fixed), "fixed_attempts": sum(fixed.values()),
++           "reference_classes": {"official": dict(Counter(rcls_old.values())), "diagnostic": dict(Counter(rcls_new.values()))},
++           "class_changes": {f"{a} → {b}": n for (a, b), n in changed.most_common()},
++           "budget_rows_diagnostic": sorted(i for i, c in rcls_new.items() if c == "本机预算终止（未裁定）"),
++           "interrupted_twice_diagnostic": sorted(i for i, c in rcls_new.items() if c.startswith("未裁定（中断两次")),
++           "main_metric": {"official": m_old, "diagnostic": m_new},
++           "k_ids": {"official": k_old, "diagnostic": k_new}, "u_ids_diagnostic": u_new,
++           "reference_on_default_1": {"official": dict(Counter(rcls_old.get(i) for i in ones)),
++                                      "diagnostic": dict(Counter(rcls_new[i] for i in ones))},
++           "reference_events": {"official": sum(1 for c in rcls_old.values() if c not in ("1 分", "正常 0")),
++                                "diagnostic": sum(1 for c in rcls_new.values() if c not in ("1 分", "正常 0"))},
++           "resynth_stats": {k: v for k, v in stats.items() if k in ("rows", "warm_rows", "pools", "budget_kills",
++                                                                     "hard_stops", "interrupted_rows")},
++           "raw_files": {"before": [n_before, m_before], "after": [n_after, m_after], "unchanged": m_before == m_after}}
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
++    m = m_new
++    print(f"诊断：k={m['k']} u={m['u']} 上界={m['upper_one_sided_95_k_plus_u']:.3g}（正式 u={m_old['u']}，"
++          f"上界={m_old['upper_one_sided_95_k_plus_u']:.3g}）；原始文件不变={out['raw_files']['unchanged']}")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/experiments/s2_main_sched.py b/experiments/s2_main_sched.py
+new file mode 100644
+index 0000000..f33c433
+--- /dev/null
++++ b/experiments/s2_main_sched.py
+@@ -0,0 +1,43 @@
++"""主测量的调度包装：按段设定并发（申请季 D132，用户 2026-10-07：按实际运行表现充分使用本机资源，
++不因静态公式算出零并发或保守预算停工）。接替 experiments/s2_main_userP1.py（只做“公式 P=0 时取 P=1”）。
++
++为什么另写包装而不改 s2_main.py：执行文件在版本锁里，Codex 审过的是 9a88991 的版本；这里只替换调度用的
++choose_P，判分、种子、样本、指标、门槛、未裁定规则与续跑核对全部沿用原文件。
++
++各段的并发（Claude 的中间决定，理由记在方案里）：
++- reference：P=REF_P。参照给每行 300 秒宽时限，用来得出参照裁定，CPU 竞争对它的影响远小于对计时口径的影响；
++- 其他各段（default、limit2s、limit10s、replay1–3、retest）：P=1。这几段量的就是超时与异常，并发引入的 CPU 竞争
++  会混进被测量本身；保持与默认段（P=1）同一条件，结果才可比。
++方案第 6 节公式的值照常算出并记在 P_info（formula_P），只作记录，不再拦停；每段的 P_info 另记 override 与
++schedule，写进 pass_done.json 和报告。整机保护（guard.py、stepguard.py）照常：内存压力、交换区增长、可用内存过低等
++仍会暂停或停止，停止后从断点续跑，必要时降低 REF_P（环境变量 S2_REF_P）。
++"""
++import os
++import sys
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++
++import s2_main  # noqa: E402
++
++REF_P = int(os.environ.get("S2_REF_P", "3"))
++NOTE = "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）"
++_choose, _run_pass = s2_main.choose_P, s2_main.run_pass
++_current = {"name": None}
++
++
++def choose_P(a):
++    _, info = _choose(a)
++    P = REF_P if _current["name"] == "reference" else 1
++    return P, dict(info, override=NOTE, schedule={"reference": REF_P, "其他各段": 1})
++
++
++def run_pass(base, name, tasks, mode, extra, a):
++    _current["name"] = name
++    return _run_pass(base, name, tasks, mode, extra, a)
++
++
++s2_main.choose_P, s2_main.run_pass = choose_P, run_pass
++
++if __name__ == "__main__":
++    s2_main.main()
+diff --git a/experiments/s2_main_userP1.py b/experiments/s2_main_userP1.py
+new file mode 100644
+index 0000000..672358c
+--- /dev/null
++++ b/experiments/s2_main_userP1.py
+@@ -0,0 +1,32 @@
++"""主测量的调度包装：方案第 6 节公式算出 P=0 时仍按 P=1 开一条（用户 2026-10-07 21:2x 指示：
++“apple有内存管理机制，先跑试一下，我会来监控”）。
++
++为什么另写包装而不改 s2_main.py：s2_main.py 等执行文件在版本锁里，Codex 审过的是 9a88991 的版本；这里只替换
++调度用的 choose_P，判分、种子、样本、指标、门槛、未裁定规则与续跑核对全部沿用原文件。
++- 公式给出 P≥1 时不干预，结果与直接运行 s2_main.py 相同；
++- 公式给出 P=0 时取 P=1（--P 仍是上限），并在 P_info 里记 override 与原公式值，写进每段的 pass_done.json 和报告；
++- 整机保护（guard.py、stepguard.py）照常运行：内存压力、交换区增长、可用内存过低等条件照样暂停或停止。
++这偏离了 Codex 第 17.5 节“公式给出 P=0 就停”的继续条件，须交 Codex 审核时说明。
++"""
++import sys
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++
++import s2_main  # noqa: E402
++
++NOTE = "用户 2026-10-07 指示：公式 P=0 时仍按 P=1 试跑，用户自行监控；整机保护照常（experiments/s2_main_userP1.py）"
++_choose = s2_main.choose_P
++
++
++def choose_P(a):
++    P, info = _choose(a)
++    if P < 1 <= a.P:
++        P, info = 1, dict(info, override=NOTE)
++    return P, info
++
++
++s2_main.choose_P = choose_P
++
++if __name__ == "__main__":
++    s2_main.main()

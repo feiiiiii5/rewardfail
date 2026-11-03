@@ -1,0 +1,1257 @@
+%% Manuscript revision: 2026-10-12. Public-version status is recorded separately.
+%%
+%% Every measured number must trace to a committed result file in this
+%% repository (results/...) or to a run directory listed in "Reproduction".
+%% Conditional arithmetic is defined by the displayed vectors and conventions.
+%%
+%% Build: tectonic -X compile main.tex
+%%
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{url}
+\usepackage{xurl}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\setlength{\belowcaptionskip}{6pt}
+\usepackage[numbers,sort&compress]{natbib}
+\let\cite\citep
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\hypersetup{
+  pdfauthor={Yufeiyang Chen},
+  pdftitle={When the Verifier Cannot Decide: Tracing Math-Verify Failures Through an RLVR Reward Pipeline},
+  pdfkeywords={reinforcement learning with verifiable rewards; reward verification; mathematical reasoning; software reliability; large language models}
+}
+
+\newcommand{\mv}{Math-Verify}
+
+\title{When the Verifier Cannot Decide: Tracing {Math-Verify} Failures\\
+Through an {RLVR} Reward Pipeline }
+\author{Yufeiyang Chen\thanks{The author's primary contributions were
+selecting the research topic and determining the research direction and
+methodology. AI agents (Claude and Codex) provided substantial assistance
+with implementation, experiment execution, code-based analysis and
+manuscript drafting. The author is responsible for the manuscript and its
+claims.}\\[2pt]
+School of Cyber Science and Technology, Sun Yat-sen University, Shenzhen, China\\
+Correspondence: \texttt{fei76161@gmail.com}}
+\date{12 October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+An unsuccessful mathematical verification can yield the same reward as
+a wrong answer. Preserving the distinction requires more than catching
+an exception at the scorer. We audit Math-Verify, its wrapper, a reward
+manager and batch aggregation in a pinned verl configuration.
+Persistent-worker injections reproduce a known sparse-metadata failure:
+moving the same failed row changes the outcome from a lost flag to a
+batch exception. We trace its interaction with the wrapper's flagging
+contract and test row-preserving aggregation in 21 regression fixtures.
+A pre-declared replay of 93,733 stored responses observes 54 library-event
+rows; longer limits recover one zero-to-one verdict and leave 18 rows
+undecided. The realised sample therefore permits one to nineteen
+recoveries under the declared reference protocol. Separate replays
+cover all 193,767 stored answers and a human-labelled answer set.
+Matched shared-pool experiments connect natural heavy inputs to a batch
+abort under diagnostic 60-second library and 30-second outer limits;
+default-limit and serial controls complete. Together, the measurements
+specify regression requirements at the consumer boundary and show how
+timeout and recovery policies interact under concurrency. The replay
+rates describe the fixed corpora and protocols, longer limits are not
+ground truth, and no training effect is inferred.
+\end{abstract}
+
+\noindent\textbf{Keywords:} reinforcement learning with verifiable rewards;
+reward verification; mathematical reasoning; software reliability; large language models.
+
+%% ---------------------------------------------------------------------------
+\section{Introduction}
+
+RLVR replaces a learned reward model with a program that checks each answer
+against a reference \cite{lambert2024tulu3,shao2024deepseekmath,deepseek2025r1}.
+For mathematics the check is usually symbolic: the answer and the reference
+are parsed into SymPy expressions and compared, and a library such as
+\mv{} \cite{mathverify} wraps the parsing and comparison in time limits
+because some expressions are expensive to evaluate. The reward is binary,
+but the checking program has a third outcome that the binary reward cannot
+express: it may fail to decide. A comparison can time out, a parser can
+raise, the subprocess that runs the check can be killed, and a process
+pool shared by many rows can break.
+
+Training frameworks have repeatedly run into this third outcome. In verl \cite{sheng2024hybridflow}, contributors have reported that a
+signal-based time limit that could not be armed in a Ray worker thread made
+every MATH reward zero until the limit was disabled \cite{verl5635}, that
+disabling it then let training hang \cite{verl5839}, and that a dead or stuck
+scoring subprocess yields persistent zero rewards \cite{verl8011}. The pull request that addresses the last report
+\cite{verl8015} rebuilds a broken pool, kills a stuck one, and propagates
+persistent failures upward ``so the reward manager can flag the row''.
+Separately, contributors have already reported sparse-metadata loss and
+batch exceptions, and proposed union-key assembly in one or both batch
+paths \cite{verl6545,verl7151}. These records establish known failure
+mechanisms and candidate repairs. They do not by themselves give a rate
+estimate for the fixed response corpus studied here, or establish how
+the \#8015 wrapper's failure reporting behaves when composed with its
+manager and aggregation paths.
+
+We audit the reward pipeline as an end-to-end contract. A wrapper can
+correctly report an error while aggregation removes that report; a larger
+timeout can recover a verdict while also keeping costly work alive for
+longer. Component-level tests therefore need to be connected to row-level
+batch behaviour. We combine executable mechanism tests, fixed-response
+replay and matched shared-pool controls to examine these relationships in
+one pinned configuration. We ask:
+\begin{enumerate}[label=\textbf{RQ\arabic*},leftmargin=*]
+\item When the reward wrapper reports a failure, does that information
+      survive the reward manager and batch aggregation?
+      (\S\ref{sec:mechanism})
+\item Which verifier events and limit-sensitive verdict changes occur in
+      the stored responses, and how do they compare with representation
+      effects in a separate labelled answer set?
+      (\S\ref{sec:prevalence})
+\item How do time limits and concurrent pool recovery interact when
+      naturally heavy inputs enter a scoring batch?
+      (\S\ref{sec:consequences})
+\end{enumerate}
+The pinned framework comparison (\S\ref{sec:frameworks}) and conditional
+advantage calculations (\S\ref{sec:update}) put these measurements in
+context; they are not additional full-framework experiments or learning
+outcomes.
+
+\paragraph{Contributions.}
+\begin{enumerate}[nosep,leftmargin=*]
+\item \textbf{A reproduced mechanism and an executable aggregation contract.}
+  We trace an already reported sparse-schema failure through the real
+  wrapper, manager and aggregation functions, using persistent-worker
+  injections to test failure reporting. A bounded prototype based on the
+  existing union-and-fill approach preserves the reward vector and aligned
+  metadata in 21 fixtures, providing a concrete regression target
+  (\S\ref{sec:mechanism}).
+\item \textbf{A paired measurement of verifier decisions and unresolved cases.}
+  A pre-declared replay covers 93,733 responses and carries unresolved
+  rows into a conservative bound. Separate extensions cover all 193,767
+  stored answers and 5,556 human-labelled extracted answers, distinguishing
+  timeout-sensitive verdicts from representation-sensitive ones
+  (\S\ref{sec:prevalence}).
+\item \textbf{Controlled evidence for timeout--concurrency interactions.}
+  Natural heavy inputs connect the recovery wrapper's previously reported
+  reset interaction to a manager-level batch abort under relaxed diagnostic
+  limits. Matched default-limit, serial and single-heavy controls isolate
+  the tested conditions. A pinned framework audit and conditional
+  advantage calculations explain the surrounding policies and their
+  possible consequences (\S\ref{sec:consequences}--\ref{sec:update}).
+\end{enumerate}
+
+\paragraph{Scope.}
+The experiments ran on one machine (Apple M2 Pro, 10 cores,
+16\,GiB, macOS, Python 3.12.8) against pinned code; framework comparisons
+are source audits and advantage examples are conditional calculations. Rates describe
+\emph{this filtered dataset re-verified under the declared protocol}, not
+natural rates during training. The reference judgement is the same verifier
+with longer time limits, not ground truth. No model was trained.
+
+\paragraph{Why three kinds of evidence.}
+Injected failures test whether information survives a particular code
+path; they do not estimate how often a verifier fails on model output.
+Stored-response replays supply counts under a fixed scoring protocol,
+including unresolved cases. Matched heavy-input scenes then vary timeout
+and recovery policies to isolate their effects on a batch. Keeping these
+roles separate prevents a demonstrated mechanism, a corpus frequency and
+a diagnostic batch abort from being mistaken for the same result.
+
+%% ---------------------------------------------------------------------------
+\section{Background}
+\label{sec:background}
+
+\paragraph{Reward computation in verl.}
+In the pinned verl revision, the default routing sends the MATH datasets to
+verl's own \texttt{math\_reward} scorer, not to \mv{}; the \mv{} wrapper is
+an optional scorer that a user selects with a custom reward function, as
+verl's own tests do. Rewards
+are computed by a reward manager. The default \texttt{naive} manager calls
+the scoring function in a thread pool (via \texttt{run\_in\_executor}) and does
+not catch exceptions; the \texttt{rate\_limited} manager limits concurrency
+(default~1), and on a timeout or exception records a reward of $0.0$ together
+with an extra \texttt{timeout} or \texttt{error} key. The default reward
+configuration starts 8 reward workers. When rewards are computed during
+generation, each response is sent to a randomly chosen worker; when they are
+computed after generation, the batch is split into contiguous chunks.
+Routing and worker/chunk counts were checked at the tested head
+\texttt{0c4c3d4}; they do not imply eight request threads per worker.
+
+\paragraph{The \mv{} wrapper in pull request \#8015.}
+The wrapper at head \texttt{0c4c3d4} keeps a module-level
+\texttt{ProcessPoolExecutor} with at most four spawned workers. It submits
+each row and waits at most 30\,s. On an outer timeout it cancels its own
+task, kills every worker of the current pool, and returns
+\texttt{timeout\_score} (default $0$). On the first broken-pool error it
+rebuilds the pool and retries once; a second consecutive failure is raised
+to the caller. Python's executor marks every pending future of a broken pool
+as failed, so one dying worker affects every row in flight on that pool.
+
+\paragraph{Time limits inside \mv{}.}
+\mv{} 0.9.0 enforces its own limits with \texttt{signal.alarm}: 5\,s for
+parsing each side and 5\,s for each candidate pair in the comparison. With
+\texttt{raise\_on\_error} left at its default (false), a parse that times out or raises
+returns an empty list and a pair that times out or raises counts as
+``not equal''; if another pair (for instance the plain-string pair) matches,
+the overall verdict is still true. The library's timeout exception derives
+from \texttt{BaseException}. Because \texttt{signal.alarm} only works on
+the main thread, calling it from another thread raises an error, which the
+library rewrites into an explicit message; the wrapper calls the library in
+the main thread of its pool subprocesses.
+
+%% ---------------------------------------------------------------------------
+\section{Verdicts, failures and contracts}
+\label{sec:contracts}
+
+We distinguish four kinds of zero (Table~\ref{tab:events}). This study traces
+undecided verdicts and reference-side failures through the scoring pipeline.
+
+\begin{table}[h]
+\centering
+\caption{What a zero reward can mean.}
+\label{tab:events}
+\small
+\begin{tabular}{@{}p{3.4cm}p{6.3cm}l@{}}
+\toprule
+Event & Example & Responsibility \\
+\midrule
+Ordinary negative & declared unequal, or no answer admitted by the extraction policy & policy \\
+Policy over budget & truncated response, exhausted turns & policy \\
+Verifier undecided & library timeout or exception, dead worker, broken pool & infrastructure \\
+Data-side failure & the reference answer itself cannot be parsed & data \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Whether a zero for an undecided verdict is a \emph{defect} depends on the
+contract the pipeline claims to implement. Under a \emph{budget contract}
+(``correct means provably correct within the compute budget'') a timeout
+scored as wrong is intended. An \emph{observability contract} instead
+requires a failed attempt to remain distinguishable from a negative verdict,
+even when both receive zero. A separate \emph{exclusion policy} must specify
+whether an undecided row is removed from the group statistics, the loss,
+and its denominator. A promise to flag a failure does not by itself promise
+to exclude it from optimisation. We call
+behaviour a defect only when a pinned implementation states a contract in
+code comments, documentation or a pull-request description and its runtime
+behaviour departs from it. Where no contract is stated we report a
+\emph{contract ambiguity}. We also separate the \emph{default protocol}
+(library defaults, framework routing and platform as shipped) from
+\emph{diagnostic protocols} that change parameters to make failures visible;
+results under the latter are never reported as default behaviour.
+The uniform-key expectation stated in the discussion of \#6545
+\cite{verl6545} is relevant here: our question is how that assumption
+composes with a manager that emits failure-only keys. We test the
+specified returned reward and metadata views, rather than assuming that
+every sparse dictionary is valid under every consumer's contract.
+
+%% ---------------------------------------------------------------------------
+\section{What happens to a failure flag}
+\label{sec:mechanism}
+
+Pull request \#8015 states an observability contract for persistent
+failures: the wrapper raises ``so the reward manager can flag the row'', and
+the \texttt{rate\_limited} manager does write an \texttt{error} key. We tested
+whether the flag reaches the consumer.
+
+\paragraph{Setup.}
+We ran verl at the pull-request head with the real \texttt{rate\_limited}
+manager, the real reward-loop workers and both aggregation functions (the
+per-sample path used during generation and the batch path used after it).
+Generation was replaced by fixed response texts, so no model was loaded.
+Persistent failure was injected by making the scoring subprocess call
+\texttt{os.\_exit(17)} on a marked response, on every attempt; a ledger
+recorded each injection. Thirteen cases varied the position of the failing
+row, whether whole chunks or whole batches failed, and the manager.
+The two recorded runs are in \texttt{results/c1c/run1/} and
+\texttt{results/c1c/run2/}, against execution commit \texttt{cc87848}.
+They expose the same outcomes on repeated execution of the declared cases.
+
+\paragraph{Results.}
+Both aggregation paths take the set of extra-information keys from the
+\emph{first} row of a chunk and then index every row by those keys.
+This is the sparse-schema mechanism already described in
+\cite{verl6545,verl7151}. Our failure injection makes the incompatible
+manager outputs and their returned failure information explicit:
+\begin{itemize}[leftmargin=*]
+\item If the failing row is not first, the batch completes, the failing row
+      contributes $0$, and the reward returned by \texttt{extract\_reward}
+      carries no failure flag: from that return value a failed scoring is
+      indistinguishable from a wrong answer. (The raw per-sample column on
+      the generation path still holds the flag; we did not run a full trainer
+      to see whether anything reads it.)
+\item If the failing row is first and other rows are normal, aggregation
+      raises \texttt{KeyError} and the batch aborts. Moving the \emph{same}
+      originally correct answer from a later position to the first reproduced
+      the switch, so position, not content, decides between the two outcomes.
+\item If an entire chunk fails, mismatched keys or metadata across chunks
+      trigger assertion failures; if the entire batch fails, zeros and flags
+      are returned consistently.
+\item Under the default \texttt{naive} manager the same failure aborts the
+      batch with the true cause, because the manager does not catch it. The
+      flagging design therefore only applies with \texttt{rate\_limited}.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering\small
+\fbox{\begin{minipage}{0.94\textwidth}
+\centering
+\textbf{Wrapper exception $\longrightarrow$ manager returns reward 0 and an error flag}
+
+\medskip
+\begin{tabular}{@{}p{2.5cm}ccc p{5.6cm}@{}}
+\toprule
+Failed row & Row 1 & Row 2 & Row 3 & First-row-key aggregation \\
+\midrule
+Row 2: rewards & 1 & 0 & 1 & first row has no error key \\
+Error metadata & --- & error & --- & error column is omitted \\
+\addlinespace
+Row 1: rewards & 0 & 1 & 1 & first row contains the error key \\
+Error metadata & error & --- & --- & indexing a normal row raises \texttt{KeyError} \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\textbf{Union-and-fill aggregation: retain the key and align missing entries explicitly}
+\end{minipage}}
+\caption{Schematic of the row-position effect. Common metadata is omitted;
+three rows illustrate the first-row key rule rather than a new measured
+batch. Both real aggregation paths exhibit this effect. The tested repair
+prototype applies only to batch assembly after scoring, with missing
+entries represented by \texttt{None}.}
+\label{fig:failure-flag}
+\end{figure}
+
+\paragraph{Row-preserving aggregation.}
+Union-key assembly with explicit missing entries was proposed upstream
+\cite{verl6545,verl7151}; it is not a new repair algorithm. We use a
+bounded local version to specify and test the failure-recording contract.
+Let a batch contain ordered pairs $(r_i,e_i)$, where $r_i$ is the numerical
+reward and $e_i$ is the row's optional metadata dictionary. An aggregation
+that preserves failure information must satisfy three requirements:
+\begin{enumerate}[nosep,leftmargin=*]
+\item \emph{Key completeness:} retain every key in
+      $K=\bigcup_i \mathrm{keys}(e_i)$, including keys absent from the first row.
+\item \emph{Row alignment:} each metadata column has one entry per returned
+      reward, in the same order after any padding and trimming. Absence
+      requires an explicit representation rather than dropping the column.
+\item \emph{Reward preservation:} adding observational metadata leaves
+      the numerical reward vector unchanged; exclusion from an update is
+      a separate policy decision.
+\end{enumerate}
+The first-row key rule violates completeness, and direct indexing assumes
+every row has every retained key. The fixtures below exercise these two
+failure modes at each row position and check alignment across worker
+chunks. These are aggregation requirements; they cannot expose a library
+failure that was never included in $e_i$.
+
+\paragraph{Row-permutation equivariance.}
+For a batch without padding, the same requirements imply an executable
+metamorphic check: reordering fixed scorer outputs should only reorder
+the returned rewards and metadata. If $\pi$ is a row permutation and
+$A(B)$ assembles batch $B$, then for every retained metadata key $k$,
+\[
+ \mathrm{scores}(A(\pi B))=\pi\,\mathrm{scores}(A(B)),\qquad
+ \mathrm{column}_k(A(\pi B))=\pi\,\mathrm{column}_k(A(B)).
+\]
+The retained key set should be unchanged. Moving a flagged row to the
+first position violates this requirement in the original code even
+though its scorer output has not changed. The eight error-position and
+eight timeout-position fixtures below exercise the same row-alignment
+requirement for the local prototype.
+
+\paragraph{A bounded aggregation repair.}
+We tested a local prototype on the pinned batch aggregation method, changing
+only two assignments: take the union of extra keys over all rows, and fill
+missing entries with \texttt{None} in object-valued columns. Twenty-one
+fixed scorer-output fixtures cover an \texttt{error} or \texttt{timeout}
+at each of eight positions, mixed flags, empty extras, normal outputs and
+padding/trimming across two workers. The original method omits columns in
+16 fixtures and raises in three; the prototype returns the expected reward
+vector and aligned extra values in all 21. Upstream source was unchanged.
+This is a local regression of batch assembly with fixed scoring outputs and
+substituted Ray transport, not a verifier or training run. It does not repair
+the generation-path concatenation, naive-manager exceptions or silent
+library failures, and downstream acceptance of \texttt{None} or a masking
+policy remains untested.
+
+\paragraph{Library-internal timeouts do not reach the wrapper's timeout branch.}
+The wrapper maps the library's timeout exception to \texttt{timeout\_score}.
+With default parameters the library catches its own timeouts first, so the
+branch is not reached: setting \texttt{timeout\_score} to $-7$ left
+library-level failures at $0$ or $1$, and only the outer 30-second wait and an
+explicitly raised timeout returned $-7$. In a controlled slow comparison, two
+originally correct answers dropped to $0$, while a third still scored $1$
+through the string fallback. Because no contract states which timeout layers
+\texttt{timeout\_score} is meant to cover, we report this as a contract
+ambiguity, not a defect.
+
+\paragraph{Mechanism evidence and replay incidence.}
+The aggregation behaviour is a property of real verl code at the tested head,
+exercised end to end through the manager. The failure itself was injected; it
+does not show that natural inputs reach the propagation path. The next
+section measures what natural inputs do.
+
+%% ---------------------------------------------------------------------------
+\section{How often: re-verifying 93,733 responses}
+\label{sec:prevalence}
+
+\subsection{Protocol}
+
+The sample, replay settings, observation checks, follow-up selection and
+decision rule were fixed before the main sample was scored (execution
+snapshot \texttt{9a88991}). The sample map and threshold calculations are
+distributed under \texttt{plan/} in the companion archive. The finite-sample
+recovery range below is an additional interpretation of the same frozen
+counts, not a change to the pre-declared rule.
+
+\paragraph{Sample.}
+OpenR1-Math-220k \cite{openr1math} (configuration \texttt{default}) contains
+93,733 problems from NuminaMath~1.5, each with one to six reasoning traces
+generated by DeepSeek-R1; according to the dataset card, traces were verified
+with \mv{} or, for about 12\% of samples, an LLM judge, and every problem has
+at least one trace judged correct. For each
+problem we chose one response uniformly with a fixed seed, using a hash of
+the problem text (the dataset's \texttt{uuid} is missing for 664 rows and
+shared by 60 pairs of different problems). The full response text, including
+the reasoning, was passed to the wrapper with the dataset's \texttt{answer}
+as reference. The dataset was already filtered by the same library, so
+nothing about the direction of bias can be assumed.
+
+\paragraph{Isolated replay.}
+Each measurement process owns one wrapper and its pool, submits one row,
+waits for it, and only then submits the next; a new pool is first warmed with
+a trivial row whose result is discarded. There is therefore no queueing and
+no cross-row interference by design. The wrapper code, the library limits
+(5\,s), the outer limit (30\,s) and \texttt{timeout\_score}$=0$ are unchanged.
+
+\paragraph{Observation layer.}
+In the parent we wrap pool creation, task submission and each wait, recording
+outcomes, pool generations, resets and every kill. In the child, before the
+unchanged worker function runs, we wrap \mv{}'s \texttt{parse} and
+\texttt{verify} and record each step (reference parse, answer parse, each
+comparison pair) with wall and CPU time, the result type, library log
+records, and the arrival of every alarm signal. Records carry sequence
+numbers; a synthesis step cross-checks parent and child records row by row
+and marks any row whose records are incomplete or inconsistent as undecided.
+Turning the layer off and on changed no score on 500 pilot rows. Eighteen
+negative controls, each corrupting one record type, were all detected.
+The self-test records are in \texttt{results/s2\_rev2/selftest/report.json}.
+
+\paragraph{Reference judgement and follow-ups.}
+Every row scored $0$ by default was re-scored with the library limits raised
+to 60\,s and the outer limit to 300\,s (the \emph{reference}). A pre-drawn
+random set of 1,000 default-$1$ rows was also re-scored to check for
+one-to-zero changes in those sampled rows. Rows with a default or reference event,
+a score change, or a limit-sensitive change were replayed three times under
+the default setting. Rows with a library timeout or any step over 1\,s, plus a
+pre-drawn random 1\%, were re-scored with library limits of 2\,s and 10\,s.
+Another pre-drawn 1\% of rows were re-run unchanged to measure test--retest
+instability.
+
+\paragraph{Metric and decision rule.}
+Let $k$ be the number of rows scored $0$ by default and $1$ by the reference,
+and $u$ the number left undecided (the reference itself timed out, the row was
+interrupted twice, or the local resource guard stopped it). The denominator is
+always $n=93{,}733$. For the realised sample, the possible zero-to-one
+recovery share under this reference protocol is partially identified:
+\[
+  \frac{k}{n}\ \leq\ q_{\mathrm{recover}}\ \leq\ \frac{k+u}{n}.
+\]
+These finite-sample bounds assign unresolved rows to either endpoint and
+need no assumption of independent, identically distributed problems.
+They concern score recovery under the specified verifier, not mathematical
+correctness. The pre-declared decision rule additionally uses binomial-model
+Clopper--Pearson bounds \cite{clopper1934}. These are working-model bounds
+for the declared rule, not distribution-free bounds for heterogeneous
+problems or guarantees about a training population.
+Before the run we fixed: continue to the consequence stage if the one-sided
+95\% lower bound on $k/n$ is at least $10^{-3}$ (here $k\ge111$), or if a
+natural input reproducibly raises through the wrapper, or if an outer timeout
+spills over to other rows; stop this line if none holds and the one-sided
+95\% upper bound on $(k+u)/n$ is below $10^{-4}$ (here $k+u\le4$); otherwise
+report the result as \emph{in between}.
+
+\subsection{Results}
+
+\begin{table}[h]
+\centering
+\caption{Default-protocol outcomes on the main sample ($n=93{,}733$).}
+\label{tab:default}
+\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+Outcome & Rows \\
+\midrule
+Score 1 & 61,246 \\
+Score 0, no verifier event & 32,442 \\
+Score 0, comparison timed out (library) & 27 \\
+Score 0, comparison raised (library) & 12 \\
+Score 0, answer parse raised (library) & 4 \\
+Score 0, answer parse timed out (library) & 1 \\
+Score 0, reference parse timed out (library) & 1 \\
+Outer timeout, broken pool, exception raised by the wrapper & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Events are rare; selected replays are stable.}
+Under the default protocol 45 zero-scored rows had a verifier-side event
+(Table~\ref{tab:default}); a further 9 rows had a comparison error in one
+candidate pair but still scored $1$ through another pair. No row hit the outer 30-second limit, broke the pool, or made the wrapper
+raise, and no row took more than 10\,s. All 47 rows selected for replay gave
+the same outcome three times out of three, and the 963-row retest changed
+nothing.
+
+\paragraph{One score change, eighteen undecided.}
+The reference turned exactly one default $0$ into a $1$ ($k=1$). Eighteen rows
+stayed undecided: fourteen in which the 60-second comparison also timed out,
+one in which parsing the reference answer timed out, two interrupted twice and
+one stopped by the local resource guard. The last three were interrupted or
+stopped by the resource guard then in use on this 16\,GiB machine (since
+retired); they are local interventions, not natural outcomes. All 1,000 default-$1$ rows stayed $1$.
+The finite-sample recovery interval is
+$[1.07\times10^{-5},\,2.03\times10^{-4}]$. With $k=1$, $u=18$ the
+one-sided 95\% binomial-model upper bound on $(k+u)/n$ is
+$2.97\times10^{-4}$; the two-sided 95\% interval for $k/n$ is
+$[2.7\times10^{-7}, 5.9\times10^{-5}]$. Neither threshold is met, so the
+pre-declared verdict is \emph{in between}. Of 928 rows re-scored with 2\,s
+and 10\,s limits, three changed with the limit: two scored $0$ at 2\,s and $1$
+at 5\,s and 10\,s, and one (the $k$ row) scored $1$ only at 10\,s.
+
+The bound rests on the reference not being backfilled. Had all eighteen
+undecided rows scored $0$ under some longer limit, the upper bound would fall
+below $10^{-4}$; had all scored $1$, $k$ would be 19, still far from the
+continue threshold. The supplementary diagnostics below were specified in
+advance for exactly these rows and are reported separately; they do not
+change the formal result.
+
+\subsection{The one change, measured again}
+
+The single $k$ row changes from $0$ to $1$ when the comparison limit is
+relaxed; this score change is not an independent proof of mathematical
+correctness. Re-run ten times in sequence on one
+warmed pool, it timed out at the 5\,s alarm every time (comparison wall
+5.002--5.005\,s) and scored $0$; under the reference it scored $1$ every time
+with comparison wall 5.82--7.51\,s (median 6.21\,s). The ten repeats share a
+pool and SymPy's caches and are not independent samples, and we have no
+measurement on other hardware; all ten repeats show the same limit-dependent
+pattern on this machine. The first repeat had a gold-parse time of 0.11\,s
+against $<$0.001\,s afterwards; cache state was not controlled. It behaved
+the same way: $0$ at the 5.005\,s alarm
+under the default, and $1$ under the reference with the slowest comparison of
+the ten (7.51\,s).
+
+\subsection{Heavy natural inputs}
+\label{sec:prevalence-heavy}
+
+Four undecided rows were singled out because the reference either could not
+finish them or stopped them for memory. We ran each in a fresh process that
+calls the wrapper's worker function directly with the 60-second library
+limits, dumped all thread stacks every 10\,s, and stopped a run at 1.5\,GiB of
+memory footprint or 120\,s of wall time after a final stack dump. These are
+stack-capture endpoints, not resource limits of the method.
+
+All four stacks end in the same place: \mv{}'s numeric equality calls SymPy's
+\texttt{doit()}, which evaluates an integer power in
+\texttt{Integer.\_eval\_power}. Three rows express the same recursive-function
+task for $f(4,1981)$, with identical recurrence rules. Their \emph{reference answers} contain nested
+powers: $-3+2^{2^{1984}}$, $2^{2^{1984}}-3$ and $2^{2^{1984}-3}$.
+The last is not the same expression as the first two; we report the corpus
+strings rather than settling their mathematical correctness. The responses
+all answer $2\uparrow\uparrow 1984-3$. In each, footprint grew at 82--88\,MiB/s over the
+first 15\,s and passed the 1.5\,GiB endpoint within about 18\,s of process
+start, with no sign of levelling off within that window; a truncated
+trace says nothing about whether or when the computation would end. The fourth row's reference answer is $0$ and its response
+contains $5^{5^{5^{5^{5}}}}$; there memory grew slowly (peak 351\,MiB) and the
+60-second alarm stopped the comparison on time, scoring $0$, as in the main
+measurement. Under the default 5-second limit all four were stopped by the
+alarm and scored $0$; none reached the outer limit or harmed the pool.
+
+So in the default protocol the library's alarm is what contains these
+inputs: they score $0$ in about 5\,s and leave the pool intact. Whether the
+0 is wrong is not settled here; all four rows remain undecided. The trigger can sit in the reference answer, in which case any
+response to that problem whose comparison takes the same numeric path would
+meet it --- in GRPO, possibly several members of one group. The corpus
+extension below counts within-question events under isolated replay; it does
+not reproduce simultaneous generation or training. The shared-pool experiment
+below tests selected inputs at explicitly relaxed limits; disabled limits
+are only a source-level observation.
+
+\subsection{The remaining fourteen}
+The other fourteen undecided rows were re-scored once each with 300\,s
+library limits (outer limit 1,500\,s), a bounded sensitivity analysis rather
+than a ground truth. None scored $1$. Eleven comparisons reached their
+300\,s wall-clock limit and one reference-answer parse reached that limit;
+the limit applies to each library operation, not to the entire response.
+Two comparisons
+finished and returned false, after 81\,s and 281\,s. Counting the four heavy
+rows as still undecided, this gives $k_{300}=1$ and $u_{300}=16$: the one-sided
+95\% upper bound on $(k_{300}+u_{300})/n$ is $2.72\times10^{-4}$ and the
+lower bound on $k_{300}/n$ is $5.5\times10^{-7}$, so the analysis stays between
+the two pre-declared thresholds, as the formal result does. A preliminary
+reading of the answer strings, which is not ground truth, judged ten of the twelve rows that
+remain undecided to state the reference answer and the other two not to; it
+agrees with both finished zeros (one reading ``different'', one with nothing
+to judge). A limit sixty times the default thus decided two of the fourteen,
+both as zeros.
+
+The run was interrupted once after seven rows and resumed
+from the same directory; the eighth row was re-run from the start. During the
+first part the machine carried heavy unrelated load (median one-minute load
+average 10.5), and one memory-pressure reading was critical, which paused
+dispatch for 32\,s without stopping the row in progress (the one that
+finished at 281\,s, with 208\,s of comparison CPU time). The eleven
+timed-out comparisons used approximately 250--299\,s of CPU time. These
+results show that the stated wall-clock protocol did not finish those
+operations on this host; they do not establish a hardware-independent
+minimum computation time.
+
+\subsection{Extension to all stored long-form answers}
+\label{sec:allanswers}
+
+After the main result was fixed, we specified a replay of only the 100,034
+answers outside the one-answer-per-question sample. Question identity is
+the exact text's SHA-256, with an answer index appended; the 93,733 question
+strings contain one to six answers each, 193,767 in total. The original
+sample, its formal report and decision thresholds were not re-scored or
+changed. Each new answer used the same isolated 5\,s / 30\,s protocol;
+all 32,704 answers not scoring one were re-run at 60\,s / 300\,s, along with
+1,000 default-one answers selected by a fixed hash ordering of question
+key and answer index. Code, data, selection and baseline hashes were locked
+before replay.
+
+The complement contains one default-zero/reference-one change and fourteen
+undecided answers (thirteen comparison timeouts and one reference-parse
+timeout). All 1,000 controls remain one. Joining these \emph{counts} to the
+audited main counts gives two changes and 32 undecided answers in 193,767:
+the corresponding finite-corpus proportions are $2/n$ and $34/n$, or
+0.00103\% and 0.01755\%. These are descriptive endpoints, not confidence
+bounds, and do not apply the main sample's decision rule. The second change
+is another answer to the main sample's one limit-sensitive question;
+it is not a second distinct problem exhibiting that effect.
+
+The full default replay has 103 answers with an observed library failure
+event; 85 score zero and eighteen still score one through another accepted
+comparison. Of the 92,287 questions with at least two answers, 59 have an
+observed event and 42 have events on two answers. Define an ordered pair
+by choosing an observed-event answer and one other stored answer to the
+same exact question. There are 103 such pairs, of which 84 have events at
+both endpoints (81.55\%); no other endpoint has incomplete observation.
+This denominator excludes single-answer questions and weights questions
+by the number of event anchors and other answers. All 42 multi-event
+questions have two stored answers. The same reference and question content,
+different replay times and uncontrolled caches can jointly explain
+co-occurrence. We do not estimate a correlation parameter, a training
+failure rate or dependence in eight-answer GRPO groups from these counts.
+
+The default complement replay finished in 14.2 minutes. Its reference
+controller disappeared once with one unfinished answer; the reason was
+not recorded. The same directory and version lock were resumed, retaining
+completed work and the interrupted attempt. The reported 20.4-minute
+reference duration describes the resumed controller only, not all reference
+work or the intervening gap. No red-pressure intervention occurred in this
+extension (maximum recorded pressure was warning). Raw-event reassembly
+and a separate count/pair reconstruction match the stored report.
+
+\subsection{Cross-check with human-labelled extracted answers}
+\label{sec:labels}
+
+We used the released human-labelled 1.5B-model answers of
+Xin~\cite{xin2026groupcorr,humanlabels}: 5,556 answers, with 2,822 positive
+and 2,734 negative labels, drawn from 3,041 groups. The author's sampling
+code stratifies by category and verifier opinions; this is not a random
+sample of a training population. Only 72 groups contain all eight answer
+positions. Two annotation columns agree on the 200 double-labelled rows;
+we did not independently adjudicate the labels. The input is an extracted
+answer, not the full generated reasoning used in the main sample.
+
+Each answer was replayed in isolation through the same pinned wrapper,
+first verbatim and then, if it did not already contain \verb|\boxed|,
+enclosed in \verb|\boxed{...}|. Each presentation was scored with default
+5\,s library / 30\,s outer limits and with 60\,s / 300\,s limits. The 24
+already-boxed answers reuse their recorded scores rather than creating a
+second identical trial. Thus there are 22,176 actual trials and 5,556
+label-aligned rows per presentation and limit condition. Input strings,
+source hashes and alias mappings were fixed before measurement. All rows
+have complete observation records, and no resource intervention occurred.
+An ordinary zero here means no observed failure event, not necessarily a
+completed unequal comparison: an empty extraction under the specified
+format policy also produces zero.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Presentation & Label-positive / score 0 & Label-negative / score 1 & Disagreement & Event zeros \\
+\midrule
+Verbatim & 1,487 & 43 & 1,530 & 3 / 2 \\
+Explicit delimiter & 113 & 91 & 204 & 4 / 3 \\
+\bottomrule
+\end{tabular}
+\caption{Label disagreement at default and extended limits: the scores are
+identical between the two limits. The last column gives default / extended
+failure-event counts; all those answers have negative human labels.}
+\label{tab:labels}
+\end{table}
+
+Under either presentation, no observed failure-event zero intersects a
+positive human label (0/2,822 label-positive answers). Extending the limit
+eliminates one comparison-timeout event per presentation but changes no
+score. This is a zero result on the selected sample; it is not a proof that
+timeouts cannot hide correct answers elsewhere. The presentation change
+turns 1,431 zeros into ones and nine ones into zeros, reducing disagreement
+but increasing label-negative ones from 43 to 91. Most disagreement
+therefore cannot be attributed to the observed timeout events. The delimiter
+condition is an explicit input transformation, not a repair demonstrated
+on full generated responses or a new verifier method. The underlying label
+study already analyses verifier disagreement and group dependence; our
+addition here is the failure trace under the specified execution protocols.
+
+%% ---------------------------------------------------------------------------
+\section{Consequences of heavy natural inputs}
+\label{sec:consequences}
+\subsection{Matched single-heavy batches}
+
+The two unchanged wrappers were compared at \texttt{0c4c3d4} and
+\texttt{acad987}, with a process-pool initializer setting the library limits
+inside each spawned child's main thread. The original scoring functions,
+manager and aggregation functions were executed; fixed text, an index
+text-tokenizer and a local substitute for Ray transport replaced generation
+and remote dispatch. One naive manager used eight request threads and
+64 rows. This is a controlled amplification at one reward actor, not the
+full default split across eight actors. Four extra score-one answers warmed
+each fresh scene sequentially; this does not guarantee that all four lazy
+pool children had been warmed.
+The manager is instantiated afresh for each batch, while the scene retains
+its event loop, thread executor and wrapper pool. Following batches therefore
+probe scorer/pool state, not survival of the same manager object.
+
+The matrix comprises two wrappers, two library limits (unmodified 5\,s or
+60\,s), and fixed 30\,s outer waits. The 64 controls were selected by a
+fixed hash ordering from the previous score-one set, independently of these
+new outcomes. For each wrapper/limit pair, an all-control batch ran once;
+the response-heavy input at position 1 or 33 and one reference-heavy
+input at position 1 each ran three times. Every scene ended with a following
+64-control batch in the same pool. The 40 scenes had no local resource
+intervention; maximum recorded pressure was normal. Synthetic tests first
+checked on/off score equality, default versus relaxed library timeouts and
+the two outer-timeout pool policies. The natural scenes used the specified
+30\,s waits, not the synthetic test's shortened wait.
+
+Every heavy row scored zero, all 63 unaffected controls scored one, and all
+following controls scored one. Under the 5\,s library limit, the heavy
+scoring calls returned after 5.03--5.34\,s with no pool reset. Under the
+60\,s library / 30\,s outer diagnostic, the heavy call returned zero at
+30.00--30.18\,s in both wrappers. The pull-request wrapper reset the pool
+in all nine heavy scenes at this diagnostic setting; the main wrapper reset
+it in none. In main, the child's heavy computation ended approximately
+29.72--29.92\,s \emph{after} the following control batch had finished,
+showing that returning zero did not stop the background work. Its scene
+shutdown waited for that work; it was not an observed training stall.
+
+No shared-pool score damage was observed with \emph{one} heavy row in
+these particular batches. This is not evidence that arbitrary concurrent
+inputs are safe. More controls could consume the remaining pool capacity,
+and the default concurrent protocol could reach the outer deadline by
+queueing or cumulative comparison work. The diagnostic distinguishes
+cleanup policies, not the deployment frequency of a default fault.
+\subsection{Three-heavy, eight-row manager controls}
+
+A separately specified matrix used the first eight of the same control
+answers. For each wrapper and library limit, both a naive manager with
+eight request threads and a rate-limited manager at its default concurrency
+one scored either a pure-control batch or a batch with the three
+reference-heavy rows first. Every scene then scored eight controls. All
+16 scenes completed without resource intervention. This remains one
+locally invoked reward actor; it does not execute a full Ray trainer.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}llp{0.27\linewidth}p{0.27\linewidth}@{}}
+\toprule
+Library limit & Manager & Recovery wrapper & Main wrapper \\
+\midrule
+5\,s & Naive & Three zeros, five ones & Three zeros, five ones \\
+5\,s & Rate-limited (1) & Three zeros, five ones & Three zeros, five ones \\
+60\,s & Naive & BrokenProcessPool; no batch return & Three zeros, five ones \\
+60\,s & Rate-limited (1) & Three zeros, five ones & Three zeros, five ones \\
+\bottomrule
+\end{tabular}
+\caption{Three natural reference-heavy inputs in an eight-row batch,
+with 30\,s outer waits throughout. Pure controls and following controls
+all score one. The 60\,s condition is a diagnostic, not a library default.}
+\label{tab:threeheavy}
+\end{table}
+
+The pull request's public discussion had already reported a second
+\texttt{BrokenProcessPool} under concurrent resets with a minimal verifier
+stand-in, and its author explicitly retained that propagation
+\cite{verl8015discussion}. Our experiment extends that engineering record
+with real verifier inputs and the manager's batch outcome; it does not claim
+to discover the reset interaction.
+The diagnostic naive recovery-wrapper scene raised
+\texttt{BrokenProcessPool} after repeated pool resets; its five control
+calls individually returned one, but no aggregate batch reward was
+returned. The traceback reaches the wrapper's persistent broken-pool
+raise. Two additional traced repetitions reproduced the batch abort
+(three traced runs in total). A fourth run disabled child step/DEBUG
+observation and also aborted; parent scheduling logs and the time-limit
+initializer remained in place, so this is not a completely uninstrumented
+run. The four matched main-wrapper scenes returned three zeros and five
+ones. No subprocess-exit fault was injected, and no red-pressure guard
+intervened. Default-limit and serial controls in the initial matrix each
+ran once; we do not assign them a frequency estimate.
+
+On a batch exception, the harness records it, drains requests already
+started by the real gather, and only then issues the controlled following
+batch. Those batches all return eight ones. This demonstrates recovery
+under that harness, not that an actual training loop automatically resumes.
+The contrast is a consequence of timeout/recovery policy interacting with
+concurrency: it is not evidence that the declared zero-on-timeout policy is
+itself a defect, nor that the diagnostic abort occurs at default limits.
+It also does not establish deployment incidence or satisfy the original
+main-sample decision rule retrospectively. The formal result and thresholds
+remain unchanged.
+
+\subsection{Sequential parent calls and a longer outer wait}
+
+Fourteen additional, separately specified scenes reused the first eight
+controls, the three reference-heavy inputs and the four warm-up answers.
+Each wrapper had seven one-time scenes: pure-control and three-heavy inputs
+under direct sequential calls at 5\,s / 30\,s and 60\,s / 30\,s; and
+pure-control, single-heavy and three-heavy inputs under the eight-thread
+naive manager at 60\,s / 300\,s. Each scene ended with eight controls.
+All fourteen completed, with no resource intervention and maximum pressure
+normal. Every normal answer scored one, and every heavy answer scored zero.
+
+Under sequential parent calls at 60\,s / 30\,s, the recovery wrapper reset
+its pool three times but returned all row results. Main made no reset;
+its child's work continued after each outer return. The recorded child
+intervals overlap even though the parent invokes the wrapper sequentially,
+so this control does not imply entirely serial background computation.
+At 60\,s / 300\,s the library's comparison deadlines ended the heavy work
+before the outer waits; neither wrapper reset its pool, both naive batches
+returned, and all following controls scored one. These controls are
+consistent with the earlier batch abort arising from concurrent
+outer-timeout recovery, rather than an isolated heavy call. They do not
+establish that every concurrency pattern or timing environment behaves
+the same way.
+
+\section{Other frameworks}
+\label{sec:frameworks}
+Scoring paths were inspected at fixed revisions. The function-body and
+string checks below test small parts of those paths; full deployment
+configurations were not executed.
+
+\paragraph{TRL.} TRL's built-in \texttt{accuracy\_reward}~\citep{trl} calls
+\mv{} in the calling thread, with no worker process. On the main thread it
+passes a 10\,s parsing and a 5\,s comparison limit; off the main thread it
+passes \texttt{None} for both, which disables the alarm, and lowers \mv{}'s
+log level to hide the resulting warnings. An unparseable reference answer
+yields \texttt{None}, which the GRPO trainer turns into NaN and so keeps as a
+flag; a comparison that times out returns false and becomes an unflagged $0$.
+The GRPO trainer calls synchronous reward functions directly in its training
+loop, without exception handling. Under an ordinary script launch that loop
+is the main thread, so the limits apply.
+
+\paragraph{Ray.} The Ray Train example for TRL GRPO~\citep{raytrl} copies
+\texttt{accuracy\_reward} and sets both limits to $0$, stating that the
+default limits are incompatible with Ray. In \mv{}~0.9.0 a limit of $0$ or
+\texttt{None} means no alarm at all. A run that follows this example therefore
+has no library deadline if a comparison reaches the integer powers of
+\S\ref{sec:prevalence-heavy}; the verifier is called inside the training
+process. This is a statement about the code; we have not run such a
+configuration.
+
+\paragraph{verl main.} At the main-branch revision we read (\texttt{acad987}),
+verl's default scorer~\cite{verlmain} routes by data source and does not use \mv{}: the
+MATH sources go to a rule-based checker, with \mv{} offered only in a comment
+as a manual override; DAPO and AIME sources go to another rule-based checker;
+six NuminaMath sources go to \texttt{prime\_math}. Its first symbolic path
+has an intended 10\,s subprocess timeout and catches exceptions as false;
+we have not executed that path across multiprocessing start methods.
+The fallback calls \texttt{math\_equal(..., timeout=True)}, passing a
+boolean to a duration parameter. More directly, its \texttt{symbolic\_equal}
+uses \texttt{with timeout\_limit(...)} although that helper returns a
+decorator function. Each such block raises \texttt{TypeError} before parsing
+or comparison, and the exceptions are swallowed. In a bounded check using
+the fixed function bodies and call sentinels, the fallback returned false
+without reaching any symbolic operation. Earlier string or numeric branches
+can still return true; this is not a claim that all prime\_math scores are
+zero. The \#8015 wrapper we test therefore sits on the
+opt-in \mv{} route, and our results apply to configurations that choose it.
+
+\paragraph{OpenRLHF.} OpenRLHF~\citep{openrlhf} does not use \mv{}. Its math
+grader (adapted, per its header, from the OpenRLHF-Agent project) compares
+with SymPy \texttt{simplify}
+but first refuses to hand SymPy any expression containing \verb|^{| or
+\verb|^(|, a chained power, an exponent of two or more digits, or more than two
+unknown letters; such pairs are graded unequal without evaluation. On the main
+thread \texttt{simplify} runs under a 120\,s alarm; off the main thread (the
+code comment names Ray actors) it runs without a limit. A timeout or other
+exception is graded false, again without a flag. This is a contrasting input
+admission policy; prime\_math's first path contains the same power filters.
+In a bounded check of the pinned extraction and normalisation helpers, the
+candidate difference strings for all four heavy pairs were rejected by both
+paths' admission gates. The check ran no symbolic evaluation or complete
+grading path; early string decisions and other inputs are outside it. The
+filters also reject ordinary expressions such as $2^{20}$, so this is a
+compute-versus-admission trade-off, not evidence of superior accuracy.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{p{0.12\linewidth}p{0.41\linewidth}p{0.37\linewidth}}
+\toprule
+Path & Time and execution boundary & Failure information \\
+\midrule
+TRL & Calling thread; 10\,s parse / 5\,s compare on main thread, disabled otherwise & Unparseable reference: None; comparison timeout: $0$ \\
+Ray example & Calling process; both library limits set to zero & Same reward conversion; no library deadline \\
+verl main & Math-Verify is opt-in; prime\_math has subprocess decoration plus the incompatible fallback above & Caught exceptions become false; no failure flag on those paths \\
+OpenRLHF & Power filters; 120\,s alarm on main thread, disabled otherwise & Filter refusal, timeout and other exceptions become false \\
+\bottomrule
+\end{tabular}
+\caption{Pinned code comparison for the specified paths. The bounded
+fallback and admission-gate checks were executed; full framework configurations
+were not.}
+\label{tab:frameworks}
+\end{table}
+
+\section{Conditional changes in GRPO advantages}
+\label{sec:update}
+This section is an algebraic illustration, not a measured learning effect
+or a new theory of verifier noise. For a group of $G=8$ binary rewards,
+fix the sample standard deviation and epsilon as
+\[
+ \bar r=G^{-1}\sum_i r_i,\qquad
+ s^2=(G-1)^{-1}\sum_i(r_i-\bar r)^2,\qquad
+ A_i=(r_i-\bar r)/(s+10^{-6}).
+\]
+Assume the first answer would receive one if it were decided, but its
+observed undecided verdict is replaced by zero. Table~\ref{tab:advantages}
+shows the advantage of that answer. Constant groups have $s=0$ and all
+advantages zero under this convention.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Complete clean reward vector & Before zero replacement & After zero replacement \\
+\midrule
+$(1,1,0,0,0,0,0,0)$ & $1.620182$ & $-0.353552$ \\
+$(1,0,0,0,0,0,0,0)$ & $2.474867$ & $0$ \\
+$(1,1,1,1,1,1,1,1)$ & $0$ & $-2.474867$ \\
+\bottomrule
+\end{tabular}
+\caption{Conditional advantage changes for the first answer, at fixed
+standard-deviation and epsilon conventions. No vector is inferred from
+the observed marginal failure rate.}
+\label{tab:advantages}
+\end{table}
+
+A positive advantage can become negative or zero; a previously zero
+advantage can become negative. The group composition matters. In the first
+example, the remaining positive answer's advantage changes from 1.620182
+to 2.474867. If instead the undecided row is excluded from \emph{both}
+group moments and the loss, the remaining positive answer has advantage
+2.267781, and the six negative answers each have $-0.377963$.
+This masking policy also changes the loss denominator: with equal response
+lengths and a token-mean loss over active answers, it is proportional to
+seven rather than eight responses. It is not equivalent to assigning the
+failed answer advantage zero after computing moments over all eight.
+The all-negative and all-positive remaining groups are constant and have
+zero advantages. These policies require an observable failure indicator;
+they do not supply the unknown clean reward, restore its learning signal,
+or establish a better trained model. Existing work already treats noisy
+rewards, degenerate groups and normalisation
+\cite{cai2025noisy,nie2026starvation,yang2026biased}.
+Plesner et al.\ \cite{plesner2026imperfect} also distinguish advantage
+changes from clipped gradients and optimisation trajectories. The examples
+here illustrate conditional reward handling, not an optimizer update.
+
+%% ---------------------------------------------------------------------------
+\section{Implications for reward-pipeline design}
+\label{sec:implications}
+
+\paragraph{Verify the contract at the consumer boundary.}
+The wrapper, manager and aggregator expose different views of the same
+attempt. A manager-side flag is useful only if the intended consumer can
+recover its row identity and meaning. The observed position-dependent
+outcomes justify testing sparse \texttt{error} and \texttt{timeout} keys at
+every row position, across mixed-success chunks and padding/trimming
+boundaries. Our local prototype supplies an aggregation regression target;
+the consumer still needs to define whether \texttt{None} means absent,
+unknown or a value excluded from statistics.
+
+\paragraph{Treat a timeout change as a change in execution policy.}
+The main replay contains rare limit-sensitive verdicts, but the shared-pool
+experiments show a separate consequence of extending a deadline. When an
+outer wait expires first, returning a score need not stop the child work;
+killing a shared pool can affect concurrent requests. Default-limit
+controls, serial calls and the longer-outer-wait controls distinguish these
+effects in the tested configuration. A deadline adjustment should therefore
+be checked for both verdict changes and effects on neighbouring requests,
+with resource interventions recorded separately.
+
+\paragraph{Separate observability from a claim about learning.}
+Retaining a failure flag establishes what happened to a scoring attempt.
+It does not establish the mathematical answer, determine the correct
+exclusion policy or demonstrate improved training. The labelled replay
+also shows that answer representation can alter disagreement much more
+than increasing time limits in that selected set. A subsequent training
+evaluation would need to fix extraction, adjudicate disputed answers, and
+compare explicitly defined inclusion and normalisation policies. The
+current evidence provides concrete cases and regression requirements for
+that evaluation.
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Verifier errors in RLVR.}
+Cai et al.\ \cite{cai2025noisy} model an imperfect verifier as a noisy reward
+channel with false-negative and false-positive rates and give population-level
+results and corrections; a fixed broken scoring worker under uniform random
+assignment reduces to their channel, but their results are stated before
+GRPO's finite-sample normalisation, so they do not transfer to the default
+update unchanged. Egashira et al.\ \cite{egashira2026delay} inject systematic verification
+errors and observe delay, plateau or collapse; Plesner et al.\
+\cite{plesner2026imperfect} report modest mean performance losses in their
+multi-seed code experiments with resampled reward noise, while their
+uncertainty intervals allow larger losses; Zhang \cite{zhang2026leaky} contrasts training on
+code test suites with and without natural false positives. These works
+model or measure the effects of erroneous rewards. Our measurements locate
+the operations and aggregation policies that turn an unavailable decision
+into a reward or a batch exception.
+
+\paragraph{Auditing verifiers and harnesses.}
+Xin \cite{xin2026wherefails} audits four verifiers with metamorphic tests and
+classifies verdicts as true, false, timeout, error and crash; a follow-up
+\cite{xin2026groupcorr} finds that verifier errors are correlated within GRPO
+groups and releases the human-labelled rollouts we reuse. Its discussion
+separates pooled dependence from prompt difficulty; our finite-corpus
+co-occurrence description retains that distinction. Verifier fuzzing \cite{ray2026fuzzing}, allocation and routing of repeated
+or multiple verifier calls \cite{hu2026vstress,hu2026routeaudit},
+reliability-first advantages \cite{tian2026stargrpo} and harness checks
+\cite{pan2026probe} address neighbouring questions. Rollout Cards
+\cite{masters2026rolloutcards} includes a source audit of failure recording
+in 50 repositories and documents exception-to-zero coercion at aggregation
+boundaries. This motivates checking the consumer boundary as well as the
+scorer. Our executed trace isolates a row-position effect in a particular
+manager and both of its aggregation paths; the 21 fixtures turn that trace
+into a concrete regression requirement.
+
+\paragraph{The closest comparisons and the added evidence.}
+The closest code-level records are \#6545 and \#7151
+\cite{verl6545,verl7151}. The latter also considers multiple workers and
+the fully asynchronous return path. Our study does not claim priority for
+the first-row-key mechanism, union-and-fill repair or generic cross-worker
+alignment. It adds a trace from the specific \#8015 worker failure through
+the manager's sparse flag to returned rewards, together with fixed-response
+measurements and matched timeout/recovery controls. The local prototype
+serves as a regression specification, not as a more complete framework fix.
+
+Xin's verifier audit~\cite{xin2026wherefails} uses certified answer
+transformations to distinguish returned verdicts from execution failures.
+We reuse the distinction while following runtime events through a wrapper,
+manager and consumer. Rollout Cards~\cite{masters2026rolloutcards} already
+establishes that failure recording can disappear across layers; the
+row-position mechanism identifies the specific operation responsible in
+the tested configuration. Finally, the concurrent reset interaction was
+reported in the upstream discussion~\cite{verl8015discussion}. The natural
+heavy-input replay adds its manager-level consequence and matched default,
+serial, single-heavy and longer-wait controls. These comparisons delimit
+the added evidence without treating a known failure class as a new concept.
+
+\paragraph{Failures in RL infrastructure.}
+Zhang et al.\ \cite{zhang2026rftfailure} inject training faults and detect
+them from training curves. iCoder-27B \cite{yang2026icoder} separates
+infrastructure from policy errors and normalises over valid samples. On the
+optimisation side, Nie et al.\ \cite{nie2026starvation} and Yang et al.\
+\cite{yang2026biased} analyse degenerate groups and the bias of group-relative
+advantages; any statement about how undecided zeros shift degenerate-group
+rates must account for both. The pinned advantage examples here show
+conditional changes in finite reward vectors; they neither estimate the
+frequency of those vectors in training nor reproduce the theoretical
+results of these studies.
+
+%% ---------------------------------------------------------------------------
+\section{Limitations}
+\label{sec:limitations}
+
+\paragraph{Execution scope.}
+The measurements use one Apple-silicon macOS machine. Timing, signal
+delivery and process start methods can differ on other systems.
+Generation and Ray transport were substituted; real scoring, manager
+and aggregation functions were exercised, but no complete trainer was
+run. The Math-Verify wrapper is optional in verl's default routing, and
+its adoption rate is unknown. The metadata prototype covers local batch
+assembly; downstream handling of missing values needs a separate check.
+
+\paragraph{Data and reference validity.}
+The main corpus contains responses already filtered by a verifier or
+judge, with one answer sampled per problem. Its replay rates do not
+estimate training-time incidence. The longer-limit reference is the
+same verifier, and the separate human-labelled set is stratified,
+contains extracted answers, and was not independently re-adjudicated.
+Neither longer limits nor answer formatting establishes mathematical
+truth. Finite-sample recovery bounds and binomial working-model bounds
+answer different questions; the latter add homogeneity and independence
+assumptions not guaranteed by the corpus.
+
+\paragraph{Supplementary analysis.}
+The all-answer extension combines the audited main counts with later
+complement replays under a newer resource policy. Within-question
+co-occurrence uses exact problem text, not semantic deduplication, and
+groups have one to six answers rather than the eight-answer training
+groups used in the conditional calculations. Natural heavy-input scenes
+are selected diagnostics with explicitly changed limits. Their matched
+controls identify behaviour in those scenes rather than its frequency
+in unconstrained execution.
+
+\paragraph{Learning effects.}
+The advantage examples use declared reward vectors, variance conventions
+and a numerical stabiliser. No policy gradients, training trajectories,
+or model-performance changes were measured. Observability is a software
+contract property; whether an exclusion or correction policy improves
+learning remains a separate empirical question.
+
+\section{Conclusion}
+
+At the tested verl head, the wrapper's failure-reporting policy composes
+poorly with the already reported first-row schema assumption: preserving
+an error at the manager boundary does not ensure that it survives batch
+assembly. Its row position can determine whether the flag disappears or
+assembly fails. The 21 fixtures make reward preservation and metadata
+alignment explicit regression requirements; deployment still requires a
+defined missing-value policy.
+
+The fixed response corpora show rare limit-sensitive changes and leave
+some heavy inputs undecided. Matched replay separates a returning timeout
+from unfinished background computation, and connects natural heavy inputs
+to an already reported reset interaction under relaxed diagnostic limits.
+These results support testing failures across the wrapper, manager and
+aggregation boundaries together. They do not establish training incidence
+or a learning benefit from a particular handling policy.
+
+\appendix
+\section{Reproduction}
+
+The companion archive, \path{rewardfail-companion.zip}, contains the source,
+compact reports, derived score records and selected event traces.
+Its \path{package_manifest.json} verifies the distributed files; the
+original-fingerprint index described below refers to the separately
+retained complete records. Public copies substitute portable path labels
+without changing reported scores or counts. The archive's README explains
+which checks run without the omitted datasets and full raw logs.
+The companion source pins the full dependency list in
+\path{requirements.lock}, including Math-Verify 0.9.0 and SymPy 1.14.0.
+The tested wrapper and manager are at verl pull-request head
+\texttt{0c4c3d4}; the comparison wrapper and prime\_math audit are at
+\texttt{acad987}. OpenR1-Math-220k is at revision
+\path{e4e141ec9dea9f8326f4d347be56105859b2bd68}, default configuration.
+The human-label CSV revision and provenance are cited in
+\cite{humanlabels}. Its pinned repository carries an MIT licence, and the
+pinned OpenR1 data card declares Apache-2.0. These are upstream licence
+statements, not a separate audit of all source-data rights. The following
+records are kept separately:
+\begin{itemize}[leftmargin=*]
+\item Injection mechanisms: \path{results/c1c/run1/} and
+      \path{results/c1c/run2/}; original execution \texttt{cc87848},
+      with two recorded runs compared by \path{experiments/compare_runs.py}.
+\item Formal main measurement: \path{results/s2_main/report.json} and
+      raw directory \path{main-20261007-202545}. Subsequent experiments
+      never change this directory, the formal report or its thresholds.
+\item Supplementary diagnostics: \path{results/s2_u18/report.json},
+      raw directory \path{u18-20261008-104342}.
+\item Labelled-answer cross-check: \path{results/s2_e3/report.json},
+      raw directory \path{e3-20261008-codex}; driver at \texttt{2df9212}.
+\item All-answer extension: \path{results/s2_e2/report.json}, raw directory
+      \path{e2-complement-20261008-codex}; driver at \texttt{4aa71b9}.
+      The 100,034 complement answers use the original Parquet reader,
+      separate answer-index identifiers and the original worker unchanged.
+\item Shared-pool controls and scenes: \path{results/s2_e1/selftest.json},
+      \path{results/s2_e1/report.json}, \path{report_eight.json} and
+      \path{report_repeat.json} within that directory. Raw directories are
+      \path{e1-core-20261008-codex}, \path{e1-eight-20261008-codex} and
+      \path{e1-repeat-20261008-codex}; scene snapshots are \texttt{8b8321e},
+      \texttt{c026164} and \texttt{3bd7f94}, respectively. The committed
+      reports are compact indexes with hashes of the complete raw records;
+      they do not duplicate all fixed input strings.
+\item Sequential-parent and longer-outer controls:
+      \path{results/s2_e1/report_controls.json}, raw directory
+      \path{e1-controls-20261008-codex}; scene enumeration at
+      \texttt{ca0503b}, execution identical to the earlier scene runner.
+\item Local batch-assembly proposal: \path{results/s2_e1/aggregation_contract.json},
+      generated by \path{experiments/s2_contract.py} at \texttt{ca0503b}.
+      Pinned string-preprocessing checks:
+      \path{results/s2_e1/normalization_filter.json}; these do not execute
+      SymPy or a complete alternate verifier.
+\end{itemize}
+
+Each run records per-file SHA-256 code/data locks, specifications, child
+and parent events, pressure readings and intervention/restart history.
+Supplementary drivers use the locked worker's existing inline-text path;
+they do not edit the main worker or upstream wrapper files. Replay commands
+use fresh run directories and are launched with \texttt{nohup}, for example
+\begin{verbatim}
+nohup .venv/bin/python -I -B experiments/s2_e3.py \
+  --run-dir <STAGE2>/runs/e3-new > <STAGE2>/runs/e3-new.log 2>&1 &
+nohup .venv/bin/python -I -B experiments/s2_e1.py \
+  --run-dir <STAGE2>/runs/e1-new > <STAGE2>/runs/e1-new.log 2>&1 &
+nohup .venv/bin/python -I -B experiments/s2_e2.py \
+  --run-dir <STAGE2>/runs/e2-new > <STAGE2>/runs/e2-new.log 2>&1 &
+\end{verbatim}
+Run one measurement controller at a time. Green or warning memory pressure
+does not impose a static cap; critical pressure pauses/stops the run and
+is recorded as a local intervention, not as a natural verifier failure.
+The new drivers' own synthetic checks and raw-record reconstructions were
+recorded with their code/source locks. Reassembly of the new raw parent and
+child events and a separate count reconstruction matched the reported
+results; these checks use the same machine and underlying verifier.
+
+The relative-path index \path{results/artifact_manifest.json} records
+SHA-256 hashes and byte sizes for 1,572 files, eight complete raw-run
+directories and 32 frozen report values. Its six configurable roots locate
+the companion repository, raw stage-two records, separate audits, data and
+the two upstream checkouts. The read-only
+\path{experiments/check_artifacts.py} verifies this inventory without
+scoring answers. Complete, missing-root and corrupt-index checks returned
+the declared pass, partial and fail statuses. File relocation was tested
+in temporary-directory fixtures; mapping the full inventory to different
+root aliases was tested on this host. Neither check is an independent
+experimental replication on another machine. Historical drivers and
+memory-pressure monitoring still depend on the original macOS layout.
+
+The original main run's raw report is its historical execution report;
+\path{results/s2_main/report.json} is the audited reanalysis. Executed
+code snapshots and their locks take precedence over current source when
+interpreting a run. The inventory does not select redistribution licences
+or confer rights to upstream data or software. Source status was refreshed
+on 9 October 2026; the added sparse-metadata pull-request records were
+checked on 12 October 2026. Cited-paper metadata was checked on
+8 October 2026.
+Original companion code is licensed under Apache-2.0; this does not replace
+upstream licences. This manuscript is licensed under the Creative Commons
+Attribution 4.0 International licence
+(\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}). Substantial AI assistance is
+disclosed in the author contribution statement.
+
+\paragraph{Conflicts of Interest.} The author declares no conflicts of interest.
+
+\bibliographystyle{plainnat}
+\begingroup
+\raggedright
+\Urlmuskip=0mu
+\bibliography{refs}
+\endgroup
+
+\end{document}

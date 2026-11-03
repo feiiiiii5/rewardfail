@@ -1,0 +1,15 @@
+digraph pipeline {
+  graph [rankdir=LR, nodesep=0.30, ranksep=0.42, fontname="PingFang SC", bgcolor="white", pad=0.20];
+  node [shape=box, style="rounded,filled", fillcolor="#EAF1FB", color="#2F5597", fontname="PingFang SC", fontsize=13, margin="0.14,0.08"];
+  edge [fontname="PingFang SC", fontsize=10, color="#555555"];
+  gen [label="生成环节\n固定回答替身\n（不加载模型）"];
+  wrap [label="#8015 Math-Verify 包装器\n进程池 4 个 worker\n外层 30 s；坏池重建后重试 1 次"];
+  mgr [label="rate_limited 管理器\n并发上限 1；管理器超时 300 s\n成功写 acc；失败写 error + acc=0"];
+  agg [label="compute_rm_score\n批汇总：取首行键\n逐行按该键集合索引"];
+  ext [label="extract_reward\n按 reward_extra_keys\n读取奖励与附加列"];
+  exp [label="_write_generations\n写 JSONL 并逐行读回"];
+  gen -> wrap -> mgr -> agg -> ext -> exp;
+  wrap -> mgr [label="子进程退出 17\n持续失败", color="#C00000", fontcolor="#C00000", style=dashed];
+  agg -> ext [label="失败在首位：KeyError\n失败在后：error 列丢失", color="#C00000", fontcolor="#C00000", style=dashed];
+  {rank=same; wrap; mgr;}
+}

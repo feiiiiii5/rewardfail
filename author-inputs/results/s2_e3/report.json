@@ -1,0 +1,1762 @@
+{
+ "run_dir": "<REWARDfail_LOCAL>/stage2/runs/e3-20261008-codex",
+ "lock": {
+  "pre": {
+   "experiment": "E3",
+   "csv_sha256": "90fca106cb07f031a7ac169e009e6ab9cc0839126912218d0763b0ab6e037005",
+   "tasks_sha256": {
+    "raw": "2de0481e<PHONE>d55635b9c302654ab42c9b0aa418e3ed3b78ae7c766ba",
+    "boxed": "a8605f600d79143edf80e0928be33265cc0dcf97e9a5bda9d9d8d67857f3eee2"
+   },
+   "boxed_aliases": [
+    "e3-01247",
+    "e3-01417",
+    "e3-02021",
+    "e3-02252",
+    "e3-02267",
+    "e3-02692",
+    "e3-02709",
+    "e3-02831",
+    "e3-03407",
+    "e3-03514",
+    "e3-03850",
+    "e3-03953",
+    "e3-03965",
+    "e3-04150",
+    "e3-04167",
+    "e3-04206",
+    "e3-04266",
+    "e3-04345",
+    "e3-04642",
+    "e3-04844",
+    "e3-04849",
+    "e3-04937",
+    "e3-04967",
+    "e3-05226"
+   ],
+   "P": 1,
+   "modes": [
+    "observe",
+    "reference"
+   ]
+  },
+  "code_sha256": {
+   "experiments/s2_main.py": "ccda445d0d8828ebffc85ba2f1db4b02c0b0ada7a850d27cdab84572851aff49",
+   "experiments/s2_worker.py": "749ea6b71144f7cebc6a915775b2fd0710ed9bff3942e001a05237080f24ed98",
+   "rewardfail/__init__.py": "90deb4f1667387636b92697c18c1f60428a611e394ecb0aad83f1224f5fc8fa9",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "175f6a7e90ec53dc27a901aa66e6ccaef96688aff0e5e1c0ddec259dc3f3f48f",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "b452dda7f6e4dc8aa9cfc6c5de5ad61b73af55fe5e37ce20a4503861399dc69a",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "ac90f81f620f37fca83c4e1be2ba35500648927e4698d6279b7bacb8e319f975",
+   "rewardfail/s2/supervise.py": "eb2bb2ab60baa63c8f6b15613d5b16929199f7b7de9f6d4666c85e2c46d29c1b",
+   "experiments/s2_e3.py": "c5051feef66bb2d9aa5ceac073ab53e31051f573d59151ca734d6addd6551bd8"
+  },
+  "tested_source": {
+   "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+   "verl_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+   "verl_dirty": [],
+   "wrapper_sha256": "f04f57d5cdc08d80197577c77d0bb9d47c2ddc6b4f8e80389ddf7ad3c71c8713"
+  },
+  "python": "3.12.8",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "data": {
+   "sample_map_sha256": "aa5dc856e7e3d9b4ae066d9c78ce7295ea0b1824a1a4842b516cae89f84128b6",
+   "shards_sha256": {
+    "train-00000-of-00010.parquet": "ccc3a95e4875dc4cff9bec2f0fb1c93e4c9cbb24fb24853fd0b96c416e1a263c",
+    "train-00001-of-00010.parquet": "a7d3eb54d97f7e1237a872947f2246de54a104be224646f62f588abdf6c7db60",
+    "train-00002-of-00010.parquet": "a44a2354bfa752541ab768b62edf01f3df4b9b2a7660774ab1eb6e7f19f0a86b",
+    "train-00003-of-00010.parquet": "dd7d2f0f04d80b3ae08484b706c4f7fd9dd29eeff4038c36257a307c77b877e9",
+    "train-00004-of-00010.parquet": "e358157990d7744643e25f1e692556ac5fd4a2212c008cf67475b14e040861ea",
+    "train-00005-of-00010.parquet": "30254d14d17b63d1f7963488d53a2d26aa22070f71baa2fe601201b081e38060",
+    "train-00006-of-00010.parquet": "b3bce93c06d4dc22788c04d0a1da5cbadb5b3db31046809c59a4ec26e96ebb52",
+    "train-00007-of-00010.parquet": "7def8029cf6d40f7493e9aa4be4b49c251ae7e0cb23b0b117c485e09ff5d5021",
+    "train-00008-of-00010.parquet": "29cf75a663e91039fc92bffd86a9ad845f992302da52d1fb1563b6c41ae777ed",
+    "train-00009-of-00010.parquet": "14df2775196a701b97a71cf0285fa75d97980fbda4db9ec9af9c2a07658ca256"
+   }
+  }
+ },
+ "inventory": {
+  "n": 5556,
+  "groups": 3041,
+  "full_eight_groups": 72,
+  "already_boxed_reused": 24,
+  "double_annotations": 200,
+  "double_disagreements": 0
+ },
+ "passes": {
+  "raw-observe": {
+   "pass": "raw-observe",
+   "mode": "observe",
+   "extra": [],
+   "tasks": 5556,
+   "P": 1,
+   "P_info": {
+    "max_P": 1,
+    "available_gib": 6.095,
+    "pressure": 1,
+    "rule": "D135：只在内存压力变红时降并发或暂停"
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 47.4,
+    "guard": {
+     "rule": "D135",
+     "child_limit": null,
+     "kill_min": 1073741824,
+     "avail_start": 6544769024,
+     "swap_start": 1044447232,
+     "peak_total_fp": 829639920,
+     "min_avail": 5827690496,
+     "max_swap": 1044447232,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "red_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 5556,
+    "warm_rows": 1,
+    "pools": {
+     "raw-observe1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 48.6,
+   "load": {
+    "status_records": 5,
+    "load1_p50": 4.62,
+    "load1_max": 4.91,
+    "pressure_max": 1,
+    "avail_min_gib": 5.476,
+    "swap_max_gib": 0.973
+   }
+  },
+  "raw-reference": {
+   "pass": "raw-reference",
+   "mode": "reference",
+   "extra": [],
+   "tasks": 5556,
+   "P": 1,
+   "P_info": {
+    "max_P": 1,
+    "available_gib": 6.203,
+    "pressure": 1,
+    "rule": "D135：只在内存压力变红时降并发或暂停"
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 160.2,
+    "guard": {
+     "rule": "D135",
+     "child_limit": null,
+     "kill_min": 1073741824,
+     "avail_start": 6661685248,
+     "swap_start": 1044447232,
+     "peak_total_fp": 826592544,
+     "min_avail": 5883576320,
+     "max_swap": 1044447232,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "red_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 5556,
+    "warm_rows": 1,
+    "pools": {
+     "raw-reference1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 161.4,
+   "load": {
+    "status_records": 16,
+    "load1_p50": 4.24,
+    "load1_max": 5.0,
+    "pressure_max": 1,
+    "avail_min_gib": 5.493,
+    "swap_max_gib": 0.973
+   }
+  },
+  "boxed-observe": {
+   "pass": "boxed-observe",
+   "mode": "observe",
+   "extra": [],
+   "tasks": 5532,
+   "P": 1,
+   "P_info": {
+    "max_P": 1,
+    "available_gib": 6.228,
+    "pressure": 1,
+    "rule": "D135：只在内存压力变红时降并发或暂停"
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 70.8,
+    "guard": {
+     "rule": "D135",
+     "child_limit": null,
+     "kill_min": 1073741824,
+     "avail_start": 6688735232,
+     "swap_start": 1044447232,
+     "peak_total_fp": 861359440,
+     "min_avail": 5838585856,
+     "max_swap": 1044447232,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "red_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 5532,
+    "warm_rows": 1,
+    "pools": {
+     "boxed-observe1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 72.1,
+   "load": {
+    "status_records": 7,
+    "load1_p50": 4.16,
+    "load1_max": 4.37,
+    "pressure_max": 1,
+    "avail_min_gib": 5.466,
+    "swap_max_gib": 0.973
+   }
+  },
+  "boxed-reference": {
+   "pass": "boxed-reference",
+   "mode": "reference",
+   "extra": [],
+   "tasks": 5532,
+   "P": 1,
+   "P_info": {
+    "max_P": 1,
+    "available_gib": 6.24,
+    "pressure": 1,
+    "rule": "D135：只在内存压力变红时降并发或暂停"
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 238.5,
+    "guard": {
+     "rule": "D135",
+     "child_limit": null,
+     "kill_min": 1073741824,
+     "avail_start": 6700105728,
+     "swap_start": 1044447232,
+     "peak_total_fp": 910314880,
+     "min_avail": 5562466304,
+     "max_swap": 1044447232,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "red_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 5532,
+    "warm_rows": 1,
+    "pools": {
+     "boxed-reference1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 239.8,
+   "load": {
+    "status_records": 24,
+    "load1_p50": 4.28,
+    "load1_max": 4.75,
+    "pressure_max": 1,
+    "avail_min_gib": 5.195,
+    "swap_max_gib": 0.973
+   }
+  }
+ },
+ "analysis": {
+  "raw-observe": {
+   "counts": {
+    "n": 5556,
+    "human_positive": 2822,
+    "failure_event": 3,
+    "incomplete_or_intervened": 0,
+    "fallback_one": 0,
+    "failure_zero_human_one": 0,
+    "normal_disagreement": 1530,
+    "normal_false_negative": 1487,
+    "normal_false_positive": 43
+   },
+   "by_sampling_category": {
+    "interval_or_tuple": {
+     "n": 728,
+     "human_positive": 372,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 371,
+     "normal_false_negative": 370,
+     "normal_false_positive": 1
+    },
+    "large_numeric": {
+     "n": 648,
+     "human_positive": 362,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 3,
+     "normal_false_negative": 2,
+     "normal_false_positive": 1
+    },
+    "latex_frac": {
+     "n": 900,
+     "human_positive": 510,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 148,
+     "normal_false_negative": 134,
+     "normal_false_positive": 14
+    },
+    "latex_sqrt": {
+     "n": 680,
+     "human_positive": 321,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 318,
+     "normal_false_negative": 316,
+     "normal_false_positive": 2
+    },
+    "latex_text_unit": {
+     "n": 340,
+     "human_positive": 167,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 166,
+     "normal_false_negative": 166,
+     "normal_false_positive": 0
+    },
+    "small_numeric": {
+     "n": 900,
+     "human_positive": 549,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 18,
+     "normal_false_negative": 8,
+     "normal_false_positive": 10
+    },
+    "symbolic_other": {
+     "n": 900,
+     "human_positive": 473,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 463,
+     "normal_false_negative": 455,
+     "normal_false_positive": 8
+    },
+    "trailing_period": {
+     "n": 136,
+     "human_positive": 32,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 23,
+     "normal_false_negative": 19,
+     "normal_false_positive": 4
+    },
+    "trailing_whitespace": {
+     "n": 324,
+     "human_positive": 36,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 20,
+     "normal_false_negative": 17,
+     "normal_false_positive": 3
+    }
+   },
+   "failure_cost_per_all": 0.0,
+   "failure_cost_per_human_positive": 0.0,
+   "affected_rows": [
+    {
+     "id": "e3-01052",
+     "label": 0,
+     "category": "symbolic_other",
+     "result": {
+      "id": "e3-01052",
+      "worker": "raw-observe1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 5.0222,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 5.0221,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 352224264,
+        "steps": [
+         [
+          "gold_parse",
+          5.7e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.017324,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          5.003956,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          2.8e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          9e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-03233",
+     "label": 0,
+     "category": "latex_frac",
+     "result": {
+      "id": "e3-03233",
+      "worker": "raw-observe1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 5.0621,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 5.061968,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 407487520,
+        "steps": [
+         [
+          "gold_parse",
+          0.000412,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.046872,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          5.013992,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          2.6e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-05332",
+     "label": 0,
+     "category": "latex_sqrt",
+     "result": {
+      "id": "e3-05332",
+      "worker": "raw-observe1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 5.0192,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 5.019073,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 407487520,
+        "steps": [
+         [
+          "gold_parse",
+          0.000473,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.013455,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          5.004484,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          2e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          9e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    }
+   ]
+  },
+  "raw-reference": {
+   "counts": {
+    "n": 5556,
+    "human_positive": 2822,
+    "failure_event": 2,
+    "incomplete_or_intervened": 0,
+    "fallback_one": 0,
+    "failure_zero_human_one": 0,
+    "normal_disagreement": 1530,
+    "normal_false_negative": 1487,
+    "normal_false_positive": 43
+   },
+   "by_sampling_category": {
+    "interval_or_tuple": {
+     "n": 728,
+     "human_positive": 372,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 371,
+     "normal_false_negative": 370,
+     "normal_false_positive": 1
+    },
+    "large_numeric": {
+     "n": 648,
+     "human_positive": 362,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 3,
+     "normal_false_negative": 2,
+     "normal_false_positive": 1
+    },
+    "latex_frac": {
+     "n": 900,
+     "human_positive": 510,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 148,
+     "normal_false_negative": 134,
+     "normal_false_positive": 14
+    },
+    "latex_sqrt": {
+     "n": 680,
+     "human_positive": 321,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 318,
+     "normal_false_negative": 316,
+     "normal_false_positive": 2
+    },
+    "latex_text_unit": {
+     "n": 340,
+     "human_positive": 167,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 166,
+     "normal_false_negative": 166,
+     "normal_false_positive": 0
+    },
+    "small_numeric": {
+     "n": 900,
+     "human_positive": 549,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 18,
+     "normal_false_negative": 8,
+     "normal_false_positive": 10
+    },
+    "symbolic_other": {
+     "n": 900,
+     "human_positive": 473,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 463,
+     "normal_false_negative": 455,
+     "normal_false_positive": 8
+    },
+    "trailing_period": {
+     "n": 136,
+     "human_positive": 32,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 23,
+     "normal_false_negative": 19,
+     "normal_false_positive": 4
+    },
+    "trailing_whitespace": {
+     "n": 324,
+     "human_positive": 36,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 20,
+     "normal_false_negative": 17,
+     "normal_false_positive": 3
+    }
+   },
+   "failure_cost_per_all": 0.0,
+   "failure_cost_per_human_positive": 0.0,
+   "affected_rows": [
+    {
+     "id": "e3-03233",
+     "label": 0,
+     "category": "latex_frac",
+     "result": {
+      "id": "e3-03233",
+      "worker": "raw-reference1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 60.0607,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 60.060606,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 443876432,
+        "steps": [
+         [
+          "gold_parse",
+          0.000375,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.046123,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          60.013434,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          2.9e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          9e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-05332",
+     "label": 0,
+     "category": "latex_sqrt",
+     "result": {
+      "id": "e3-05332",
+      "worker": "raw-reference1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 60.0196,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 60.019518,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 443876432,
+        "steps": [
+         [
+          "gold_parse",
+          0.000606,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.013109,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          60.004987,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          3.1e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          9e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    }
+   ]
+  },
+  "boxed-observe": {
+   "counts": {
+    "n": 5556,
+    "human_positive": 2822,
+    "failure_event": 4,
+    "incomplete_or_intervened": 0,
+    "fallback_one": 0,
+    "failure_zero_human_one": 0,
+    "normal_disagreement": 204,
+    "normal_false_negative": 113,
+    "normal_false_positive": 91
+   },
+   "by_sampling_category": {
+    "interval_or_tuple": {
+     "n": 728,
+     "human_positive": 372,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 20,
+     "normal_false_negative": 8,
+     "normal_false_positive": 12
+    },
+    "large_numeric": {
+     "n": 648,
+     "human_positive": 362,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 4,
+     "normal_false_negative": 3,
+     "normal_false_positive": 1
+    },
+    "latex_frac": {
+     "n": 900,
+     "human_positive": 510,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 26,
+     "normal_false_negative": 10,
+     "normal_false_positive": 16
+    },
+    "latex_sqrt": {
+     "n": 680,
+     "human_positive": 321,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 14,
+     "normal_false_negative": 4,
+     "normal_false_positive": 10
+    },
+    "latex_text_unit": {
+     "n": 340,
+     "human_positive": 167,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 34,
+     "normal_false_negative": 24,
+     "normal_false_positive": 10
+    },
+    "small_numeric": {
+     "n": 900,
+     "human_positive": 549,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 21,
+     "normal_false_negative": 10,
+     "normal_false_positive": 11
+    },
+    "symbolic_other": {
+     "n": 900,
+     "human_positive": 473,
+     "failure_event": 2,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 52,
+     "normal_false_negative": 30,
+     "normal_false_positive": 22
+    },
+    "trailing_period": {
+     "n": 136,
+     "human_positive": 32,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 20,
+     "normal_false_negative": 15,
+     "normal_false_positive": 5
+    },
+    "trailing_whitespace": {
+     "n": 324,
+     "human_positive": 36,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 13,
+     "normal_false_negative": 9,
+     "normal_false_positive": 4
+    }
+   },
+   "failure_cost_per_all": 0.0,
+   "failure_cost_per_human_positive": 0.0,
+   "affected_rows": [
+    {
+     "id": "e3-00414",
+     "label": 0,
+     "category": "symbolic_other",
+     "result": {
+      "id": "e3-00414",
+      "worker": "boxed-observe1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 5.1697,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 5.169557,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 322339824,
+        "steps": [
+         [
+          "gold_parse",
+          0.000834,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.164081,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          5.003944,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          1.9e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-01052",
+     "label": 0,
+     "category": "symbolic_other",
+     "result": {
+      "id": "e3-01052",
+      "worker": "boxed-observe1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 5.0298,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 5.029674,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 379405320,
+        "steps": [
+         [
+          "gold_parse",
+          7.4e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.018419,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          5.010455,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          2.3e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-03233",
+     "label": 0,
+     "category": "latex_frac",
+     "result": {
+      "id": "e3-03233",
+      "worker": "boxed-observe1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 5.0575,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 5.05745,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 448660560,
+        "steps": [
+         [
+          "gold_parse",
+          0.000486,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.036584,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          5.019518,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          3.4e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          1.3e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-05332",
+     "label": 0,
+     "category": "latex_sqrt",
+     "result": {
+      "id": "e3-05332",
+      "worker": "boxed-observe1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 5.0318,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 5.031682,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 448660560,
+        "steps": [
+         [
+          "gold_parse",
+          0.000576,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.021351,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          5.009049,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          2.3e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          1e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    }
+   ]
+  },
+  "boxed-reference": {
+   "counts": {
+    "n": 5556,
+    "human_positive": 2822,
+    "failure_event": 3,
+    "incomplete_or_intervened": 0,
+    "fallback_one": 0,
+    "failure_zero_human_one": 0,
+    "normal_disagreement": 204,
+    "normal_false_negative": 113,
+    "normal_false_positive": 91
+   },
+   "by_sampling_category": {
+    "interval_or_tuple": {
+     "n": 728,
+     "human_positive": 372,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 20,
+     "normal_false_negative": 8,
+     "normal_false_positive": 12
+    },
+    "large_numeric": {
+     "n": 648,
+     "human_positive": 362,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 4,
+     "normal_false_negative": 3,
+     "normal_false_positive": 1
+    },
+    "latex_frac": {
+     "n": 900,
+     "human_positive": 510,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 26,
+     "normal_false_negative": 10,
+     "normal_false_positive": 16
+    },
+    "latex_sqrt": {
+     "n": 680,
+     "human_positive": 321,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 14,
+     "normal_false_negative": 4,
+     "normal_false_positive": 10
+    },
+    "latex_text_unit": {
+     "n": 340,
+     "human_positive": 167,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 34,
+     "normal_false_negative": 24,
+     "normal_false_positive": 10
+    },
+    "small_numeric": {
+     "n": 900,
+     "human_positive": 549,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 21,
+     "normal_false_negative": 10,
+     "normal_false_positive": 11
+    },
+    "symbolic_other": {
+     "n": 900,
+     "human_positive": 473,
+     "failure_event": 1,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 52,
+     "normal_false_negative": 30,
+     "normal_false_positive": 22
+    },
+    "trailing_period": {
+     "n": 136,
+     "human_positive": 32,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 20,
+     "normal_false_negative": 15,
+     "normal_false_positive": 5
+    },
+    "trailing_whitespace": {
+     "n": 324,
+     "human_positive": 36,
+     "failure_event": 0,
+     "incomplete_or_intervened": 0,
+     "fallback_one": 0,
+     "failure_zero_human_one": 0,
+     "normal_disagreement": 13,
+     "normal_false_negative": 9,
+     "normal_false_positive": 4
+    }
+   },
+   "failure_cost_per_all": 0.0,
+   "failure_cost_per_human_positive": 0.0,
+   "affected_rows": [
+    {
+     "id": "e3-00414",
+     "label": 0,
+     "category": "symbolic_other",
+     "result": {
+      "id": "e3-00414",
+      "worker": "boxed-reference1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 60.1794,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 60.179277,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 324256776,
+        "steps": [
+         [
+          "gold_parse",
+          0.000879,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.16787,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          60.009914,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          1.9e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          8e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-03233",
+     "label": 0,
+     "category": "latex_frac",
+     "result": {
+      "id": "e3-03233",
+      "worker": "boxed-reference1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 60.0574,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 60.057331,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 489784448,
+        "steps": [
+         [
+          "gold_parse",
+          0.000447,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.035735,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          60.020453,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          3.3e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          1.3e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    },
+    {
+     "id": "e3-05332",
+     "label": 0,
+     "category": "latex_sqrt",
+     "result": {
+      "id": "e3-05332",
+      "worker": "boxed-reference1w0",
+      "class": "0 分：比较超时",
+      "score": 0.0,
+      "exc": null,
+      "wall": 60.0383,
+      "undetermined": null,
+      "problems": [],
+      "flags": [],
+      "resets": 0,
+      "attempts": [
+       {
+        "att": 1,
+        "gen": 1,
+        "outcome": "score",
+        "waited": 60.038158,
+        "exit": 0,
+        "budget_killed": false,
+        "fp_max": 489784448,
+        "steps": [
+         [
+          "gold_parse",
+          0.000587,
+          true,
+          [],
+          0
+         ],
+         [
+          "pred_parse",
+          0.025423,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          60.011386,
+          true,
+          [
+           "Timeout during comparison"
+          ],
+          1
+         ],
+         [
+          "compare",
+          2.5e-05,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          9e-06,
+          true,
+          [],
+          0
+         ],
+         [
+          "compare",
+          7e-06,
+          true,
+          [],
+          0
+         ]
+        ]
+       }
+      ],
+      "warm": false
+     }
+    }
+   ]
+  }
+ },
+ "boundaries": [
+  "Selected and stratified extracted answers; not natural full-response prevalence.",
+  "Human labels and the longer-time reference are separate comparators, not mathematical proof.",
+  "Counts overlap; unknown/intervened rows are reported separately.",
+  "No GRPO training or population group-error estimate."
+ ]
+}

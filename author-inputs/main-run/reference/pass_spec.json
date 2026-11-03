@@ -1,0 +1,9 @@
+{
+ "pass": "reference",
+ "mode": "reference",
+ "extra": [],
+ "n": 33487,
+ "ids_sha256": "0652cff1fb356ea70c036270f02ffb5372ed69ebc16d3b5a4b0c02e6ca7b9a1b",
+ "child_limit": 3221225472,
+ "row_limit": 690
+}

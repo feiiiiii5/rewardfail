@@ -1,0 +1,278 @@
+{
+  "case": "O5",
+  "run_id": "run-01",
+  "mode": "original",
+  "agent_workers": 1,
+  "order": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "failing": [
+    6
+  ],
+  "expected": null,
+  "expected_rows": 7,
+  "verl_dir": "<WORKSPACE>/thesis-runs/verl-pr8015-original",
+  "out": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O5",
+  "started": "2026-11-02 09:01:22 +0800",
+  "environment": {
+    "python": "3.12.8",
+    "executable": "<WORKSPACE>/rewardfail/.venv/bin/python",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "versions": {
+      "torch": "2.14.1",
+      "ray": "2.59.0",
+      "transformers": "5.12.1",
+      "tensordict": "0.10.0",
+      "math-verify": "0.9.0",
+      "sympy": "1.14.0",
+      "numpy": "2.5.3",
+      "hydra-core": "1.3.7",
+      "omegaconf": "2.3.1",
+      "tokenizers": "0.22.2",
+      "psutil": "7.2.2",
+      "packaging": "25.0"
+    },
+    "root": "<WORKSPACE>/rewardfail",
+    "verl_dir": "<WORKSPACE>/thesis-runs/verl-pr8015-original",
+    "verl_file": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/__init__.py",
+    "reward_loop_file": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/experimental/reward_loop/reward_loop.py",
+    "verl_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+    "verl_status": "",
+    "verl_diff": [],
+    "verl_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compute_rm_score_ast_sha256": "afb5d6c40caf9f3992726c9dacfc8d6ba8ff83c0f581fa3af543cc37e03e54fc",
+    "workspace_head": "d86baaa404f1b3b5b1a1fe49453075e9a82d2a0e",
+    "workspace_status": "?? .DS_Store\n?? experiments/thesis_chain.py",
+    "pinned_third_party_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+    "pinned_third_party_status": "",
+    "rows_sha256": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719",
+    "rows_historical_sha256": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719",
+    "rows_match_historical": true,
+    "code_sha256": {
+      "experiments/thesis_chain.py": "6cce7c0cfe36e9ea5c920eaa1562cfaa6edcb5aeb0db8298facd6ec2e87beb8c",
+      "experiments/c1c_chain.py": "0c58cfc36bb9db6c0e7d6e4aca726d141ebf8a335b9369a80bc694bffce9b845",
+      "rewardfail/inject.py": "aca4d02295b84f62a3aaef659f4a885f801abb35aaed7302d780d554d1ed392e",
+      "rewardfail/reward_fn.py": "108b848b011e43e407773b672870d1cef19831ba29e3fbde2876dffd6ad392e0",
+      "rewardfail/fixed_agent_loop.py": "e32c8e7d2d65f91f74f1afe4e6c76c3a65a4683abc2d03295dcde11560fee1fe",
+      "artifacts/tiny_model/config.json": "aa58d9b4ff298a6485c2f61846c234e9b878192ad0d60afe483e6e5e52dbd01e",
+      "artifacts/agent_loops.yaml": "2e6b007e6cf38fc2a8ca7710358bfb6f68a719444b9b6c07b2d30bab189bf5b8"
+    },
+    "ledger_path": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O5/ledger.jsonl"
+  },
+  "ray_worker_paths": {
+    "verl": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/__init__.py",
+    "reward_loop": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/experimental/reward_loop/reward_loop.py"
+  },
+  "seconds": 12.32,
+  "outcome": "completed",
+  "row_scores": [
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "n_rows": 7,
+  "expected_scores": null,
+  "scores_match_expected": null,
+  "extract_reward_columns": {
+    "acc": [
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ]
+  },
+  "column_lengths": {
+    "acc": 7
+  },
+  "reward_extra_keys": [
+    "acc"
+  ],
+  "non_tensor_keys": [
+    "__num_turns__",
+    "acc",
+    "agent_name",
+    "data_source",
+    "extra_info",
+    "extras",
+    "index",
+    "max_global_steps",
+    "min_global_steps",
+    "multi_modal_inputs",
+    "priority",
+    "raw_prompt",
+    "reward_model",
+    "tool_rewards",
+    "turn_scores"
+  ],
+  "error_column_present": false,
+  "error_positions": [],
+  "error_original_ids": [],
+  "expected_error_original_ids": [
+    6
+  ],
+  "error_set_matches_expected": false,
+  "ledger_counts_by_original_id": {
+    "6": 2
+  },
+  "ledger_entries": [
+    {
+      "row": 6,
+      "pid": 28528,
+      "t": 1793581306.845545
+    },
+    {
+      "row": 6,
+      "pid": 28551,
+      "t": 1793581307.480845
+    }
+  ],
+  "rows": [
+    {
+      "position": 0,
+      "original_id": 0,
+      "question": "1+3=?",
+      "ground_truth": "4",
+      "fixed_response": "The answer is \\boxed{4}.",
+      "expected_score": null,
+      "actual_score": 1.0,
+      "expected_fail": false,
+      "actual_error": null,
+      "ledger_count": 0
+    },
+    {
+      "position": 1,
+      "original_id": 1,
+      "question": "2+3=?",
+      "ground_truth": "5",
+      "fixed_response": "I think it is \\boxed{6}.",
+      "expected_score": null,
+      "actual_score": 0.0,
+      "expected_fail": false,
+      "actual_error": null,
+      "ledger_count": 0
+    },
+    {
+      "position": 2,
+      "original_id": 2,
+      "question": "Write 1/2 as a decimal.",
+      "ground_truth": "\\frac{1}{2}",
+      "fixed_response": "\\boxed{0.5}",
+      "expected_score": null,
+      "actual_score": 1.0,
+      "expected_fail": false,
+      "actual_error": null,
+      "ledger_count": 0
+    },
+    {
+      "position": 3,
+      "original_id": 3,
+      "question": "3*3=?",
+      "ground_truth": "9",
+      "fixed_response": "\\boxed{8}",
+      "expected_score": null,
+      "actual_score": 0.0,
+      "expected_fail": false,
+      "actual_error": null,
+      "ledger_count": 0
+    },
+    {
+      "position": 4,
+      "original_id": 4,
+      "question": "10-3=?",
+      "ground_truth": "7",
+      "fixed_response": "\\boxed{7}",
+      "expected_score": null,
+      "actual_score": 1.0,
+      "expected_fail": false,
+      "actual_error": null,
+      "ledger_count": 0
+    },
+    {
+      "position": 5,
+      "original_id": 5,
+      "question": "2^3=?",
+      "ground_truth": "8",
+      "fixed_response": "\\boxed{9}",
+      "expected_score": null,
+      "actual_score": 0.0,
+      "expected_fail": false,
+      "actual_error": null,
+      "ledger_count": 0
+    },
+    {
+      "position": 6,
+      "original_id": 6,
+      "question": "sqrt(16)=?",
+      "ground_truth": "4",
+      "fixed_response": "\\boxed{4}",
+      "expected_score": null,
+      "actual_score": 0.0,
+      "expected_fail": true,
+      "actual_error": null,
+      "ledger_count": 2
+    }
+  ],
+  "export": {
+    "readback": {
+      "path": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O5/export/1.jsonl",
+      "n_lines": 7,
+      "n_expected": 7,
+      "scores_equal": true,
+      "inputs_equal": true,
+      "outputs_equal": true,
+      "gts_equal": true,
+      "error_values_equal": true,
+      "columns_written": [
+        "acc"
+      ],
+      "null_count_by_column": {
+        "input": 0,
+        "output": 0,
+        "gts": 0,
+        "score": 0,
+        "step": 0,
+        "acc": 0
+      }
+    },
+    "wronglen_check": {
+      "path": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O5/export/wronglen/2.jsonl",
+      "n_lines": 7,
+      "wrong_len_absent": true,
+      "known_columns_present": [
+        "acc"
+      ]
+    }
+  },
+  "finished": "2026-11-02 09:01:50 +0800",
+  "ledger": {
+    "path": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O5/ledger.jsonl",
+    "counts": {
+      "6": 2
+    },
+    "entries": [
+      {
+        "row": 6,
+        "pid": 28528,
+        "t": 1793581306.845545
+      },
+      {
+        "row": 6,
+        "pid": 28551,
+        "t": 1793581307.480845
+      }
+    ]
+  }
+}

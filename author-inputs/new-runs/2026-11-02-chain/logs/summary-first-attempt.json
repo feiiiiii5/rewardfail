@@ -1,0 +1,228 @@
+{
+  "run_id": "run-01",
+  "started": "2026-11-02 08:56:39 +0800",
+  "fixed_verl": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill",
+  "original_verl": "<WORKSPACE>/thesis-runs/verl-pr8015-original",
+  "out_root": "<WORKSPACE>/thesis-runs/2026-11-02-chain",
+  "cases": [
+    {
+      "case": "O4",
+      "mode": "original",
+      "returncode": 0,
+      "duration_s": 29.67,
+      "outcome": "completed",
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scores_match_expected": null,
+      "error_original_ids": [],
+      "error_set_matches_expected": false,
+      "exception_type": null,
+      "raise_site": null,
+      "ledger_counts": {
+        "6": 2
+      },
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O4/case.json"
+    },
+    {
+      "case": "O5",
+      "mode": "original",
+      "returncode": 1,
+      "duration_s": 16.58,
+      "outcome": "aborted",
+      "row_scores": null,
+      "scores_match_expected": null,
+      "error_original_ids": null,
+      "error_set_matches_expected": null,
+      "exception_type": "AssertionError",
+      "raise_site": "verl/protocol.py:871",
+      "ledger_counts": {},
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O5/case.json"
+    },
+    {
+      "case": "O6",
+      "mode": "original",
+      "returncode": 1,
+      "duration_s": 27.5,
+      "outcome": "aborted",
+      "row_scores": null,
+      "scores_match_expected": null,
+      "error_original_ids": null,
+      "error_set_matches_expected": null,
+      "exception_type": "KeyError",
+      "raise_site": "verl/experimental/reward_loop/reward_loop.py:369",
+      "ledger_counts": {
+        "2": 2
+      },
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O6/case.json"
+    },
+    {
+      "case": "C1",
+      "mode": "fixed",
+      "returncode": 0,
+      "duration_s": 27.82,
+      "outcome": "completed",
+      "row_scores": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "scores_match_expected": true,
+      "error_original_ids": [
+        0
+      ],
+      "error_set_matches_expected": true,
+      "exception_type": null,
+      "raise_site": null,
+      "ledger_counts": {
+        "0": 2
+      },
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C1/case.json"
+    },
+    {
+      "case": "C2",
+      "mode": "fixed",
+      "returncode": 0,
+      "duration_s": 30.17,
+      "outcome": "completed",
+      "row_scores": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "scores_match_expected": true,
+      "error_original_ids": [
+        2
+      ],
+      "error_set_matches_expected": true,
+      "exception_type": null,
+      "raise_site": null,
+      "ledger_counts": {
+        "2": 2
+      },
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C2/case.json"
+    },
+    {
+      "case": "C3",
+      "mode": "fixed",
+      "returncode": 0,
+      "duration_s": 27.08,
+      "outcome": "completed",
+      "row_scores": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scores_match_expected": true,
+      "error_original_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "error_set_matches_expected": true,
+      "exception_type": null,
+      "raise_site": null,
+      "ledger_counts": {
+        "4": 2,
+        "0": 2,
+        "1": 1,
+        "5": 1,
+        "2": 1,
+        "6": 1,
+        "3": 1,
+        "7": 1
+      },
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C3/case.json"
+    },
+    {
+      "case": "C4",
+      "mode": "fixed",
+      "returncode": 0,
+      "duration_s": 29.96,
+      "outcome": "completed",
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scores_match_expected": true,
+      "error_original_ids": [
+        6
+      ],
+      "error_set_matches_expected": true,
+      "exception_type": null,
+      "raise_site": null,
+      "ledger_counts": {
+        "6": 2
+      },
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C4/case.json"
+    },
+    {
+      "case": "C5",
+      "mode": "fixed",
+      "returncode": 1,
+      "duration_s": 17.06,
+      "outcome": "aborted",
+      "row_scores": null,
+      "scores_match_expected": null,
+      "error_original_ids": null,
+      "error_set_matches_expected": null,
+      "exception_type": "AssertionError",
+      "raise_site": "verl/protocol.py:871",
+      "ledger_counts": {},
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C5/case.json"
+    }
+  ],
+  "stop": {
+    "case": "C5",
+    "reason": "fixed case failed pre-declared check",
+    "brief": {
+      "case": "C5",
+      "mode": "fixed",
+      "returncode": 1,
+      "duration_s": 17.06,
+      "outcome": "aborted",
+      "row_scores": null,
+      "scores_match_expected": null,
+      "error_original_ids": null,
+      "error_set_matches_expected": null,
+      "exception_type": "AssertionError",
+      "raise_site": "verl/protocol.py:871",
+      "ledger_counts": {},
+      "case_json": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C5/case.json"
+    }
+  },
+  "finished": "2026-11-02 09:00:05 +0800"
+}

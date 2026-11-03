@@ -1,0 +1,1850 @@
+{
+  "run": "2026-11-02-chain",
+  "run_dir": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01",
+  "checked_at": "2026-11-02 09:12:09 +0800",
+  "cases": [],
+  "failures_preserved": [
+    "run-01/failures/O5-two-agent-workers",
+    "run-01/failures/C5-two-agent-workers"
+  ],
+  "checks": [
+    {
+      "check": "C0: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C0/case.json"
+    },
+    {
+      "check": "C0: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C0: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C0: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C0: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C0: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C0: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C0: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C0: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C0: scores match expected",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C0: expected score vector",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C0: error set matches expected",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C0: no false error column",
+      "pass": true,
+      "detail": false
+    },
+    {
+      "check": "C0: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "check": "C0: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C0: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C0: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C0: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C0: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C0: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C0: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C0: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C1/case.json"
+    },
+    {
+      "check": "C1: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C1: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C1: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C1: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C1: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C1: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C1: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C1: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C1: scores match expected",
+      "pass": true,
+      "detail": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C1: expected score vector",
+      "pass": true,
+      "detail": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C1: error set matches expected",
+      "pass": true,
+      "detail": [
+        0
+      ]
+    },
+    {
+      "check": "C1: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "0": 2
+      }
+    },
+    {
+      "check": "C1: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C1: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C1: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C2/case.json"
+    },
+    {
+      "check": "C2: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C2: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C2: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C2: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C2: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C2: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C2: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C2: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C2: scores match expected",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C2: expected score vector",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C2: error set matches expected",
+      "pass": true,
+      "detail": [
+        2
+      ]
+    },
+    {
+      "check": "C2: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "2": 2
+      }
+    },
+    {
+      "check": "C2: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C2: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C2: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C3: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C3/case.json"
+    },
+    {
+      "check": "C3: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C3: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C3: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C3: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C3: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C3: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C3: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C3: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C3: scores match expected",
+      "pass": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "check": "C3: expected score vector",
+      "pass": true,
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "check": "C3: error set matches expected",
+      "pass": true,
+      "detail": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "check": "C3: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C3: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "4": 2,
+        "0": 2,
+        "1": 1,
+        "5": 1,
+        "2": 1,
+        "6": 1,
+        "3": 1,
+        "7": 1
+      }
+    },
+    {
+      "check": "C3: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C3: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C3: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C3: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C3: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C3: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C3: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C3: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C4: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C4/case.json"
+    },
+    {
+      "check": "C4: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C4: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C4: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C4: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C4: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C4: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C4: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C4: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C4: scores match expected",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C4: expected score vector",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C4: error set matches expected",
+      "pass": true,
+      "detail": [
+        6
+      ]
+    },
+    {
+      "check": "C4: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C4: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "6": 2
+      }
+    },
+    {
+      "check": "C4: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C4: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C4: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C4: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C4: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C4: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C4: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C4: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C5: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C5/case.json"
+    },
+    {
+      "check": "C5: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C5: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C5: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C5: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C5: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C5: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C5: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C5: row count",
+      "pass": true,
+      "detail": 7
+    },
+    {
+      "check": "C5: scores match expected",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "check": "C5: expected score vector",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "check": "C5: error set matches expected",
+      "pass": true,
+      "detail": [
+        6
+      ]
+    },
+    {
+      "check": "C5: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C5: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "6": 2
+      }
+    },
+    {
+      "check": "C5: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C5: export line count",
+      "pass": true,
+      "detail": 7
+    },
+    {
+      "check": "C5: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C5: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C5: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C5: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C5: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C5: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C6: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C6/case.json"
+    },
+    {
+      "check": "C6: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C6: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C6: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C6: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C6: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C6: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C6: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C6: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C6: scores match expected",
+      "pass": true,
+      "detail": [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C6: expected score vector",
+      "pass": true,
+      "detail": [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C6: error set matches expected",
+      "pass": true,
+      "detail": [
+        2
+      ]
+    },
+    {
+      "check": "C6: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C6: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "2": 2
+      }
+    },
+    {
+      "check": "C6: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C6: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C6: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C6: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C6: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C6: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C6: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C6: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1r: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C1r/case.json"
+    },
+    {
+      "check": "C1r: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C1r: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C1r: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C1r: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C1r: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C1r: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C1r: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C1r: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C1r: scores match expected",
+      "pass": true,
+      "detail": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C1r: expected score vector",
+      "pass": true,
+      "detail": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C1r: error set matches expected",
+      "pass": true,
+      "detail": [
+        0
+      ]
+    },
+    {
+      "check": "C1r: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1r: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "0": 2
+      }
+    },
+    {
+      "check": "C1r: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C1r: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C1r: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1r: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1r: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1r: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1r: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C1r: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2r: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/C2r/case.json"
+    },
+    {
+      "check": "C2r: mode",
+      "pass": true,
+      "detail": "fixed"
+    },
+    {
+      "check": "C2r: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/__init__.py"
+    },
+    {
+      "check": "C2r: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-unionfill/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "C2r: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325"
+    },
+    {
+      "check": "C2r: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "C2r: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "C2r: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "C2r: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C2r: scores match expected",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C2r: expected score vector",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "check": "C2r: error set matches expected",
+      "pass": true,
+      "detail": [
+        2
+      ]
+    },
+    {
+      "check": "C2r: error column present",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2r: every planned failure has ledger >=1",
+      "pass": true,
+      "detail": {
+        "2": 2
+      }
+    },
+    {
+      "check": "C2r: no ledger for non-failing rows",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "C2r: export line count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "C2r: export scores equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2r: export inputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2r: export outputs equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2r: export gts equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2r: export error values equal",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "C2r: wrong-length column ignored",
+      "pass": true,
+      "detail": true
+    },
+    {
+      "check": "O4: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O4/case.json"
+    },
+    {
+      "check": "O4: mode",
+      "pass": true,
+      "detail": "original"
+    },
+    {
+      "check": "O4: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/__init__.py"
+    },
+    {
+      "check": "O4: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "O4: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "afb5d6c40caf9f3992726c9dacfc8d6ba8ff83c0f581fa3af543cc37e03e54fc"
+    },
+    {
+      "check": "O4: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "O4: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "O4: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "O4: row count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "O4: scores match pre-run inference",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "check": "O4: error flag lost in original",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "O4: injection ledger present",
+      "pass": true,
+      "detail": {
+        "6": 2
+      }
+    },
+    {
+      "check": "O4: export readback",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "O5: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O5/case.json"
+    },
+    {
+      "check": "O5: mode",
+      "pass": true,
+      "detail": "original"
+    },
+    {
+      "check": "O5: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/__init__.py"
+    },
+    {
+      "check": "O5: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "O5: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "afb5d6c40caf9f3992726c9dacfc8d6ba8ff83c0f581fa3af543cc37e03e54fc"
+    },
+    {
+      "check": "O5: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "O5: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "O5: completed",
+      "pass": true,
+      "detail": "completed"
+    },
+    {
+      "check": "O5: row count",
+      "pass": true,
+      "detail": 7
+    },
+    {
+      "check": "O5: scores match pre-run inference",
+      "pass": true,
+      "detail": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "check": "O5: error flag lost in original",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "O5: injection ledger present",
+      "pass": true,
+      "detail": {
+        "6": 2
+      }
+    },
+    {
+      "check": "O5: export readback",
+      "pass": true,
+      "detail": 7
+    },
+    {
+      "check": "O6: case.json exists",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/O6/case.json"
+    },
+    {
+      "check": "O6: mode",
+      "pass": true,
+      "detail": "original"
+    },
+    {
+      "check": "O6: imported verl under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/__init__.py"
+    },
+    {
+      "check": "O6: reward_loop under intended copy",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/experimental/reward_loop/reward_loop.py"
+    },
+    {
+      "check": "O6: compute_rm_score AST hash",
+      "pass": true,
+      "detail": "afb5d6c40caf9f3992726c9dacfc8d6ba8ff83c0f581fa3af543cc37e03e54fc"
+    },
+    {
+      "check": "O6: ROWS hash matches historical",
+      "pass": true,
+      "detail": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+    },
+    {
+      "check": "O6: pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "O6: aborted as expected",
+      "pass": true,
+      "detail": "aborted"
+    },
+    {
+      "check": "O6: raise site",
+      "pass": true,
+      "detail": "verl/experimental/reward_loop/reward_loop.py:369"
+    },
+    {
+      "check": "O6: injection ledger present",
+      "pass": true,
+      "detail": {
+        "2": 2
+      }
+    },
+    {
+      "check": "C1r: scores equal to C1",
+      "pass": true,
+      "detail": {
+        "first": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "restart": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "check": "C1r: error ids equal to C1",
+      "pass": true,
+      "detail": {
+        "first": [
+          0
+        ],
+        "restart": [
+          0
+        ]
+      }
+    },
+    {
+      "check": "C1r: export equal to C1",
+      "pass": true,
+      "detail": {
+        "first": 8,
+        "restart": 8
+      }
+    },
+    {
+      "check": "C2r: scores equal to C2",
+      "pass": true,
+      "detail": {
+        "first": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "restart": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "check": "C2r: error ids equal to C2",
+      "pass": true,
+      "detail": {
+        "first": [
+          2
+        ],
+        "restart": [
+          2
+        ]
+      }
+    },
+    {
+      "check": "C2r: export equal to C2",
+      "pass": true,
+      "detail": {
+        "first": 8,
+        "restart": 8
+      }
+    },
+    {
+      "check": "O5 first attempt: preserved",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/failures/O5-two-agent-workers/case.json"
+    },
+    {
+      "check": "O5 first attempt: aborted at generation",
+      "pass": true,
+      "detail": {
+        "outcome": "aborted",
+        "raise": "verl/protocol.py:871",
+        "message": "only support equal chunk. Got size of DataProto 7 and chunk 2."
+      }
+    },
+    {
+      "check": "C5 first attempt: preserved",
+      "pass": true,
+      "detail": "<WORKSPACE>/thesis-runs/2026-11-02-chain/run-01/failures/C5-two-agent-workers/case.json"
+    },
+    {
+      "check": "C5 first attempt: aborted at generation",
+      "pass": true,
+      "detail": {
+        "outcome": "aborted",
+        "raise": "verl/protocol.py:871",
+        "message": "only support equal chunk. Got size of DataProto 7 and chunk 2."
+      }
+    },
+    {
+      "check": "driver hash recorded for all cases",
+      "pass": true,
+      "detail": {
+        "3b3aa0dc2f5934e09a06833477e3fed705cf01870a9bb700cb19febb05ef04ca": [
+          "C0",
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "O4",
+          "O6"
+        ],
+        "6cce7c0cfe36e9ea5c920eaa1562cfaa6edcb5aeb0db8298facd6ec2e87beb8c": [
+          "C5",
+          "C6",
+          "C1r",
+          "C2r",
+          "O5"
+        ]
+      }
+    },
+    {
+      "check": "rewardfail workspace unchanged except new driver",
+      "pass": true,
+      "detail": [
+        "?? .DS_Store",
+        "?? experiments/thesis_chain.py"
+      ]
+    },
+    {
+      "check": "pinned third_party clean",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "original copy reward_loop hash",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "unionfill copy AST hash",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "n_checks": 249,
+  "n_fail": 0,
+  "driver_hashes": {
+    "3b3aa0dc2f5934e09a06833477e3fed705cf01870a9bb700cb19febb05ef04ca": [
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "O4",
+      "O6"
+    ],
+    "6cce7c0cfe36e9ea5c920eaa1562cfaa6edcb5aeb0db8298facd6ec2e87beb8c": [
+      "C5",
+      "C6",
+      "C1r",
+      "C2r",
+      "O5"
+    ]
+  },
+  "records": {
+    "C0": {
+      "case": "C0",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": null,
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "error_original_ids": [],
+      "seconds": 9.14,
+      "started": "2026-11-02 08:55:49 +0800",
+      "finished": "2026-11-02 08:56:14 +0800"
+    },
+    "C1": {
+      "case": "C1",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": null,
+      "row_scores": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "error_original_ids": [
+        0
+      ],
+      "seconds": 10.44,
+      "started": "2026-11-02 08:57:54 +0800",
+      "finished": "2026-11-02 08:58:19 +0800"
+    },
+    "C2": {
+      "case": "C2",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": null,
+      "row_scores": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "error_original_ids": [
+        2
+      ],
+      "seconds": 12.67,
+      "started": "2026-11-02 08:58:21 +0800",
+      "finished": "2026-11-02 08:58:49 +0800"
+    },
+    "C3": {
+      "case": "C3",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": null,
+      "row_scores": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "error_original_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seconds": 9.94,
+      "started": "2026-11-02 08:58:52 +0800",
+      "finished": "2026-11-02 08:59:16 +0800"
+    },
+    "C4": {
+      "case": "C4",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": null,
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "error_original_ids": [
+        6
+      ],
+      "seconds": 12.66,
+      "started": "2026-11-02 08:59:19 +0800",
+      "finished": "2026-11-02 08:59:46 +0800"
+    },
+    "C5": {
+      "case": "C5",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": 1,
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "error_original_ids": [
+        6
+      ],
+      "seconds": 12.16,
+      "started": "2026-11-02 09:01:53 +0800",
+      "finished": "2026-11-02 09:02:20 +0800"
+    },
+    "C6": {
+      "case": "C6",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": 2,
+      "row_scores": [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "error_original_ids": [
+        2
+      ],
+      "seconds": 10.59,
+      "started": "2026-11-02 09:02:22 +0800",
+      "finished": "2026-11-02 09:02:48 +0800"
+    },
+    "C1r": {
+      "case": "C1r",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": 2,
+      "row_scores": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "error_original_ids": [
+        0
+      ],
+      "seconds": 10.78,
+      "started": "2026-11-02 09:02:50 +0800",
+      "finished": "2026-11-02 09:03:16 +0800"
+    },
+    "C2r": {
+      "case": "C2r",
+      "mode": "fixed",
+      "outcome": "completed",
+      "agent_workers": 2,
+      "row_scores": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "error_original_ids": [
+        2
+      ],
+      "seconds": 12.73,
+      "started": "2026-11-02 09:03:19 +0800",
+      "finished": "2026-11-02 09:03:46 +0800"
+    },
+    "O4": {
+      "case": "O4",
+      "mode": "original",
+      "outcome": "completed",
+      "agent_workers": null,
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "error_original_ids": [],
+      "seconds": 12.49,
+      "started": "2026-11-02 08:56:40 +0800",
+      "finished": "2026-11-02 08:57:07 +0800"
+    },
+    "O5": {
+      "case": "O5",
+      "mode": "original",
+      "outcome": "completed",
+      "agent_workers": 1,
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "error_original_ids": [],
+      "seconds": 12.32,
+      "started": "2026-11-02 09:01:22 +0800",
+      "finished": "2026-11-02 09:01:50 +0800"
+    },
+    "O6": {
+      "case": "O6",
+      "mode": "original",
+      "outcome": "aborted",
+      "agent_workers": null,
+      "row_scores": null,
+      "error_original_ids": null,
+      "seconds": 10.59,
+      "started": "2026-11-02 08:57:26 +0800",
+      "finished": "2026-11-02 08:57:51 +0800"
+    }
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "environment": {
+    "python": "3.12.8",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "packages": {
+      "torch": "2.14.1",
+      "ray": "2.59.0",
+      "transformers": "5.12.1",
+      "tensordict": "0.10.0",
+      "math-verify": "0.9.0",
+      "latex2sympy2_extended": "1.11.0",
+      "sympy": "1.14.0",
+      "numpy": "2.5.3",
+      "omegaconf": "2.3.1",
+      "hydra-core": "1.3.7",
+      "tokenizers": "0.22.2"
+    },
+    "verl_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+    "verl_head_is_pinned": true,
+    "verl_worktree_clean": true,
+    "requirements_lock_sha256": "fa73bd7195db44f32182f9487210b1cd578a9347e89d1dc1b23178f843e1eec1",
+    "code_sha256": {
+      "rewardfail/inject.py": "aca4d02295b84f62a3aaef659f4a885f801abb35aaed7302d780d554d1ed392e",
+      "rewardfail/reward_fn.py": "108b848b011e43e407773b672870d1cef19831ba29e3fbde2876dffd6ad392e0",
+      "rewardfail/fixed_agent_loop.py": "e32c8e7d2d65f91f74f1afe4e6c76c3a65a4683abc2d03295dcde11560fee1fe",
+      "rewardfail/tiny_model.py": "ee582b2b15616d08829013b1a8cc156be5c14be3fd2a4ba95c15ca17391c1527",
+      "experiments/c1c_chain.py": "0c58cfc36bb9db6c0e7d6e4aca726d141ebf8a335b9369a80bc694bffce9b845"
+    },
+    "rows_sha256": "b808a68980ff4be946e7a1447e178825b8e4c2422005d06a655586b509bf1719"
+  },
+  "started": "2026-10-06 17:15:09 +0800",
+  "cases": [
+    {
+      "case": "A0_none",
+      "manager": "rate_limited",
+      "outcome": "completed",
+      "exception_type": null,
+      "raise_site": null,
+      "exception_message_head": null,
+      "has_error_column": false,
+      "reward_extra_keys": [
+        "acc"
+      ],
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "raw_reward_extra_info_rows_with_error": [],
+      "n_failed_log_lines": 0,
+      "injected_worker_deaths_by_row": {}
+    },
+    {
+      "case": "A1_row2",
+      "manager": "rate_limited",
+      "outcome": "completed",
+      "exception_type": null,
+      "raise_site": null,
+      "exception_message_head": null,
+      "has_error_column": false,
+      "reward_extra_keys": [
+        "acc"
+      ],
+      "row_scores": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "raw_reward_extra_info_rows_with_error": [
+        2
+      ],
+      "n_failed_log_lines": 1,
+      "injected_worker_deaths_by_row": {
+        "2": 2
+      }
+    },
+    {
+      "case": "A2_row0",
+      "manager": "rate_limited",
+      "outcome": "aborted",
+      "exception_type": "RayTaskError(KeyError)",
+      "raise_site": "verl/experimental/agent_loop/agent_loop.py:1111",
+      "exception_message_head": "KeyError: 'error'",
+      "has_error_column": null,
+      "reward_extra_keys": null,
+      "row_scores": null,
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 1,
+      "injected_worker_deaths_by_row": {
+        "0": 2
+      }
+    },
+    {
+      "case": "A3_row4",
+      "manager": "rate_limited",
+      "outcome": "aborted",
+      "exception_type": "RayTaskError(KeyError)",
+      "raise_site": "verl/experimental/agent_loop/agent_loop.py:1111",
+      "exception_message_head": "KeyError: 'error'",
+      "has_error_column": null,
+      "reward_extra_keys": null,
+      "row_scores": null,
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 1,
+      "injected_worker_deaths_by_row": {
+        "4": 2
+      }
+    },
+    {
+      "case": "A4_all",
+      "manager": "rate_limited",
+      "outcome": "completed",
+      "exception_type": null,
+      "raise_site": null,
+      "exception_message_head": null,
+      "has_error_column": true,
+      "reward_extra_keys": [
+        "error",
+        "acc"
+      ],
+      "row_scores": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raw_reward_extra_info_rows_with_error": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "n_failed_log_lines": 7,
+      "injected_worker_deaths_by_row": {
+        "0": 2,
+        "4": 2,
+        "2": 1,
+        "5": 1,
+        "6": 1,
+        "1": 1,
+        "7": 1,
+        "3": 1
+      }
+    },
+    {
+      "case": "A5_rows4to7",
+      "manager": "rate_limited",
+      "outcome": "aborted",
+      "exception_type": "AssertionError",
+      "raise_site": "verl/utils/py_functional.py:366",
+      "exception_message_head": "Key 'error' is not present in the keys of the first dictionary in the list.",
+      "has_error_column": null,
+      "reward_extra_keys": null,
+      "row_scores": null,
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 3,
+      "injected_worker_deaths_by_row": {
+        "4": 2,
+        "5": 2,
+        "7": 2,
+        "6": 1
+      }
+    },
+    {
+      "case": "A6_rows0to3",
+      "manager": "rate_limited",
+      "outcome": "aborted",
+      "exception_type": "AssertionError",
+      "raise_site": "verl/protocol.py:949",
+      "exception_message_head": "Conflicting values for meta_info key 'reward_extra_keys'",
+      "has_error_column": null,
+      "reward_extra_keys": null,
+      "row_scores": null,
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 4,
+      "injected_worker_deaths_by_row": {
+        "0": 2,
+        "1": 1,
+        "3": 2,
+        "2": 2
+      }
+    },
+    {
+      "case": "B0_none",
+      "manager": "rate_limited",
+      "outcome": "completed",
+      "exception_type": null,
+      "raise_site": null,
+      "exception_message_head": null,
+      "has_error_column": false,
+      "reward_extra_keys": [
+        "acc"
+      ],
+      "row_scores": [
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 0,
+      "injected_worker_deaths_by_row": {}
+    },
+    {
+      "case": "B1_row2",
+      "manager": "rate_limited",
+      "outcome": "completed",
+      "exception_type": null,
+      "raise_site": null,
+      "exception_message_head": null,
+      "has_error_column": false,
+      "reward_extra_keys": [
+        "acc"
+      ],
+      "row_scores": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 1,
+      "injected_worker_deaths_by_row": {
+        "2": 2
+      }
+    },
+    {
+      "case": "B2_row0",
+      "manager": "rate_limited",
+      "outcome": "aborted",
+      "exception_type": "KeyError",
+      "raise_site": "verl/experimental/reward_loop/reward_loop.py:369",
+      "exception_message_head": "'error'",
+      "has_error_column": null,
+      "reward_extra_keys": null,
+      "row_scores": null,
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 1,
+      "injected_worker_deaths_by_row": {
+        "0": 2
+      }
+    },
+    {
+      "case": "B3_all",
+      "manager": "rate_limited",
+      "outcome": "completed",
+      "exception_type": null,
+      "raise_site": null,
+      "exception_message_head": null,
+      "has_error_column": true,
+      "reward_extra_keys": [
+        "error",
+        "acc"
+      ],
+      "row_scores": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 8,
+      "injected_worker_deaths_by_row": {
+        "0": 2,
+        "4": 2,
+        "1": 1,
+        "5": 1,
+        "2": 1,
+        "6": 1,
+        "7": 1,
+        "3": 1
+      }
+    },
+    {
+      "case": "N1_naive_A_row2",
+      "manager": "naive",
+      "outcome": "aborted",
+      "exception_type": "RayTaskError(BrokenProcessPool)",
+      "raise_site": "verl/utils/reward_score/math_verify.py:84",
+      "exception_message_head": "concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.",
+      "has_error_column": null,
+      "reward_extra_keys": null,
+      "row_scores": null,
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 0,
+      "injected_worker_deaths_by_row": {
+        "2": 2
+      }
+    },
+    {
+      "case": "N2_naive_B_row2",
+      "manager": "naive",
+      "outcome": "aborted",
+      "exception_type": "RayTaskError(BrokenProcessPool)",
+      "raise_site": "verl/utils/reward_score/math_verify.py:84",
+      "exception_message_head": "concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.",
+      "has_error_column": null,
+      "reward_extra_keys": null,
+      "row_scores": null,
+      "raw_reward_extra_info_rows_with_error": null,
+      "n_failed_log_lines": 0,
+      "injected_worker_deaths_by_row": {
+        "2": 2
+      }
+    }
+  ],
+  "finished": "2026-10-06 17:23:47 +0800"
+}

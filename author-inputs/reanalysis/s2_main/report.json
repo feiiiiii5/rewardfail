@@ -1,0 +1,2192 @@
+{
+ "what": "第二阶段主测量（10-08 只重新分析：修正本机预算终止归因，未重判；方案第 18.3 节）",
+ "run_dir": "<REWARDfail_LOCAL>/stage2/runs/main-20261007-202545",
+ "pre": {
+  "source": "main",
+  "n": 93733,
+  "ids_sha256": "cd6b9c9ce7dae8f5ef9ff63f738f41aaa75ab721aa03a38b0a6032c17b24dbaa",
+  "retest": 963,
+  "retest_sha256": "55fc7b84b73ab35447f473f79cfd853f26c6f990e5892d5c862844c39680a3ed",
+  "limits_random": 874,
+  "limits_random_sha256": "d3e2c491dff450d6a05ac447df215489464a8db01326d9e45a1124be3e8981be",
+  "refone_order_sha256": "09c2ee0c92f7a61c4deec641183422343b3f40c66ac2b79a9225e5abf1ea4b79",
+  "synthetic": false,
+  "child_limit_mib": 3072
+ },
+ "lock": {
+  "code_sha256": {
+   "experiments/s2_main.py": "29e73e7c96c01c500781216b2094355bd564e381aef3242f666f05f17339595a",
+   "experiments/s2_worker.py": "b4320a74d2e1cf6d49c1a1b75ef5eb0d11daa248ece14d61d569e21509250985",
+   "rewardfail/__init__.py": "90deb4f1667387636b92697c18c1f60428a611e394ecb0aad83f1224f5fc8fa9",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "a8fa21e2b041c327ac5fe2bd8144b3b1c3bc2cc8470cfe994c9550bb63248745",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "425d7369211c1fa6d1603df03b2014e8d200e1378df00745d0e5151e7ca69be6",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "c6094ac81d830e8b6f6a6f6f1f789898284c8a42137f0193e6119af7dee61cc7",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "164bd7936e3c297fdbf20115e7168ed4c1e434a8d0500b4cc55515ce01a7c961",
+   "rewardfail/s2/supervise.py": "ff09a8394ef5d302ff5f1e71886ad26e118c6c3b9b54959aa36871b1fc82e818"
+  },
+  "tested_source": {
+   "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+   "verl_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+   "verl_dirty": [],
+   "wrapper_sha256": "f04f57d5cdc08d80197577c77d0bb9d47c2ddc6b4f8e80389ddf7ad3c71c8713"
+  },
+  "python": "3.12.8",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "data": {
+   "sample_map_sha256": "aa5dc856e7e3d9b4ae066d9c78ce7295ea0b1824a1a4842b516cae89f84128b6",
+   "shards_sha256": {
+    "train-00000-of-00010.parquet": "ccc3a95e4875dc4cff9bec2f0fb1c93e4c9cbb24fb24853fd0b96c416e1a263c",
+    "train-00001-of-00010.parquet": "a7d3eb54d97f7e1237a872947f2246de54a104be224646f62f588abdf6c7db60",
+    "train-00002-of-00010.parquet": "a44a2354bfa752541ab768b62edf01f3df4b9b2a7660774ab1eb6e7f19f0a86b",
+    "train-00003-of-00010.parquet": "dd7d2f0f04d80b3ae08484b706c4f7fd9dd29eeff4038c36257a307c77b877e9",
+    "train-00004-of-00010.parquet": "e358157990d7744643e25f1e692556ac5fd4a2212c008cf67475b14e040861ea",
+    "train-00005-of-00010.parquet": "30254d14d17b63d1f7963488d53a2d26aa22070f71baa2fe601201b081e38060",
+    "train-00006-of-00010.parquet": "b3bce93c06d4dc22788c04d0a1da5cbadb5b3db31046809c59a4ec26e96ebb52",
+    "train-00007-of-00010.parquet": "7def8029cf6d40f7493e9aa4be4b49c251ae7e0cb23b0b117c485e09ff5d5021",
+    "train-00008-of-00010.parquet": "29cf75a663e91039fc92bffd86a9ad845f992302da52d1fb1563b6c41ae777ed",
+    "train-00009-of-00010.parquet": "14df2775196a701b97a71cf0285fa75d97980fbda4db9ec9af9c2a07658ca256"
+   }
+  }
+ },
+ "reanalysis": {
+  "why": "修订前 analyze.py 按子进程 pid 与池代次把预算终止贴到这个子进程判过的所有行；修订后只记被杀时结果还没送回父侧的尝试（analyze.returned_at，KILL_MARGIN 秒）。主样本不重判，原运行目录与版本锁只读。",
+  "execution_version": "9a88991",
+  "analysis_env": {
+   "python": "3.12.8",
+   "platform": "macOS-27.2-arm64-arm-64bit",
+   "versions": {
+    "verl": "0.10.0.dev0",
+    "math-verify": "0.9.0",
+    "sympy": "1.14.0",
+    "torch": "2.14.1",
+    "pyarrow": "25.0.1",
+    "psutil": "7.2.2"
+   },
+   "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+   "repo_head": "6540dcb826647d5698c1e090aeb2d34a93b7b7ec",
+   "repo_dirty": [],
+   "code_sha256": {
+    "experiments/s2_main.py": "29e73e7c96c01c500781216b2094355bd564e381aef3242f666f05f17339595a",
+    "experiments/s2_main_reanalyze.py": "dd11c9d7135664c2103c10b873a2ba219cc50c94d5042b4d7cef8c084a79f49b",
+    "experiments/s2_main_sched.py": "e70a6dfe93a2a86bf7d8fcf86f787acceefe5fc5c35f2571d622234a23bd3401",
+    "experiments/s2_main_userP1.py": "794d3dad96d05a3decbb62c5fa144790bf8d8c4de05d82a1741cae006cd8dbf2",
+    "experiments/s2_pilot.py": "1bd097d7f3ced9f59a8ffb0f4418544f1efdbc0823509b5c2c47aca5666623f1",
+    "experiments/s2_reader_check.py": "19341d65c7a5072abd1b45a68b72774953436ceb38d60caa0a9f7759e537bae5",
+    "experiments/s2_rev1_recheck.py": "a272d6f4d405aef0aaa594a274b3cca437e4c85f644a6f2c48284c37ba0aacae",
+    "experiments/s2_rev1_switch_repeat.py": "2b9a15ffcec83ae03e287f766e31ca0280a7142dd2cc4e5dbddeed44ba7914a8",
+    "experiments/s2_rev1_tail.py": "7ddefc81ce853a7d2da074742fb0d219ee9af93dd125fc56dbda1a4a6728876d",
+    "experiments/s2_selftest.py": "387b682cf216a0d59a589420a2e46ecf93a96177fc1bc72b5be7a70a2aade633",
+    "experiments/s2_worker.py": "b4320a74d2e1cf6d49c1a1b75ef5eb0d11daa248ece14d61d569e21509250985",
+    "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+    "rewardfail/s2/analyze.py": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
+    "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+    "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+    "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+    "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+    "rewardfail/s2/guard.py": "425d7369211c1fa6d1603df03b2014e8d200e1378df00745d0e5151e7ca69be6",
+    "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+    "rewardfail/s2/obs.py": "c6094ac81d830e8b6f6a6f6f1f789898284c8a42137f0193e6119af7dee61cc7",
+    "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+    "rewardfail/s2/stepguard.py": "164bd7936e3c297fdbf20115e7168ed4c1e434a8d0500b4cc55515ce01a7c961",
+    "rewardfail/s2/supervise.py": "ff09a8394ef5d302ff5f1e71886ad26e118c6c3b9b54959aa36871b1fc82e818"
+   }
+  },
+  "lock_diffs_vs_run": [
+   {
+    "item": "code_sha256 / rewardfail/s2/analyze.py",
+    "run_lock": "a8fa21e2b041c327ac5fe2bd8144b3b1c3bc2cc8470cfe994c9550bb63248745",
+    "now": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a"
+   }
+  ],
+  "exec_version_reproduces_rows": {
+   "default": true,
+   "reference": true,
+   "limit2s": true,
+   "limit10s": true,
+   "replay1": true,
+   "replay2": true,
+   "replay3": true,
+   "retest": true
+  },
+  "class_changes_by_pass": {
+   "default": {},
+   "reference": {
+    "本机预算终止（未裁定） → 正常 0": 9551,
+    "本机预算终止（未裁定） → 1 分": 308,
+    "本机预算终止（未裁定） → 0 分：比较超时": 3,
+    "本机预算终止（未裁定） → 0 分：比较出错": 3,
+    "本机预算终止（未裁定） → 0 分：回答侧解析出错": 1
+   },
+   "limit2s": {},
+   "limit10s": {},
+   "replay1": {},
+   "replay2": {},
+   "replay3": {},
+   "retest": {}
+  },
+  "main_rows_changed_by_pass": {
+   "default": 0,
+   "reference": 9863,
+   "limit2s": 0,
+   "limit10s": 0,
+   "replay1": 0,
+   "replay2": 0,
+   "replay3": 0,
+   "retest": 0
+  },
+  "budget_rows_by_pass": {
+   "default": [],
+   "reference": [
+    "m-2a2cbb703cd7d47a",
+    "warm-reference-r21w0-2"
+   ],
+   "limit2s": [],
+   "limit10s": [],
+   "replay1": [],
+   "replay2": [],
+   "replay3": [],
+   "retest": []
+  },
+  "resynth_seconds": {
+   "default": 50.3,
+   "reference": 19.3,
+   "limit2s": 0.8,
+   "limit10s": 0.8,
+   "replay1": 6.1,
+   "replay2": 6.1,
+   "replay3": 6.1,
+   "retest": 0.8
+  },
+  "run_dir_report_json": "运行目录里的 report.json 是 10-07 原版，没有改；旧正式版见实验仓 6c416b2",
+  "source_manifest": {
+   "before": {
+    "files": 162,
+    "sha256": "351ce70b0fbbfbfdfead6d090f85ec20662ba2a9c85eac4333a67b2bcd0bf2d4"
+   },
+   "after": {
+    "files": 162,
+    "sha256": "351ce70b0fbbfbfdfead6d090f85ec20662ba2a9c85eac4333a67b2bcd0bf2d4"
+   },
+   "unchanged": true
+  }
+ },
+ "env": {
+  "python": "3.12.8",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+  "repo_head": "9a8899165645daf642b5b8b55153efbf421ac60a",
+  "repo_dirty": [],
+  "code_sha256": {
+   "experiments/s2_main.py": "29e73e7c96c01c500781216b2094355bd564e381aef3242f666f05f17339595a",
+   "experiments/s2_pilot.py": "1bd097d7f3ced9f59a8ffb0f4418544f1efdbc0823509b5c2c47aca5666623f1",
+   "experiments/s2_reader_check.py": "19341d65c7a5072abd1b45a68b72774953436ceb38d60caa0a9f7759e537bae5",
+   "experiments/s2_rev1_recheck.py": "a272d6f4d405aef0aaa594a274b3cca437e4c85f644a6f2c48284c37ba0aacae",
+   "experiments/s2_rev1_switch_repeat.py": "2b9a15ffcec83ae03e287f766e31ca0280a7142dd2cc4e5dbddeed44ba7914a8",
+   "experiments/s2_rev1_tail.py": "7ddefc81ce853a7d2da074742fb0d219ee9af93dd125fc56dbda1a4a6728876d",
+   "experiments/s2_selftest.py": "387b682cf216a0d59a589420a2e46ecf93a96177fc1bc72b5be7a70a2aade633",
+   "experiments/s2_worker.py": "b4320a74d2e1cf6d49c1a1b75ef5eb0d11daa248ece14d61d569e21509250985",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "a8fa21e2b041c327ac5fe2bd8144b3b1c3bc2cc8470cfe994c9550bb63248745",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "425d7369211c1fa6d1603df03b2014e8d200e1378df00745d0e5151e7ca69be6",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "c6094ac81d830e8b6f6a6f6f1f789898284c8a42137f0193e6119af7dee61cc7",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "164bd7936e3c297fdbf20115e7168ed4c1e434a8d0500b4cc55515ce01a7c961",
+   "rewardfail/s2/supervise.py": "ff09a8394ef5d302ff5f1e71886ad26e118c6c3b9b54959aa36871b1fc82e818"
+  }
+ },
+ "passes": {
+  "default": {
+   "pass": "default",
+   "mode": "observe",
+   "extra": [],
+   "tasks": 93733,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 3.027,
+    "available_gib": 4.527,
+    "supervisor_gib": 0.248,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 0,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "用户 2026-10-07 指示：公式 P=0 时仍按 P=1 试跑，用户自行监控；整机保护照常（experiments/s2_main_userP1.py）"
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 892.0,
+    "guard": {
+     "budget": 3250077696,
+     "child_limit": 3221225472,
+     "avail_start": 4860690432,
+     "swap_start": 1154547712,
+     "swap_base_end": 1154547712,
+     "peak_total_fp": 2141180536,
+     "min_avail": 4423172096,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 93733,
+    "warm_rows": 1,
+    "pools": {
+     "default1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 915.1,
+   "load": {
+    "status_records": 89,
+    "load1_p50": 3.67,
+    "load1_max": 4.77,
+    "pressure_max": 1,
+    "avail_min_gib": 4.251,
+    "swap_max_gib": 1.075
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 93733,
+    "rows_ran": 93733,
+    "same_rows": true,
+    "stats": {
+     "rows": 93733,
+     "warm_rows": 1,
+     "pools": {
+      "default1w0": 1
+     },
+     "exit_codes": {
+      "0": 1
+     },
+     "budget_kills": 0,
+     "hard_stops": 0,
+     "interrupted_rows": 0,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {}
+   }
+  },
+  "reference": {
+   "pass": "reference",
+   "mode": "reference",
+   "extra": [],
+   "tasks": 33487,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 4.144,
+    "available_gib": 5.644,
+    "supervisor_gib": 0.248,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 1,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+    "schedule": {
+     "reference": 1,
+     "其他各段": 1
+    }
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 1227.5,
+    "guard": {
+     "budget": 4449255424,
+     "child_limit": 3221225472,
+     "avail_start": 6059868160,
+     "swap_start": 1112604672,
+     "swap_base_end": 1112604672,
+     "peak_total_fp": 5041396288,
+     "min_avail": 4143661056,
+     "max_pressure": 1,
+     "budget_kills": 2,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 33487,
+    "warm_rows": 7,
+    "pools": {
+     "reference-r11w0": 1,
+     "reference-r11w1": 1,
+     "reference-r11w2": 1,
+     "reference-r12w0": 2,
+     "reference-r13w0": 2,
+     "reference-r21w0": 3
+    },
+    "exit_codes": {
+     "-9": 2,
+     "0": 1
+    },
+    "budget_kills": 4,
+    "hard_stops": 3,
+    "interrupted_rows": 3,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 1236.1,
+   "load": {
+    "status_records": 173,
+    "load1_p50": 3.5,
+    "load1_max": 17.67,
+    "pressure_max": 2,
+    "avail_min_gib": 3.043,
+    "swap_max_gib": 1.067
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 33487,
+    "rows_ran": 33487,
+    "same_rows": true,
+    "stats": {
+     "rows": 33487,
+     "warm_rows": 7,
+     "pools": {
+      "reference-r11w0": 1,
+      "reference-r11w1": 1,
+      "reference-r11w2": 1,
+      "reference-r12w0": 2,
+      "reference-r13w0": 2,
+      "reference-r21w0": 3
+     },
+     "exit_codes": {
+      "-9": 2,
+      "0": 1
+     },
+     "budget_kills": 4,
+     "hard_stops": 3,
+     "interrupted_rows": 3,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {
+     "本机预算终止（未裁定） → 正常 0": 9551,
+     "本机预算终止（未裁定） → 1 分": 308,
+     "本机预算终止（未裁定） → 0 分：比较超时": 3,
+     "本机预算终止（未裁定） → 0 分：比较出错": 3,
+     "本机预算终止（未裁定） → 0 分：回答侧解析出错": 1
+    }
+   }
+  },
+  "limit2s": {
+   "pass": "limit2s",
+   "mode": "observe",
+   "extra": [
+    "--limits",
+    "2"
+   ],
+   "tasks": 928,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 3.595,
+    "available_gib": 5.095,
+    "supervisor_gib": 0.295,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 0,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+    "schedule": {
+     "reference": 1,
+     "其他各段": 1
+    }
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 125.2,
+    "guard": {
+     "budget": 3859726336,
+     "child_limit": 3221225472,
+     "avail_start": 5470339072,
+     "swap_start": 1112604672,
+     "swap_base_end": 1112604672,
+     "peak_total_fp": 1521062040,
+     "min_avail": 4906057728,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 928,
+    "warm_rows": 1,
+    "pools": {
+     "limit2s1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 125.4,
+   "load": {
+    "status_records": 13,
+    "load1_p50": 2.91,
+    "load1_max": 3.94,
+    "pressure_max": 1,
+    "avail_min_gib": 4.569,
+    "swap_max_gib": 1.036
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 928,
+    "rows_ran": 928,
+    "same_rows": true,
+    "stats": {
+     "rows": 928,
+     "warm_rows": 1,
+     "pools": {
+      "limit2s1w0": 1
+     },
+     "exit_codes": {
+      "0": 1
+     },
+     "budget_kills": 0,
+     "hard_stops": 0,
+     "interrupted_rows": 0,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {}
+   }
+  },
+  "limit10s": {
+   "pass": "limit10s",
+   "mode": "observe",
+   "extra": [
+    "--limits",
+    "10"
+   ],
+   "tasks": 928,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 3.859,
+    "available_gib": 5.359,
+    "supervisor_gib": 0.296,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 1,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+    "schedule": {
+     "reference": 1,
+     "其他各段": 1
+    }
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 353.3,
+    "guard": {
+     "budget": 4143071232,
+     "child_limit": 3221225472,
+     "avail_start": 5753683968,
+     "swap_start": 1112604672,
+     "swap_base_end": 1112604672,
+     "peak_total_fp": 2246333120,
+     "min_avail": 4523589632,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 928,
+    "warm_rows": 1,
+    "pools": {
+     "limit10s1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 353.5,
+   "load": {
+    "status_records": 35,
+    "load1_p50": 4.1,
+    "load1_max": 5.08,
+    "pressure_max": 1,
+    "avail_min_gib": 4.213,
+    "swap_max_gib": 1.036
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 928,
+    "rows_ran": 928,
+    "same_rows": true,
+    "stats": {
+     "rows": 928,
+     "warm_rows": 1,
+     "pools": {
+      "limit10s1w0": 1
+     },
+     "exit_codes": {
+      "0": 1
+     },
+     "budget_kills": 0,
+     "hard_stops": 0,
+     "interrupted_rows": 0,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {}
+   }
+  },
+  "replay1": {
+   "pass": "replay1",
+   "mode": "observe",
+   "extra": [],
+   "tasks": 9898,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 3.542,
+    "available_gib": 5.042,
+    "supervisor_gib": 0.269,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 0,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+    "schedule": {
+     "reference": 1,
+     "其他各段": 1
+    }
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 287.7,
+    "guard": {
+     "budget": 3803430912,
+     "child_limit": 3221225472,
+     "avail_start": 5414043648,
+     "swap_start": 1112604672,
+     "swap_base_end": 1112604672,
+     "peak_total_fp": 2065895984,
+     "min_avail": 4554211328,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 9898,
+    "warm_rows": 1,
+    "pools": {
+     "replay11w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 290.1,
+   "load": {
+    "status_records": 29,
+    "load1_p50": 3.27,
+    "load1_max": 4.34,
+    "pressure_max": 1,
+    "avail_min_gib": 4.348,
+    "swap_max_gib": 1.036
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 47,
+    "rows_ran": 9898,
+    "same_rows": false,
+    "stats": {
+     "rows": 9898,
+     "warm_rows": 1,
+     "pools": {
+      "replay11w0": 1
+     },
+     "exit_codes": {
+      "0": 1
+     },
+     "budget_kills": 0,
+     "hard_stops": 0,
+     "interrupted_rows": 0,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {}
+   }
+  },
+  "replay2": {
+   "pass": "replay2",
+   "mode": "observe",
+   "extra": [],
+   "tasks": 9898,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 3.594,
+    "available_gib": 5.094,
+    "supervisor_gib": 0.322,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 0,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+    "schedule": {
+     "reference": 1,
+     "其他各段": 1
+    }
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 284.8,
+    "guard": {
+     "budget": 3859251200,
+     "child_limit": 3221225472,
+     "avail_start": 5469863936,
+     "swap_start": 1112604672,
+     "swap_base_end": 1112604672,
+     "peak_total_fp": 2046677600,
+     "min_avail": 4572315648,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 9898,
+    "warm_rows": 1,
+    "pools": {
+     "replay21w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 287.1,
+   "load": {
+    "status_records": 29,
+    "load1_p50": 3.73,
+    "load1_max": 4.41,
+    "pressure_max": 1,
+    "avail_min_gib": 4.268,
+    "swap_max_gib": 1.036
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 47,
+    "rows_ran": 9898,
+    "same_rows": false,
+    "stats": {
+     "rows": 9898,
+     "warm_rows": 1,
+     "pools": {
+      "replay21w0": 1
+     },
+     "exit_codes": {
+      "0": 1
+     },
+     "budget_kills": 0,
+     "hard_stops": 0,
+     "interrupted_rows": 0,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {}
+   }
+  },
+  "replay3": {
+   "pass": "replay3",
+   "mode": "observe",
+   "extra": [],
+   "tasks": 9898,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 3.774,
+    "available_gib": 5.274,
+    "supervisor_gib": 0.314,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 0,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+    "schedule": {
+     "reference": 1,
+     "其他各段": 1
+    }
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 279.3,
+    "guard": {
+     "budget": 4053286912,
+     "child_limit": 3221225472,
+     "avail_start": 5663899648,
+     "swap_start": 1112604672,
+     "swap_base_end": 1112604672,
+     "peak_total_fp": 2017153656,
+     "min_avail": 4879990784,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 9898,
+    "warm_rows": 1,
+    "pools": {
+     "replay31w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 281.7,
+   "load": {
+    "status_records": 28,
+    "load1_p50": 3.19,
+    "load1_max": 3.45,
+    "pressure_max": 1,
+    "avail_min_gib": 4.545,
+    "swap_max_gib": 1.036
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 47,
+    "rows_ran": 9898,
+    "same_rows": false,
+    "stats": {
+     "rows": 9898,
+     "warm_rows": 1,
+     "pools": {
+      "replay31w0": 1
+     },
+     "exit_codes": {
+      "0": 1
+     },
+     "budget_kills": 0,
+     "hard_stops": 0,
+     "interrupted_rows": 0,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {}
+   }
+  },
+  "retest": {
+   "pass": "retest",
+   "mode": "observe",
+   "extra": [],
+   "tasks": 963,
+   "P": 1,
+   "P_info": {
+    "budget_gib": 3.792,
+    "available_gib": 5.292,
+    "supervisor_gib": 0.334,
+    "pipeline_gib_from_pilot": 0.839,
+    "child_base_gib_from_pilot": 0.298,
+    "child_limit_gib": 3.0,
+    "formula_P": 0,
+    "max_P": 1,
+    "pilot_report": "results/s2_rev1/pilot/report.json",
+    "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+    "schedule": {
+     "reference": 1,
+     "其他各段": 1
+    }
+   },
+   "supervise": {
+    "aborted": null,
+    "history": [
+     {
+      "launch": 1,
+      "P": 1,
+      "codes": [
+       0
+      ],
+      "stopped": false,
+      "interrupted": 0,
+      "orphans_killed": 0
+     }
+    ],
+    "seconds": 20.3,
+    "guard": {
+     "budget": 4071292928,
+     "child_limit": 3221225472,
+     "avail_start": 5681905664,
+     "swap_start": 1112604672,
+     "swap_base_end": 1112604672,
+     "peak_total_fp": 1259655008,
+     "min_avail": 4821254144,
+     "max_pressure": 1,
+     "budget_kills": 0,
+     "hard_stops": 0
+    }
+   },
+   "stats": {
+    "rows": 963,
+    "warm_rows": 1,
+    "pools": {
+     "retest1w0": 1
+    },
+    "exit_codes": {
+     "0": 1
+    },
+    "budget_kills": 0,
+    "hard_stops": 0,
+    "interrupted_rows": 0,
+    "file_problems": {
+     "workers": {},
+     "pids": {}
+    },
+    "dup_results": []
+   },
+   "seconds": 20.5,
+   "load": {
+    "status_records": 2,
+    "load1_p50": 3.15,
+    "load1_max": 3.15,
+    "pressure_max": 1,
+    "avail_min_gib": 4.696,
+    "swap_max_gib": 1.036
+   },
+   "reused": true,
+   "reanalysis": {
+    "rows_required": 963,
+    "rows_ran": 963,
+    "same_rows": true,
+    "stats": {
+     "rows": 963,
+     "warm_rows": 1,
+     "pools": {
+      "retest1w0": 1
+     },
+     "exit_codes": {
+      "0": 1
+     },
+     "budget_kills": 0,
+     "hard_stops": 0,
+     "interrupted_rows": 0,
+     "file_problems": {
+      "workers": {},
+      "pids": {}
+     },
+     "dup_results": []
+    },
+    "class_changes": {}
+   }
+  }
+ },
+ "main_metric": {
+  "n": 93733,
+  "k": 1,
+  "u": 18,
+  "rate_k": 1.0668601239691463e-05,
+  "lower_one_sided_95_k": 5.472275543430922e-07,
+  "upper_one_sided_95_k_plus_u": 0.0002974184026113824,
+  "ci95_two_sided_k": [
+   2.7010556115982434e-07,
+   5.944019203413253e-05
+  ],
+  "continue_2_metric": false,
+  "stop_2": false,
+  "k_by_classes": {
+   "0 分：比较超时 → 1 分": 1
+  },
+  "u_reasons": {
+   "参照：0 分：比较超时": 14,
+   "参照：未裁定（中断两次）": 2,
+   "参照：本机预算终止（未裁定）": 1,
+   "参照：0 分：标准答案侧解析超时": 1
+  }
+ },
+ "k_ids": [
+  "m-377a40b9adf29ef8"
+ ],
+ "u_detail": {
+  "m-3e99df52be81a4a3": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-0be9fc848295320a": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-8364284f555502b7": {
+   "default": "0 分：比较超时",
+   "reference": "未裁定（中断两次）",
+   "reason": "参照：未裁定（中断两次）"
+  },
+  "m-bfc80eaa0d4fcfda": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-e53750f029aa5980": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-f6e89bd885e1f88f": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-ac45c2e3c4109182": {
+   "default": "0 分：比较超时",
+   "reference": "未裁定（中断两次）",
+   "reason": "参照：未裁定（中断两次）"
+  },
+  "m-2a2cbb703cd7d47a": {
+   "default": "0 分：比较超时",
+   "reference": "本机预算终止（未裁定）",
+   "reason": "参照：本机预算终止（未裁定）"
+  },
+  "m-95674e055a0a4cb3": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-8967f984969c2fb1": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-696f7389aa285443": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-6cc6536a39ab6094": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-f2a5f57d876d0b1e": {
+   "default": "0 分：回答侧解析超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-691a82a720415dbc": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-c2a8844f7413b247": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-60f96867bd1e6c8c": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  },
+  "m-0a55a91128070c4b": {
+   "default": "0 分：标准答案侧解析超时",
+   "reference": "0 分：标准答案侧解析超时",
+   "reason": "参照：0 分：标准答案侧解析超时"
+  },
+  "m-fa489af4aead097c": {
+   "default": "0 分：比较超时",
+   "reference": "0 分：比较超时",
+   "reason": "参照：0 分：比较超时"
+  }
+ },
+ "answer_types": {
+  "m_flagged": 0,
+  "flagged": [],
+  "confirmed": [],
+  "by_type": {
+   "其他": {
+    "n_first": 527,
+    "k_first": 0,
+    "n_second": 555,
+    "k_second": 0,
+    "u_all": 0,
+    "flagged_in_first_half": false,
+    "uncovered_if_stopping": true
+   },
+   "分数或小数": {
+    "n_first": 3981,
+    "k_first": 0,
+    "n_second": 3838,
+    "k_second": 0,
+    "u_all": 0,
+    "flagged_in_first_half": false,
+    "uncovered_if_stopping": true
+   },
+   "区间或集合": {
+    "n_first": 6952,
+    "k_first": 0,
+    "n_second": 7015,
+    "k_second": 0,
+    "u_all": 2,
+    "flagged_in_first_half": false,
+    "uncovered_if_stopping": true
+   },
+   "含符号的表达式": {
+    "n_first": 10770,
+    "k_first": 1,
+    "n_second": 10727,
+    "k_second": 0,
+    "u_all": 14,
+    "flagged_in_first_half": false,
+    "uncovered_if_stopping": true
+   },
+   "整数": {
+    "n_first": 21085,
+    "k_first": 0,
+    "n_second": 21051,
+    "k_second": 0,
+    "u_all": 1,
+    "flagged_in_first_half": false,
+    "uncovered_if_stopping": false
+   },
+   "文字或选项": {
+    "n_first": 3376,
+    "k_first": 0,
+    "n_second": 3477,
+    "k_second": 0,
+    "u_all": 0,
+    "flagged_in_first_half": false,
+    "uncovered_if_stopping": true
+   },
+   "矩阵或向量": {
+    "n_first": 182,
+    "k_first": 0,
+    "n_second": 197,
+    "k_second": 0,
+    "u_all": 1,
+    "flagged_in_first_half": false,
+    "uncovered_if_stopping": true
+   }
+  }
+ },
+ "default_events": {
+  "标准答案侧解析超时": {
+   "k": 1,
+   "n": 93733,
+   "rate": 1.0668601239691463e-05,
+   "ci95": [
+    2.7010556115982434e-07,
+    5.944019203413253e-05
+   ]
+  },
+  "回答侧解析超时": {
+   "k": 1,
+   "n": 93733,
+   "rate": 1.0668601239691463e-05,
+   "ci95": [
+    2.7010556115982434e-07,
+    5.944019203413253e-05
+   ]
+  },
+  "比较超时": {
+   "k": 27,
+   "n": 93733,
+   "rate": 0.00028805223347166953,
+   "ci95": [
+    0.00018983654803654413,
+    0.0004190734144010399
+   ]
+  },
+  "标准答案侧解析出错": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "回答侧解析出错": {
+   "k": 4,
+   "n": 93733,
+   "rate": 4.267440495876585e-05,
+   "ci95": [
+    1.1627457552004754e-05,
+    0.00010925978781167744
+   ]
+  },
+  "比较出错": {
+   "k": 21,
+   "n": 93733,
+   "rate": 0.00022404062603352073,
+   "ci95": [
+    0.00013868985808000516,
+    0.0003424496162118324
+   ]
+  },
+  "外层超时": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "库超时异常（壳层）": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "池损坏": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "最终异常": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "本机预算终止": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "观测不完整": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "中断两次": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "收到计时信号、库没记超时": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "计时信号晚到": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  },
+  "任一步超过 1 秒": {
+   "k": 55,
+   "n": 93733,
+   "rate": 0.0005867730681830305,
+   "ci95": [
+    0.0004420674143040918,
+    0.0007636982065798046
+   ]
+  },
+  "单行超过 10 秒": {
+   "k": 0,
+   "n": 93733,
+   "rate": 0.0,
+   "ci95": [
+    0.0,
+    3.935440951248556e-05
+   ]
+  }
+ },
+ "default_classes": {
+  "正常 0": 32442,
+  "1 分": 61246,
+  "0 分：比较出错": 12,
+  "0 分：比较超时": 27,
+  "0 分：回答侧解析出错": 4,
+  "0 分：回答侧解析超时": 1,
+  "0 分：标准答案侧解析超时": 1
+ },
+ "reference_classes": {
+  "正常 0": 32452,
+  "1 分": 1001,
+  "0 分：比较超时": 14,
+  "0 分：比较出错": 12,
+  "0 分：回答侧解析出错": 4,
+  "0 分：标准答案侧解析超时": 1,
+  "未裁定（中断两次）": 2,
+  "本机预算终止（未裁定）": 1
+ },
+ "replay_set": {
+  "rows": 47,
+  "why": {
+   "默认有事件": 45,
+   "参照有事件": 34,
+   "时限敏感变化": 3,
+   "主指标翻转（k）": 1
+  },
+  "ran_rows": 9898,
+  "extra_rows": 9851,
+  "note": "按修订后的规则必需重放的行都在原段里、各有完整三次结果；原段按修订前的集合多跑的行单列在 replays_extra，不进判定"
+ },
+ "replays": {
+  "rows": 47,
+  "every_time": 47,
+  "sometimes": 0,
+  "continue_1_reproducible_final_exception": []
+ },
+ "replay_detail": {
+  "m-69732ecea7f5d647": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-3e99df52be81a4a3": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-0be9fc848295320a": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-eaf4ee63f33741a0": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-b63c6f7ce81689ae": {
+   "default": "1 分",
+   "replays": [
+    "1 分",
+    "1 分",
+    "1 分"
+   ],
+   "every_time": true
+  },
+  "m-1fbe28fc5a273006": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-8364284f555502b7": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-d65ef4d0bfa3ef01": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-bfc80eaa0d4fcfda": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-ba83bb696dce4a8c": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-6869e38fd5799fc3": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-01fa6f37d6adffe3": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-ba848cffa89adb05": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-e53750f029aa5980": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-2953b3a07e862c73": {
+   "default": "0 分：回答侧解析出错",
+   "replays": [
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错"
+   ],
+   "every_time": true
+  },
+  "m-319bae6f6c7cfa97": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-dd07584f8819bc0e": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-ab154e1ade1b3437": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-f6699e36da1504ad": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-f6e89bd885e1f88f": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-ac45c2e3c4109182": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-2a2cbb703cd7d47a": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-d5932ea325a9c529": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-95674e055a0a4cb3": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-8967f984969c2fb1": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-696f7389aa285443": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-6cc6536a39ab6094": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-f2a5f57d876d0b1e": {
+   "default": "0 分：回答侧解析超时",
+   "replays": [
+    "0 分：回答侧解析超时",
+    "0 分：回答侧解析超时",
+    "0 分：回答侧解析超时"
+   ],
+   "every_time": true
+  },
+  "m-9d18e21e41a2137c": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-fc4fd2bc4526ca0a": {
+   "default": "1 分",
+   "replays": [
+    "1 分",
+    "1 分",
+    "1 分"
+   ],
+   "every_time": true
+  },
+  "m-17f9b1b5c3331701": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-684855505496e7a9": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-377a40b9adf29ef8": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-691a82a720415dbc": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-acada5a6dac27602": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-4d58bc713af3e80c": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-1295f217da5fcb0e": {
+   "default": "0 分：回答侧解析出错",
+   "replays": [
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错"
+   ],
+   "every_time": true
+  },
+  "m-ac7bf01ed3fab4fd": {
+   "default": "0 分：比较出错",
+   "replays": [
+    "0 分：比较出错",
+    "0 分：比较出错",
+    "0 分：比较出错"
+   ],
+   "every_time": true
+  },
+  "m-3c814cd303890273": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-c2a8844f7413b247": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-60f96867bd1e6c8c": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-24b0484aa7099b98": {
+   "default": "0 分：回答侧解析出错",
+   "replays": [
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错"
+   ],
+   "every_time": true
+  },
+  "m-0324bb3335b57292": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-0a55a91128070c4b": {
+   "default": "0 分：标准答案侧解析超时",
+   "replays": [
+    "0 分：标准答案侧解析超时",
+    "0 分：标准答案侧解析超时",
+    "0 分：标准答案侧解析超时"
+   ],
+   "every_time": true
+  },
+  "m-0ff99b90a05cd1b9": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-fa489af4aead097c": {
+   "default": "0 分：比较超时",
+   "replays": [
+    "0 分：比较超时",
+    "0 分：比较超时",
+    "0 分：比较超时"
+   ],
+   "every_time": true
+  },
+  "m-e86c3f5a1ec707e4": {
+   "default": "0 分：回答侧解析出错",
+   "replays": [
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错",
+    "0 分：回答侧解析出错"
+   ],
+   "every_time": true
+  }
+ },
+ "replays_extra": {
+  "rows": 9851,
+  "every_time": 9851,
+  "sometimes": 0,
+  "continue_1_reproducible_final_exception": [],
+  "sometimes_ids": [],
+  "candidates": []
+ },
+ "concurrency_candidates": [],
+ "limits": {
+  "rows": 928,
+  "pattern_2s_5s_10s": {
+   "0/0/0": 356,
+   "1/1/1": 569,
+   "0/1/1": 2,
+   "0/0/1": 1
+  },
+  "sensitive": 3
+ },
+ "retest": {
+  "rows": 963,
+  "class_changes": {},
+  "verdict_changes": 0
+ },
+ "reference_check_on_default_1": {
+  "rows": 1000,
+  "reference_classes": {
+   "1 分": 1000
+  },
+  "not_1": 0
+ },
+ "reference_schedule": {
+  "launches": [
+   {
+    "log": "guard-reference.jsonl",
+    "launch": 1,
+    "P": 1,
+    "workers": [
+     "reference1w0"
+    ],
+    "todo": 33487,
+    "t_start": 1791380165.971,
+    "time": "21:36:05",
+    "note": "默认段完成后、参照段刚开始时手动停下，改用 experiments/s2_main_sched.py（-attempts.log 21:36:10）"
+   },
+   {
+    "log": "guard-reference-r1.jsonl",
+    "launch": 1,
+    "P": 3,
+    "workers": [
+     "reference-r11w0",
+     "reference-r11w1",
+     "reference-r11w2"
+    ],
+    "todo": 33487,
+    "t_start": 1791380191.114,
+    "t_end": 1791380315.425,
+    "seconds": 124.3,
+    "done_after": 6500,
+    "stopped": true,
+    "interrupted": [
+     "m-0be9fc848295320a",
+     "m-ac45c2e3c4109182"
+    ],
+    "codes": [
+     -9,
+     -9,
+     -9
+    ],
+    "time": "21:36:31"
+   },
+   {
+    "log": "guard-reference-r1.jsonl",
+    "launch": 2,
+    "P": 1,
+    "workers": [
+     "reference-r12w0"
+    ],
+    "todo": 26987,
+    "t_start": 1791380346.019,
+    "t_end": 1791380534.831,
+    "seconds": 188.8,
+    "done_after": 10513,
+    "stopped": true,
+    "interrupted": [
+     "m-8364284f555502b7",
+     "m-ac45c2e3c4109182"
+    ],
+    "codes": [
+     -9
+    ],
+    "time": "21:39:06"
+   },
+   {
+    "log": "guard-reference-r1.jsonl",
+    "launch": 3,
+    "P": 1,
+    "workers": [
+     "reference-r13w0"
+    ],
+    "todo": 22973,
+    "t_start": 1791380565.364,
+    "t_end": 1791380614.281,
+    "seconds": 48.9,
+    "done_after": 10514,
+    "stopped": true,
+    "interrupted": [
+     "m-8364284f555502b7"
+    ],
+    "codes": [
+     -9
+    ],
+    "time": "21:42:45"
+   },
+   {
+    "log": "guard-reference-r2.jsonl",
+    "launch": 1,
+    "P": 1,
+    "workers": [
+     "reference-r21w0"
+    ],
+    "todo": 22972,
+    "t_start": 1791380695.762,
+    "t_end": 1791381923.091,
+    "seconds": 1227.3,
+    "done_after": 33487,
+    "stopped": false,
+    "interrupted": [],
+    "codes": [
+     0
+    ],
+    "time": "21:44:55"
+   }
+  ],
+  "guard_events": [
+   {
+    "reasons": [
+     "合计超预算"
+    ],
+    "ev": "pause",
+    "t": 1791380300.164,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:38:20"
+   },
+   {
+    "reasons": [
+     "暂停后仍合计超预算"
+    ],
+    "total": 4993903584,
+    "avail": 4042473472,
+    "pressure": 1,
+    "ev": "hard_stop",
+    "t": 1791380315.306,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:38:35"
+   },
+   {
+    "paused_for": 45.8,
+    "ev": "resume",
+    "t": 1791380345.925,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:39:05"
+   },
+   {
+    "reasons": [
+     "合计超预算"
+    ],
+    "ev": "pause",
+    "t": 1791380501.441,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:41:41"
+   },
+   {
+    "pid": 51304,
+    "fp": 3292581008,
+    "limit": 3221225472,
+    "ev": "budget_kill",
+    "t": 1791380504.471,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:41:44"
+   },
+   {
+    "reasons": [
+     "暂停后仍合计超预算"
+    ],
+    "total": 3871741736,
+    "avail": 4594794496,
+    "pressure": 1,
+    "ev": "hard_stop",
+    "t": 1791380534.749,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:42:14"
+   },
+   {
+    "paused_for": 63.8,
+    "ev": "resume",
+    "t": 1791380565.261,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:42:45"
+   },
+   {
+    "reasons": [
+     "合计超预算"
+    ],
+    "ev": "pause",
+    "t": 1791380598.677,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:43:18"
+   },
+   {
+    "pid": 51339,
+    "fp": 4304457544,
+    "limit": 3221225472,
+    "ev": "budget_kill",
+    "t": 1791380608.124,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:43:28"
+   },
+   {
+    "reasons": [
+     "暂停后仍内存压力警告"
+    ],
+    "total": 1131728760,
+    "avail": 3642556416,
+    "pressure": 2,
+    "ev": "hard_stop",
+    "t": 1791380614.189,
+    "log": "guard-reference-r1.jsonl",
+    "time": "21:43:34"
+   },
+   {
+    "pid": 51538,
+    "fp": 3355004048,
+    "limit": 3221225472,
+    "ev": "budget_kill",
+    "t": 1791380997.448,
+    "log": "guard-reference-r2.jsonl",
+    "time": "21:49:57"
+   },
+   {
+    "pid": 51589,
+    "fp": 4306472728,
+    "limit": 3221225472,
+    "ev": "budget_kill",
+    "t": 1791381033.812,
+    "log": "guard-reference-r2.jsonl",
+    "time": "21:50:33"
+   },
+   {
+    "reasons": [
+     "合计超预算"
+    ],
+    "ev": "pause",
+    "t": 1791381033.814,
+    "log": "guard-reference-r2.jsonl",
+    "time": "21:50:33"
+   },
+   {
+    "paused_for": 31.5,
+    "ev": "resume",
+    "t": 1791381065.308,
+    "log": "guard-reference-r2.jsonl",
+    "time": "21:51:05"
+   }
+  ],
+  "no_dispatch_attempt": "S2_REF_P=2 的一次（21:44:04）在“构建任务与生成版本锁”被准备阶段保护停下（暂停后仍内存压力警告），退出码 7，没有派发判分",
+  "dispatched_seconds_with_end_record": 1589.3,
+  "wall_seconds_first_launch_to_last_end": 1757.1,
+  "pass_done_P_and_seconds": "pass_done.json 的 P=1 与 1236.1 秒只描述最后一次成功续跑（S2_REF_P=1，21:44:55–22:05:31），不是整段配置或累计耗时",
+  "attempts_log": [
+   "2026-10-07 20:26:24 等待脚本开始；首次运行 20:25:45 因公式 P=0（可用 4.758 GiB）退出码 3",
+   "2026-10-07 21:19:26 等待 53 分钟可用内存一直约 4.8 GiB；停掉旧等待脚本，改为最长等 4 小时重新挂上",
+   "2026-10-07 21:19:29 等待脚本开始；首次运行 20:25:45 因公式 P=0（可用 4.758 GiB）退出码 3",
+   "2026-10-07 21:20:47 用户指示“先跑试一下，我会来监控”：改用 experiments/s2_main_userP1.py（sha256 794d3dad96d05a3decbb62c5fa144790bf8d8c4de05d82a1741cae006cd8dbf2），同一目录、同一参数，公式 P=0 时取 P=1；可用 4.786 GiB",
+   "21:20:49 运行目录 <REWARDfail_LOCAL>/stage2/runs/main-20261007-202545；93733 行；续跑，版本核对一致；预先抽取 {'source': 'main', 'n': 93733, 'ids_sha256': 'cd6b9c9ce7dae8f5ef9ff63f738f41aaa75ab721aa03a38b0a6032c17b24dbaa', 'retest': 963, 'retest_sha256': '55fc7b84b73ab35447f473f79cfd853f26c6f990e5892d5c862844c39680a3ed', 'limits_random': 874, 'limits_random_sha256': 'd3e2c491dff450d6a05ac447df215489464a8db01326d9e45a1124be3e8981be', 'refone_order_sha256': '09c2ee0c92f7a61c4deec641183422343b3f40c66ac2b79a9225e5abf1ea4b79', 'synthetic': False, 'child_limit_mib': 3072}",
+   "21:20:49 default：93733 行，P=1（{'budget_gib': 3.027, 'available_gib': 4.527, 'supervisor_gib': 0.248, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '用户 2026-10-07 指示：公式 P=0 时仍按 P=1 试跑，用户自行监控；整机保护照常（experiments/s2_main_userP1.py）'}）",
+   "21:36:05 default 完成：915.1 秒",
+   "21:36:05 reference：33487 行，P=1（{'budget_gib': 3.673, 'available_gib': 5.173, 'supervisor_gib': 0.422, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '用户 2026-10-07 指示：公式 P=0 时仍按 P=1 试跑，用户自行监控；整机保护照常（experiments/s2_main_userP1.py）'}）",
+   "2026-10-07 21:36:10 默认段 pass_done 后、参照段刚开始时手动停下（终止调度进程与测量进程组），改用 experiments/s2_main_sched.py（D132 按段设并发）续跑",
+   "2026-10-07 21:36:27 第 1 次（s2_main_sched.py，sha256 e70a6dfe93a2a86bf7d8fcf86f787acceefe5fc5c35f2571d622234a23bd3401，S2_REF_P=3，可用 5.134 GiB）",
+   "21:36:30 运行目录 <REWARDfail_LOCAL>/stage2/runs/main-20261007-202545；93733 行；续跑，版本核对一致；预先抽取 {'source': 'main', 'n': 93733, 'ids_sha256': 'cd6b9c9ce7dae8f5ef9ff63f738f41aaa75ab721aa03a38b0a6032c17b24dbaa', 'retest': 963, 'retest_sha256': '55fc7b84b73ab35447f473f79cfd853f26c6f990e5892d5c862844c39680a3ed', 'limits_random': 874, 'limits_random_sha256': 'd3e2c491dff450d6a05ac447df215489464a8db01326d9e45a1124be3e8981be', 'refone_order_sha256': '09c2ee0c92f7a61c4deec641183422343b3f40c66ac2b79a9225e5abf1ea4b79', 'synthetic': False, 'child_limit_mib': 3072}",
+   "21:36:31 reference：33487 行，P=3（{'budget_gib': 3.158, 'available_gib': 4.658, 'supervisor_gib': 0.246, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 3, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 3, '其他各段': 1}}）",
+   "21:43:34 reference 段中止：整项停止 3 次；用 --run-dir <REWARDfail_LOCAL>/stage2/runs/main-20261007-202545 续跑",
+   "2026-10-07 21:43:34 第 1 次结束，退出码 2",
+   "2026-10-07 21:44:04 第 2 次（s2_main_sched.py，sha256 e70a6dfe93a2a86bf7d8fcf86f787acceefe5fc5c35f2571d622234a23bd3401，S2_REF_P=2，可用 3.27 GiB）",
+   "21:44:22 构建任务与生成版本锁：整机保护要求停止（(('内存压力警告',), ('暂停后仍内存压力警告',))）；已完成的段不受影响，用 --run-dir <REWARDfail_LOCAL>/stage2/runs/main-20261007-202545 续跑",
+   "2026-10-07 21:44:22 第 2 次结束，退出码 7",
+   "2026-10-07 21:44:52 第 3 次（s2_main_sched.py，sha256 e70a6dfe93a2a86bf7d8fcf86f787acceefe5fc5c35f2571d622234a23bd3401，S2_REF_P=1，可用 5.835 GiB）",
+   "21:44:54 运行目录 <REWARDfail_LOCAL>/stage2/runs/main-20261007-202545；93733 行；续跑，版本核对一致；预先抽取 {'source': 'main', 'n': 93733, 'ids_sha256': 'cd6b9c9ce7dae8f5ef9ff63f738f41aaa75ab721aa03a38b0a6032c17b24dbaa', 'retest': 963, 'retest_sha256': '55fc7b84b73ab35447f473f79cfd853f26c6f990e5892d5c862844c39680a3ed', 'limits_random': 874, 'limits_random_sha256': 'd3e2c491dff450d6a05ac447df215489464a8db01326d9e45a1124be3e8981be', 'refone_order_sha256': '09c2ee0c92f7a61c4deec641183422343b3f40c66ac2b79a9225e5abf1ea4b79', 'synthetic': False, 'child_limit_mib': 3072}",
+   "21:44:55 reference：33487 行，P=1（{'budget_gib': 4.144, 'available_gib': 5.644, 'supervisor_gib': 0.248, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 1, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 1, '其他各段': 1}}）",
+   "22:05:31 reference 完成：1236.1 秒",
+   "22:05:31 主指标：n=93733 k=1 u=9573",
+   "22:05:31 limit2s：928 行，P=1（{'budget_gib': 3.595, 'available_gib': 5.095, 'supervisor_gib': 0.295, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 1, '其他各段': 1}}）",
+   "22:07:37 limit2s 完成：125.4 秒",
+   "22:07:37 limit10s：928 行，P=1（{'budget_gib': 3.859, 'available_gib': 5.359, 'supervisor_gib': 0.296, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 1, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 1, '其他各段': 1}}）",
+   "22:13:30 limit10s 完成：353.5 秒",
+   "22:13:30 replay1：9898 行，P=1（{'budget_gib': 3.542, 'available_gib': 5.042, 'supervisor_gib': 0.269, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 1, '其他各段': 1}}）",
+   "22:18:21 replay1 完成：290.1 秒",
+   "22:18:21 replay2：9898 行，P=1（{'budget_gib': 3.594, 'available_gib': 5.094, 'supervisor_gib': 0.322, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 1, '其他各段': 1}}）",
+   "22:23:08 replay2 完成：287.1 秒",
+   "22:23:08 replay3：9898 行，P=1（{'budget_gib': 3.774, 'available_gib': 5.274, 'supervisor_gib': 0.314, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 1, '其他各段': 1}}）",
+   "22:27:49 replay3 完成：281.7 秒",
+   "22:27:49 retest：963 行，P=1（{'budget_gib': 3.792, 'available_gib': 5.292, 'supervisor_gib': 0.334, 'pipeline_gib_from_pilot': 0.839, 'child_base_gib_from_pilot': 0.298, 'child_limit_gib': 3.0, 'formula_P': 0, 'max_P': 1, 'pilot_report': 'results/s2_rev1/pilot/report.json', 'override': '申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）', 'schedule': {'reference': 1, '其他各段': 1}}）",
+   "22:28:10 retest 完成：20.5 秒",
+   "22:28:10 写好 <LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/results/s2_main/report.json；判定 {'continue_1': False, 'continue_2': False, 'continue_3': '没有候选，不做', 'stop': False, 'between': True, 'note': '继续满足任一条即可；停止要三条都不成立且上界（k+u）低于万分之一。有候选时第 3 条要等条件实验，此前不下停止结论。结论措辞按方案第 7 节。'}",
+   "2026-10-07 22:28:11 第 3 次结束，退出码 0"
+  ]
+ },
+ "decision": {
+  "continue_1": false,
+  "continue_2": false,
+  "continue_3": "没有候选，不做",
+  "stop": false,
+  "between": true,
+  "note": "继续满足任一条即可；停止要三条都不成立且上界（k+u）低于万分之一。有候选时第 3 条要等条件实验，此前不下停止结论。结论措辞按方案第 7 节。"
+ },
+ "seconds": 99.7
+}

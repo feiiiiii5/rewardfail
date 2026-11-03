@@ -1,0 +1,1521 @@
+{
+ "what": "18 条未裁定的补充诊断（方案第 19.2 节）：单列，不回填正式报告，不改门槛",
+ "run_dir": "<REWARDfail_LOCAL>/stage2/runs/u18-20261008-104342",
+ "main_report": "results/s2_main/report.json",
+ "lock": {
+  "pre": {
+   "what": "u18",
+   "plan": "方案第 19.2 节",
+   "k": "m-377a40b9adf29ef8",
+   "d1": [
+    "m-8364284f555502b7",
+    "m-ac45c2e3c4109182",
+    "m-2a2cbb703cd7d47a",
+    "m-bfc80eaa0d4fcfda"
+   ],
+   "d2": [
+    "m-0a55a91128070c4b",
+    "m-0be9fc848295320a",
+    "m-3e99df52be81a4a3",
+    "m-60f96867bd1e6c8c",
+    "m-691a82a720415dbc",
+    "m-696f7389aa285443",
+    "m-6cc6536a39ab6094",
+    "m-8967f984969c2fb1",
+    "m-95674e055a0a4cb3",
+    "m-c2a8844f7413b247",
+    "m-e53750f029aa5980",
+    "m-f2a5f57d876d0b1e",
+    "m-f6e89bd885e1f88f",
+    "m-fa489af4aead097c"
+   ],
+   "repeats": 10,
+   "d1_fp": 1610612736,
+   "d1_wall": 120,
+   "d2_limit": 300
+  },
+  "code_sha256": {
+   "experiments/s2_main.py": "ccda445d0d8828ebffc85ba2f1db4b02c0b0ada7a850d27cdab84572851aff49",
+   "experiments/s2_worker.py": "749ea6b71144f7cebc6a915775b2fd0710ed9bff3942e001a05237080f24ed98",
+   "rewardfail/__init__.py": "90deb4f1667387636b92697c18c1f60428a611e394ecb0aad83f1224f5fc8fa9",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "175f6a7e90ec53dc27a901aa66e6ccaef96688aff0e5e1c0ddec259dc3f3f48f",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "b452dda7f6e4dc8aa9cfc6c5de5ad61b73af55fe5e37ce20a4503861399dc69a",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "ac90f81f620f37fca83c4e1be2ba35500648927e4698d6279b7bacb8e319f975",
+   "rewardfail/s2/supervise.py": "eb2bb2ab60baa63c8f6b15613d5b16929199f7b7de9f6d4666c85e2c46d29c1b",
+   "experiments/s2_u18_diag.py": "c858b9df1b1d8b701485131143ac7f7ccf7a805c888952c594a2abf518fa8a06"
+  },
+  "tested_source": {
+   "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+   "verl_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+   "verl_dirty": [],
+   "wrapper_sha256": "f04f57d5cdc08d80197577c77d0bb9d47c2ddc6b4f8e80389ddf7ad3c71c8713"
+  },
+  "python": "3.12.8",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "data": {
+   "sample_map_sha256": "aa5dc856e7e3d9b4ae066d9c78ce7295ea0b1824a1a4842b516cae89f84128b6",
+   "shards_sha256": {
+    "train-00000-of-00010.parquet": "ccc3a95e4875dc4cff9bec2f0fb1c93e4c9cbb24fb24853fd0b96c416e1a263c",
+    "train-00001-of-00010.parquet": "a7d3eb54d97f7e1237a872947f2246de54a104be224646f62f588abdf6c7db60",
+    "train-00002-of-00010.parquet": "a44a2354bfa752541ab768b62edf01f3df4b9b2a7660774ab1eb6e7f19f0a86b",
+    "train-00003-of-00010.parquet": "dd7d2f0f04d80b3ae08484b706c4f7fd9dd29eeff4038c36257a307c77b877e9",
+    "train-00004-of-00010.parquet": "e358157990d7744643e25f1e692556ac5fd4a2212c008cf67475b14e040861ea",
+    "train-00005-of-00010.parquet": "30254d14d17b63d1f7963488d53a2d26aa22070f71baa2fe601201b081e38060",
+    "train-00006-of-00010.parquet": "b3bce93c06d4dc22788c04d0a1da5cbadb5b3db31046809c59a4ec26e96ebb52",
+    "train-00007-of-00010.parquet": "7def8029cf6d40f7493e9aa4be4b49c251ae7e0cb23b0b117c485e09ff5d5021",
+    "train-00008-of-00010.parquet": "29cf75a663e91039fc92bffd86a9ad845f992302da52d1fb1563b6c41ae777ed",
+    "train-00009-of-00010.parquet": "14df2775196a701b97a71cf0285fa75d97980fbda4db9ec9af9c2a07658ca256"
+   }
+  }
+ },
+ "env": {
+  "python": "3.12.8",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+  "repo_head": "16b2b4c9ccc33ebf7fc9ecc1f59186b5eb79c891",
+  "repo_dirty": [],
+  "code_sha256": {
+   "experiments/s2_main.py": "ccda445d0d8828ebffc85ba2f1db4b02c0b0ada7a850d27cdab84572851aff49",
+   "experiments/s2_main_reanalyze.py": "dd11c9d7135664c2103c10b873a2ba219cc50c94d5042b4d7cef8c084a79f49b",
+   "experiments/s2_main_sched.py": "e70a6dfe93a2a86bf7d8fcf86f787acceefe5fc5c35f2571d622234a23bd3401",
+   "experiments/s2_main_userP1.py": "794d3dad96d05a3decbb62c5fa144790bf8d8c4de05d82a1741cae006cd8dbf2",
+   "experiments/s2_pilot.py": "1bd097d7f3ced9f59a8ffb0f4418544f1efdbc0823509b5c2c47aca5666623f1",
+   "experiments/s2_reader_check.py": "19341d65c7a5072abd1b45a68b72774953436ceb38d60caa0a9f7759e537bae5",
+   "experiments/s2_rev1_recheck.py": "a272d6f4d405aef0aaa594a274b3cca437e4c85f644a6f2c48284c37ba0aacae",
+   "experiments/s2_rev1_switch_repeat.py": "2b9a15ffcec83ae03e287f766e31ca0280a7142dd2cc4e5dbddeed44ba7914a8",
+   "experiments/s2_rev1_tail.py": "7ddefc81ce853a7d2da074742fb0d219ee9af93dd125fc56dbda1a4a6728876d",
+   "experiments/s2_selftest.py": "e693c28b29ad38af7fca64a85a888574e5f4f34b8195a1aa0bc18ec833e9dc30",
+   "experiments/s2_u18_diag.py": "c858b9df1b1d8b701485131143ac7f7ccf7a805c888952c594a2abf518fa8a06",
+   "experiments/s2_worker.py": "749ea6b71144f7cebc6a915775b2fd0710ed9bff3942e001a05237080f24ed98",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "175f6a7e90ec53dc27a901aa66e6ccaef96688aff0e5e1c0ddec259dc3f3f48f",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "b452dda7f6e4dc8aa9cfc6c5de5ad61b73af55fe5e37ce20a4503861399dc69a",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "ac90f81f620f37fca83c4e1be2ba35500648927e4698d6279b7bacb8e319f975",
+   "rewardfail/s2/supervise.py": "eb2bb2ab60baa63c8f6b15613d5b16929199f7b7de9f6d4666c85e2c46d29c1b"
+  }
+ },
+ "compat_allowed": [],
+ "d3": {
+  "d3-default": {
+   "mode": "observe",
+   "classes": {
+    "0 分：比较超时": 10
+   },
+   "timing": {
+    "完成": 10
+   },
+   "compare_wall_by_class": {
+    "0 分：比较超时": {
+     "n": 10,
+     "median": 5.0035,
+     "min": 5.002,
+     "max": 5.005
+    }
+   },
+   "first": {
+    "id": "m-377a40b9adf29ef8#r1",
+    "class": "0 分：比较超时",
+    "timing": "完成",
+    "compare_wall": 5.005
+   },
+   "repeats_compare_wall_by_class": {
+    "0 分：比较超时": {
+     "n": 9,
+     "median": 5.003,
+     "min": 5.002,
+     "max": 5.005
+    }
+   },
+   "row_wall": {
+    "n": 10,
+    "median": 5.00655,
+    "min": 5.0043,
+    "max": 5.1488
+   },
+   "row_wall_missing": 0,
+   "note": "同一预热池顺序重复，符号缓存状态未控制，不是独立样本；只在本机，没有跨硬件对照",
+   "rows": [
+    {
+     "id": "m-377a40b9adf29ef8#r1",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.1488,
+     "attempts": 1,
+     "compare": [
+      [
+       5.005317,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       1.8e-05,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ],
+      [
+       8e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.005
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r2",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0073,
+     "attempts": 1,
+     "compare": [
+      [
+       5.00415,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       2.6e-05,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.004
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r3",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0084,
+     "attempts": 1,
+     "compare": [
+      [
+       5.005003,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       2e-05,
+       true,
+       []
+      ],
+      [
+       9e-06,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.005
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r4",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0057,
+     "attempts": 1,
+     "compare": [
+      [
+       5.002015,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       2.4e-05,
+       true,
+       []
+      ],
+      [
+       3.6e-05,
+       true,
+       []
+      ],
+      [
+       1.3e-05,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.002
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r5",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0058,
+     "attempts": 1,
+     "compare": [
+      [
+       5.003168,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       3.1e-05,
+       true,
+       []
+      ],
+      [
+       9e-06,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.003
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r6",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0074,
+     "attempts": 1,
+     "compare": [
+      [
+       5.004268,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       2.1e-05,
+       true,
+       []
+      ],
+      [
+       9e-06,
+       true,
+       []
+      ],
+      [
+       8e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.004
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r7",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0062,
+     "attempts": 1,
+     "compare": [
+      [
+       5.003279,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       1.7e-05,
+       true,
+       []
+      ],
+      [
+       8e-06,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.003
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r8",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0069,
+     "attempts": 1,
+     "compare": [
+      [
+       5.004274,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       3e-05,
+       true,
+       []
+      ],
+      [
+       9e-06,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.004
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r9",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0043,
+     "attempts": 1,
+     "compare": [
+      [
+       5.002205,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       2.1e-05,
+       true,
+       []
+      ],
+      [
+       9e-06,
+       true,
+       []
+      ],
+      [
+       8e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.002
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r10",
+     "class": "0 分：比较超时",
+     "verdict": 0,
+     "wall": 5.0045,
+     "attempts": 1,
+     "compare": [
+      [
+       5.001832,
+       true,
+       [
+        "Timeout during comparison"
+       ]
+      ],
+      [
+       1.9e-05,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ],
+      [
+       7e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.002
+    }
+   ]
+  },
+  "d3-reference": {
+   "mode": "reference",
+   "classes": {
+    "1 分": 10
+   },
+   "timing": {
+    "完成": 10
+   },
+   "compare_wall_by_class": {
+    "1 分": {
+     "n": 10,
+     "median": 6.213,
+     "min": 5.821,
+     "max": 7.511
+    }
+   },
+   "first": {
+    "id": "m-377a40b9adf29ef8#r1",
+    "class": "1 分",
+    "timing": "完成",
+    "compare_wall": 7.511
+   },
+   "repeats_compare_wall_by_class": {
+    "1 分": {
+     "n": 9,
+     "median": 6.053,
+     "min": 5.821,
+     "max": 7.41
+    }
+   },
+   "row_wall": {
+    "n": 10,
+    "median": 6.215,
+    "min": 5.824,
+    "max": 7.6495
+   },
+   "row_wall_missing": 0,
+   "note": "同一预热池顺序重复，符号缓存状态未控制，不是独立样本；只在本机，没有跨硬件对照",
+   "rows": [
+    {
+     "id": "m-377a40b9adf29ef8#r1",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 7.6495,
+     "attempts": 1,
+     "compare": [
+      [
+       7.510558,
+       true,
+       []
+      ],
+      [
+       1.9e-05,
+       true,
+       []
+      ],
+      [
+       1e-05,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 7.511
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r2",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 5.9279,
+     "attempts": 1,
+     "compare": [
+      [
+       5.925885,
+       true,
+       []
+      ],
+      [
+       1.6e-05,
+       true,
+       []
+      ],
+      [
+       8e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.926
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r3",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 6.375,
+     "attempts": 1,
+     "compare": [
+      [
+       6.372564,
+       true,
+       []
+      ],
+      [
+       1.8e-05,
+       true,
+       []
+      ],
+      [
+       1.2e-05,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 6.373
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r4",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 5.824,
+     "attempts": 1,
+     "compare": [
+      [
+       5.821073,
+       true,
+       []
+      ],
+      [
+       2e-05,
+       true,
+       []
+      ],
+      [
+       1.1e-05,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.821
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r5",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 7.4148,
+     "attempts": 1,
+     "compare": [
+      [
+       7.409562,
+       true,
+       []
+      ],
+      [
+       2.8e-05,
+       true,
+       []
+      ],
+      [
+       1.4e-05,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 7.41
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r6",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 6.5897,
+     "attempts": 1,
+     "compare": [
+      [
+       6.583386,
+       true,
+       []
+      ],
+      [
+       0.000181,
+       true,
+       []
+      ],
+      [
+       2.7e-05,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 6.584
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r7",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 6.3853,
+     "attempts": 1,
+     "compare": [
+      [
+       6.382397,
+       true,
+       []
+      ],
+      [
+       3.7e-05,
+       true,
+       []
+      ],
+      [
+       1e-05,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 6.382
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r8",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 6.055,
+     "attempts": 1,
+     "compare": [
+      [
+       6.052718,
+       true,
+       []
+      ],
+      [
+       1.9e-05,
+       true,
+       []
+      ],
+      [
+       9e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 6.053
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r9",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 6.0023,
+     "attempts": 1,
+     "compare": [
+      [
+       6.000144,
+       true,
+       []
+      ],
+      [
+       1.7e-05,
+       true,
+       []
+      ],
+      [
+       8e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 6.0
+    },
+    {
+     "id": "m-377a40b9adf29ef8#r10",
+     "class": "1 分",
+     "verdict": 1,
+     "wall": 5.832,
+     "attempts": 1,
+     "compare": [
+      [
+       5.83008,
+       true,
+       []
+      ],
+      [
+       1.7e-05,
+       true,
+       []
+      ],
+      [
+       8e-06,
+       true,
+       []
+      ]
+     ],
+     "timing": "完成",
+     "compare_wall": 5.83
+    }
+   ]
+  }
+ },
+ "d1": {
+  "m-8364284f555502b7": {
+   "id": "m-8364284f555502b7",
+   "att": 1,
+   "stopped_by": "footprint 超过 1536 MiB",
+   "stop_kind": "取栈终点",
+   "exit": -9,
+   "result": null,
+   "seconds": 19.1,
+   "fp_first_MiB": 57,
+   "fp_max_MiB": 1659,
+   "fp_read_fail": {},
+   "pressure_reads": 18,
+   "max_pressure": 1,
+   "last_step": {
+    "ev": "step_start",
+    "step": 3,
+    "kind": "compare",
+    "wall": null
+   },
+   "curve": [
+    [
+     1.0,
+     57,
+     1
+    ],
+    [
+     6.0,
+     530,
+     1
+    ],
+    [
+     11.1,
+     976,
+     1
+    ],
+    [
+     16.1,
+     1386,
+     1
+    ]
+   ],
+   "stacks": "m-8364284f555502b7-a1-stacks.txt"
+  },
+  "m-ac45c2e3c4109182": {
+   "id": "m-ac45c2e3c4109182",
+   "att": 1,
+   "stopped_by": "footprint 超过 1536 MiB",
+   "stop_kind": "取栈终点",
+   "exit": -9,
+   "result": null,
+   "seconds": 18.1,
+   "fp_first_MiB": 146,
+   "fp_max_MiB": 1656,
+   "fp_read_fail": {},
+   "pressure_reads": 17,
+   "max_pressure": 1,
+   "last_step": {
+    "ev": "step_start",
+    "step": 3,
+    "kind": "compare",
+    "wall": null
+   },
+   "curve": [
+    [
+     1.0,
+     146,
+     1
+    ],
+    [
+     6.0,
+     631,
+     1
+    ],
+    [
+     11.1,
+     1246,
+     1
+    ],
+    [
+     16.1,
+     1383,
+     1
+    ]
+   ],
+   "stacks": "m-ac45c2e3c4109182-a1-stacks.txt"
+  },
+  "m-2a2cbb703cd7d47a": {
+   "id": "m-2a2cbb703cd7d47a",
+   "att": 1,
+   "stopped_by": "footprint 超过 1536 MiB",
+   "stop_kind": "取栈终点",
+   "exit": -9,
+   "result": null,
+   "seconds": 18.1,
+   "fp_first_MiB": 134,
+   "fp_max_MiB": 1657,
+   "fp_read_fail": {},
+   "pressure_reads": 17,
+   "max_pressure": 1,
+   "last_step": {
+    "ev": "step_start",
+    "step": 3,
+    "kind": "compare",
+    "wall": null
+   },
+   "curve": [
+    [
+     1.0,
+     134,
+     1
+    ],
+    [
+     6.0,
+     530,
+     1
+    ],
+    [
+     11.0,
+     974,
+     1
+    ],
+    [
+     16.1,
+     1384,
+     1
+    ]
+   ],
+   "stacks": "m-2a2cbb703cd7d47a-a1-stacks.txt"
+  },
+  "m-bfc80eaa0d4fcfda": {
+   "id": "m-bfc80eaa0d4fcfda",
+   "att": 1,
+   "stopped_by": null,
+   "stop_kind": "自己结束",
+   "exit": 0,
+   "result": {
+    "res": 0.0,
+    "wall": 60.071
+   },
+   "seconds": 64.4,
+   "fp_first_MiB": 133,
+   "fp_max_MiB": 351,
+   "fp_read_fail": {},
+   "pressure_reads": 64,
+   "max_pressure": 2,
+   "last_step": {
+    "ev": "step_end",
+    "step": 6,
+    "kind": "compare",
+    "wall": 1.4e-05
+   },
+   "curve": [
+    [
+     1.0,
+     133,
+     1
+    ],
+    [
+     6.0,
+     294,
+     1
+    ],
+    [
+     11.1,
+     304,
+     1
+    ],
+    [
+     16.1,
+     310,
+     1
+    ],
+    [
+     21.1,
+     319,
+     1
+    ],
+    [
+     26.1,
+     324,
+     1
+    ],
+    [
+     31.1,
+     329,
+     1
+    ],
+    [
+     36.2,
+     335,
+     1
+    ],
+    [
+     41.2,
+     335,
+     1
+    ],
+    [
+     46.2,
+     335,
+     1
+    ],
+    [
+     51.4,
+     340,
+     2
+    ],
+    [
+     56.4,
+     346,
+     2
+    ],
+    [
+     61.4,
+     339,
+     2
+    ]
+   ],
+   "stacks": "m-bfc80eaa0d4fcfda-a1-stacks.txt"
+  }
+ },
+ "d2": {
+  "note": "300 秒参照的有限敏感性分析，不是最终真值；单列，不回填正式报告、不改门槛。D1 的 4 条仍未裁定，所以 k₃₀₀+u₃₀₀ ≥ 5（方案第 19.2、20.3 节）",
+  "limit": 300,
+  "outer": 1500,
+  "rows": {
+   "m-0a55a91128070c4b": {
+    "id": "m-0a55a91128070c4b",
+    "class": "0 分：标准答案侧解析超时",
+    "verdict": null,
+    "wall": 300.0204,
+    "attempts": 1,
+    "compare": [],
+    "timing": "未进入比较",
+    "compare_wall": null,
+    "reading": "相同",
+    "default": "0 分：标准答案侧解析超时",
+    "ref60": "0 分：标准答案侧解析超时"
+   },
+   "m-0be9fc848295320a": {
+    "id": "m-0be9fc848295320a",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.0486,
+    "attempts": 1,
+    "compare": [
+     [
+      300.010276,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      0.000168,
+      true,
+      []
+     ],
+     [
+      1.9e-05,
+      true,
+      []
+     ],
+     [
+      1.2e-05,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.01,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-3e99df52be81a4a3": {
+    "id": "m-3e99df52be81a4a3",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.0722,
+    "attempts": 1,
+    "compare": [
+     [
+      300.015398,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      0.001549,
+      true,
+      []
+     ],
+     [
+      3.1e-05,
+      true,
+      []
+     ],
+     [
+      3e-05,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.017,
+    "reading": "不同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-60f96867bd1e6c8c": {
+    "id": "m-60f96867bd1e6c8c",
+    "class": "正常 0",
+    "verdict": 0,
+    "wall": 81.262,
+    "attempts": 1,
+    "compare": [
+     [
+      81.22936,
+      true,
+      []
+     ],
+     [
+      2.4e-05,
+      true,
+      []
+     ],
+     [
+      8e-06,
+      true,
+      []
+     ],
+     [
+      7e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 81.229,
+    "reading": "不同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-691a82a720415dbc": {
+    "id": "m-691a82a720415dbc",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.1607,
+    "attempts": 1,
+    "compare": [
+     [
+      300.006546,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      3.1e-05,
+      true,
+      []
+     ],
+     [
+      9e-06,
+      true,
+      []
+     ],
+     [
+      7e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.007,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-696f7389aa285443": {
+    "id": "m-696f7389aa285443",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.149,
+    "attempts": 1,
+    "compare": [
+     [
+      300.046313,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      0.001635,
+      true,
+      []
+     ],
+     [
+      0.000176,
+      true,
+      []
+     ],
+     [
+      4.7e-05,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.048,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-6cc6536a39ab6094": {
+    "id": "m-6cc6536a39ab6094",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.0366,
+    "attempts": 1,
+    "compare": [
+     [
+      300.002416,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      2.2e-05,
+      true,
+      []
+     ],
+     [
+      9e-06,
+      true,
+      []
+     ],
+     [
+      7e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.002,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-8967f984969c2fb1": {
+    "id": "m-8967f984969c2fb1",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.3345,
+    "attempts": 1,
+    "compare": [
+     [
+      300.015129,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      0.000203,
+      true,
+      []
+     ],
+     [
+      2.7e-05,
+      true,
+      []
+     ],
+     [
+      2.9e-05,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.015,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-95674e055a0a4cb3": {
+    "id": "m-95674e055a0a4cb3",
+    "class": "正常 0",
+    "verdict": 0,
+    "wall": 281.1255,
+    "attempts": 1,
+    "compare": [
+     [
+      281.036868,
+      true,
+      []
+     ],
+     [
+      0.002464,
+      true,
+      []
+     ],
+     [
+      0.000119,
+      true,
+      []
+     ],
+     [
+      3.2e-05,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 281.039,
+    "reading": "无可判",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-c2a8844f7413b247": {
+    "id": "m-c2a8844f7413b247",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.0108,
+    "attempts": 1,
+    "compare": [
+     [
+      300.005072,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      2.1e-05,
+      true,
+      []
+     ],
+     [
+      9e-06,
+      true,
+      []
+     ],
+     [
+      7e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.005,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-e53750f029aa5980": {
+    "id": "m-e53750f029aa5980",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.1372,
+    "attempts": 1,
+    "compare": [
+     [
+      300.009821,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      2.7e-05,
+      true,
+      []
+     ],
+     [
+      1e-05,
+      true,
+      []
+     ],
+     [
+      7e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.01,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-f2a5f57d876d0b1e": {
+    "id": "m-f2a5f57d876d0b1e",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 315.2889,
+    "attempts": 1,
+    "compare": [
+     [
+      300.010361,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      2.3e-05,
+      true,
+      []
+     ],
+     [
+      9e-06,
+      true,
+      []
+     ],
+     [
+      8e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.01,
+    "reading": "相同",
+    "default": "0 分：回答侧解析超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-f6e89bd885e1f88f": {
+    "id": "m-f6e89bd885e1f88f",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.161,
+    "attempts": 1,
+    "compare": [
+     [
+      300.008562,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      3.3e-05,
+      true,
+      []
+     ],
+     [
+      1e-05,
+      true,
+      []
+     ],
+     [
+      7e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.009,
+    "reading": "不同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   },
+   "m-fa489af4aead097c": {
+    "id": "m-fa489af4aead097c",
+    "class": "0 分：比较超时",
+    "verdict": null,
+    "wall": 300.1395,
+    "attempts": 1,
+    "compare": [
+     [
+      300.009893,
+      true,
+      [
+       "Timeout during comparison"
+      ]
+     ],
+     [
+      2e-05,
+      true,
+      []
+     ],
+     [
+      9e-06,
+      true,
+      []
+     ],
+     [
+      7e-06,
+      true,
+      []
+     ]
+    ],
+    "timing": "完成",
+    "compare_wall": 300.01,
+    "reading": "相同",
+    "default": "0 分：比较超时",
+    "ref60": "0 分：比较超时"
+   }
+  },
+  "k_300": 1,
+  "u_300": 16,
+  "upper_one_sided_95_k_plus_u_300": 0.0002720287838819391,
+  "lower_one_sided_95_k_300": 5.472275543430922e-07,
+  "reading_vs_verdict": {
+   "相同 → None": 10,
+   "不同 → None": 2,
+   "不同 → 0": 1,
+   "无可判 → 0": 1
+  },
+  "d0_disagree_but_1": [],
+  "d0_note": "D0 是人工初判；读法不是“相同”却判 1 的只列为与人工初判不一致、待核查，不直接记参照误判"
+ },
+ "seconds": 1906.5
+}

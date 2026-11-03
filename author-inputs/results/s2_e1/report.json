@@ -1,0 +1,2098 @@
+{
+ "run_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex",
+ "lock": {
+  "pre": {
+   "what": "E1 core",
+   "specs_sha256": "046388cb5e38c4d3860e94fb817aeaca2cc7e044c78df585252ddc3fe884e327",
+   "main_sha256": "1242011cddc041ea6cb19fc9a1872ebab742d8ae7e8ebd3342f6b3b8b6e2ba15",
+   "D135": true
+  },
+  "code_sha256": {
+   "experiments/s2_main.py": "ccda445d0d8828ebffc85ba2f1db4b02c0b0ada7a850d27cdab84572851aff49",
+   "experiments/s2_worker.py": "749ea6b71144f7cebc6a915775b2fd0710ed9bff3942e001a05237080f24ed98",
+   "rewardfail/__init__.py": "90deb4f1667387636b92697c18c1f60428a611e394ecb0aad83f1224f5fc8fa9",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "175f6a7e90ec53dc27a901aa66e6ccaef96688aff0e5e1c0ddec259dc3f3f48f",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "b452dda7f6e4dc8aa9cfc6c5de5ad61b73af55fe5e37ce20a4503861399dc69a",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "ac90f81f620f37fca83c4e1be2ba35500648927e4698d6279b7bacb8e319f975",
+   "rewardfail/s2/supervise.py": "eb2bb2ab60baa63c8f6b15613d5b16929199f7b7de9f6d4666c85e2c46d29c1b",
+   "experiments/s2_e1.py": "b852425b3a3be850b84c214555fdf43608ce370a8021a7cb87b4162e400a2c22",
+   "experiments/s2_u18_diag.py": "c858b9df1b1d8b701485131143ac7f7ccf7a805c888952c594a2abf518fa8a06"
+  },
+  "tested_source": {
+   "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+   "verl_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+   "verl_dirty": [],
+   "wrapper_sha256": "f04f57d5cdc08d80197577c77d0bb9d47c2ddc6b4f8e80389ddf7ad3c71c8713"
+  },
+  "python": "3.12.8",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "data": {
+   "sample_map_sha256": "aa5dc856e7e3d9b4ae066d9c78ce7295ea0b1824a1a4842b516cae89f84128b6",
+   "shards_sha256": {
+    "train-00000-of-00010.parquet": "ccc3a95e4875dc4cff9bec2f0fb1c93e4c9cbb24fb24853fd0b96c416e1a263c",
+    "train-00001-of-00010.parquet": "a7d3eb54d97f7e1237a872947f2246de54a104be224646f62f588abdf6c7db60",
+    "train-00002-of-00010.parquet": "a44a2354bfa752541ab768b62edf01f3df4b9b2a7660774ab1eb6e7f19f0a86b",
+    "train-00003-of-00010.parquet": "dd7d2f0f04d80b3ae08484b706c4f7fd9dd29eeff4038c36257a307c77b877e9",
+    "train-00004-of-00010.parquet": "e358157990d7744643e25f1e692556ac5fd4a2212c008cf67475b14e040861ea",
+    "train-00005-of-00010.parquet": "30254d14d17b63d1f7963488d53a2d26aa22070f71baa2fe601201b081e38060",
+    "train-00006-of-00010.parquet": "b3bce93c06d4dc22788c04d0a1da5cbadb5b3db31046809c59a4ec26e96ebb52",
+    "train-00007-of-00010.parquet": "7def8029cf6d40f7493e9aa4be4b49c251ae7e0cb23b0b117c485e09ff5d5021",
+    "train-00008-of-00010.parquet": "29cf75a663e91039fc92bffd86a9ad845f992302da52d1fb1563b6c41ae777ed",
+    "train-00009-of-00010.parquet": "14df2775196a701b97a71cf0285fa75d97980fbda4db9ec9af9c2a07658ca256"
+   }
+  }
+ },
+ "completion": [
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 12.830234050750732,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-000/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 13.31488585472107,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-001/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 13.32038688659668,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-002/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 13.32140064239502,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-003/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 13.840512037277222,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-004/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 13.298949956893921,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-005/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 13.806659936904907,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-006/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 12.790480136871338,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-007/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 12.830305099487305,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-008/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 12.795660972595215,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-009/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 11.284103870391846,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-010/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 41.41045308113098,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-011/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 40.913832902908325,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-012/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 40.967385053634644,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-013/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 41.93991494178772,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-014/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 41.46355581283569,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-015/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 41.93047022819519,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-016/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 41.462124824523926,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-017/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 41.451570987701416,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-018/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 41.401291847229004,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-019/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 5.648586988449097,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-020/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.258302927017212,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-021/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.237665176391602,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-022/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.238847970962524,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-023/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.227237939834595,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-024/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.724465131759644,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-025/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.749653100967407,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-026/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.241044998168945,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-027/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.253844976425171,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-028/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 10.264709949493408,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-029/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 5.652097940444946,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-030/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 65.01094603538513,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-031/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 64.95948886871338,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-032/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 64.94475078582764,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-033/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 65.44032788276672,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-034/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 65.44021081924438,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-035/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 65.53833508491516,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-036/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 64.92330408096313,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-037/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 65.44931602478027,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-038/attempt-01"
+  },
+  {
+   "exit": 0,
+   "intervention": null,
+   "seconds": 65.4162061214447,
+   "orphans_killed": 0,
+   "attempt_dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-039/attempt-01"
+  }
+ ],
+ "scenes": [
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "normal",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-000/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": []
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-000/attempt-01/result.json",
+    "sha256": "05d2c43e50acaef709f9f2fe139ed00d132ba58dbad8a6fd8ab19d6ed3b68077"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-001/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-001/attempt-01/result.json",
+    "sha256": "b8f1089811a1111e0bf47da86d5c40abb0f83b730743b8336b05c82cef82daaa"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-002/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-002/attempt-01/result.json",
+    "sha256": "85f41e4a73c950c3a6025554903970f0e3646abd00eb86ab73c8adfdacf27af1"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-003/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-003/attempt-01/result.json",
+    "sha256": "477cf2082bc483d4669f1fc0659fab560bc64c37c75d37eb23964125e2ff065c"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-004/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-004/attempt-01/result.json",
+    "sha256": "ce1ce7a7b8502b30e3f345f68a742f011cff2edf84c9d78e17074eac373b2d7f"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-005/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-005/attempt-01/result.json",
+    "sha256": "5ac8ce5687fc7cde3349c20e8ac531a53c37d3a416b15cdcc47aafcc209d4c35"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-006/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-006/attempt-01/result.json",
+    "sha256": "4e6907a5d076b6911a5e10ec9a7cddbee784054dbfb246fe8b717d56b1cb6f85"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-007/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-007/attempt-01/result.json",
+    "sha256": "e8b9c9056d77dfb61271a26aa444fcb8b62fccaaaa8de22d55a65e710618a1f6"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-008/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-008/attempt-01/result.json",
+    "sha256": "6bd385f60858557dedc9cf07069033deeaffe1ae80e572a4a933418db3525630"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-009/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-009/attempt-01/result.json",
+    "sha256": "a4bf1125ef3c02d69e34769d1b885082d666852fcf387d7c527879caeda8f42b"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "normal",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-010/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": []
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-010/attempt-01/result.json",
+    "sha256": "26678726f9e114c2796ff65f4fa4a3d2b5efb5da5a408e12b279c6aaa19382da"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-011/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-011/attempt-01/result.json",
+    "sha256": "264fe0bb5bacb81ecfeb387c375d4edc07ed1821e2b32a0be14ac7a38704fa3d"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-012/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-012/attempt-01/result.json",
+    "sha256": "09ea012c0c981c203bfd2085afed3bde5e3c4ee3a05e1ab8ac66d7a0e1b4da75"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-013/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-013/attempt-01/result.json",
+    "sha256": "97223f60dacf811e604b2f59022320d313df81917c7f6d33c15b2e41a5a3c17e"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-014/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-014/attempt-01/result.json",
+    "sha256": "8ac434b46d463941642d938ce714af503779a2b525294e2941f5fc2433c3dffc"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-015/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-015/attempt-01/result.json",
+    "sha256": "571e69c70f77afc83f15e383c64515c3ae9e12c04ec88747b2216698bd8a6e48"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-016/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-016/attempt-01/result.json",
+    "sha256": "db205cf80ef70173818ecbec2d8de092904ba761fe4647b0069db231192cb660"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-017/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-017/attempt-01/result.json",
+    "sha256": "20acb145678b121f42ce91d5b74a56d915c19958e47a6e8093db2f805cd13816"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-018/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-018/attempt-01/result.json",
+    "sha256": "214867944f7f01eb274c900058d55fa5cce2c4ab389e05e0f5b5adf6a7b910c1"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "pr",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-019/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-019/attempt-01/result.json",
+    "sha256": "e22e3a2b4383aafbffa01a44579bf6c2b3c8207a2f467b3a8885b25c47ab14f9"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "normal",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-020/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": []
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-020/attempt-01/result.json",
+    "sha256": "d97f2ada47d9166ea5ceec72c0ad3d9b3932fd59f5453954bed264e5df0f105e"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-021/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-021/attempt-01/result.json",
+    "sha256": "b711939b554cc3e61450ce1d477eca371bbc676e35ea309de2cfeff15dc762a0"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-022/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-022/attempt-01/result.json",
+    "sha256": "0859f04beb11501a9ec91a2b0e9a92415aef808b61e2ae0f964a5de5c43f0025"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-023/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-023/attempt-01/result.json",
+    "sha256": "812079d614aeb7c3ef1786efc1ff3388e37885d9f7ce1a8777686207be56d3c5"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-024/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-024/attempt-01/result.json",
+    "sha256": "f3befa2a9188272bb846aff7fd5b755e8db77a4be4c18fef62d7db3f103b2125"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-025/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-025/attempt-01/result.json",
+    "sha256": "6b9fc716a2ef9fbd8d2f15b409d6f85b84d9f0ee53467e77295857520ab534c3"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-026/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-026/attempt-01/result.json",
+    "sha256": "29be0732b583da590a052cf66e670001b14a673327fc0f9f25c2ce2f156c60fd"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-027/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-027/attempt-01/result.json",
+    "sha256": "7cb92af31cfb99a0824bf181b95b36d4e15e40948305dda1930795c603b70eb7"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-028/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-028/attempt-01/result.json",
+    "sha256": "53e1eb569c5643242ddf226d5647d9ddf02eec2aec2373fe60d825b11eed4d3c"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": null,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-029/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-029/attempt-01/result.json",
+    "sha256": "471fa98b4f60a20f2d45301ebab8d261b0f78acde50d908723885c7ead76dfcb"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "normal",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-030/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": []
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-030/attempt-01/result.json",
+    "sha256": "47462cce5f759a383664baac1a82616f875ad659d515a1ea41b707045fc4d71e"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-031/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-031/attempt-01/result.json",
+    "sha256": "d02f25b3d374020f36be14d8dbf1dd3cc9492f62a98f3d5c0645fa3b8b120171"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-032/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-032/attempt-01/result.json",
+    "sha256": "4211e522cfab529e18953052facaffde46a2ced8b86f0342f3e4b5da4c982131"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-033/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-033/attempt-01/result.json",
+    "sha256": "1c41e365d09f89dee10e77756d43fcb09db32640375e0c74ea40dc12d0005ad2"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-034/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-034/attempt-01/result.json",
+    "sha256": "9d98cfdf345fac2351e9b07c481822c94bd4ec4380442cc6e8e7595d15333faf"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-035/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-035/attempt-01/result.json",
+    "sha256": "1f17e2472e32a9f4575cbd2d83ae71dcc830168fa81bf92efb218bdfe2c8af9e"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "bfc8-later",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-036/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     33
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "1.0": 63,
+      "0.0": 1
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-036/attempt-01/result.json",
+    "sha256": "2fcfbea3c9cda239e18e53349c094efe8e39a1d17a2c54d8a304fd481beb573b"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 1,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-037/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-037/attempt-01/result.json",
+    "sha256": "94640ae287f3894f1479ecf5a1bedb59652943147bd9efead7680e95f191fee6"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 2,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-038/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-038/attempt-01/result.json",
+    "sha256": "05c7de68c0a09bbaf4b1a9c1a5a6a9c0a8b63a1bebe52e7dc92cca31ef3226b0"
+   }
+  },
+  {
+   "spec": {
+    "wrapper": "main",
+    "lib": 60,
+    "outer": 30,
+    "observe": true,
+    "variant": "imo-first",
+    "repeat": 3,
+    "manager": "naive",
+    "dir": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-039/attempt-01",
+    "sources": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/source",
+    "row_count": 64,
+    "following_count": 64,
+    "warm_count": 4,
+    "heavy_positions": [
+     1
+    ]
+   },
+   "batches": [
+    {
+     "name": "test",
+     "score_counts": {
+      "0.0": 1,
+      "1.0": 63
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    },
+    {
+     "name": "following",
+     "score_counts": {
+      "1.0": 64
+     },
+     "extra_key_counts": {
+      "acc": 64
+     }
+    }
+   ],
+   "raw_result": {
+    "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/case-039/attempt-01/result.json",
+    "sha256": "2272370125099335face66a4896c389f6d7b308d122d01b3a92389f8eb2d520f"
+   }
+  }
+ ],
+ "boundary": "One locally invoked reward actor; fixed text/tokenizer and Ray transport substitutes. No training, no frequency estimate. Resource intervention is not a natural pool failure.",
+ "record_layout": "compact index; full inputs and row vectors in raw report/results",
+ "raw_report": {
+  "path": "<REWARDfail_LOCAL>/stage2/runs/e1-core-20261008-codex/report.json",
+  "sha256": "fca3e1017cf0f9000a746d33e7f95a30c6e7623fec2e2973db841f1674dae54f"
+ }
+}

@@ -1,0 +1,27 @@
+digraph position {
+  graph [rankdir=TB, nodesep=0.25, ranksep=0.35, fontname="PingFang SC", bgcolor="white", pad=0.20];
+  node [shape=box, style="rounded,filled", fillcolor="#F2F2F2", color="#7F7F7F", fontname="PingFang SC", fontsize=12, margin="0.12,0.07"];
+  edge [fontname="PingFang SC", fontsize=10, color="#555555"];
+  subgraph cluster_later {
+    label="失败行在后（位置 2）"; fontname="PingFang SC"; fontsize=13; color="#7F7F7F"; style="rounded";
+    L1 [label="奖励  1, 0, 0, 1, …\n附加  acc, acc, error, acc, …"];
+    L2 [label="首行键 = {acc}\n error 列被丢弃"];
+    L3 [label="extract_reward 视图\n0 分与答错不可区分"];
+    L1 -> L2 -> L3;
+  }
+  subgraph cluster_first {
+    label="失败行在首（位置 0）"; fontname="PingFang SC"; fontsize=13; color="#C00000"; style="rounded";
+    F1 [label="奖励  0, 1, 1, …\n附加  error, acc, acc, …"];
+    F2 [label="首行键 = {error}\n正常行索引 acc → KeyError"];
+    F3 [label="整批中止", fillcolor="#FBE5D6", color="#C00000"];
+    F1 -> F2 -> F3;
+  }
+  subgraph cluster_fix {
+    label="union-and-fill（本次验证的修复）"; fontname="PingFang SC"; fontsize=13; color="#548235"; style="rounded";
+    X1 [label="键 = 所有行键的并集\n缺失值显式填 None", fillcolor="#E2F0D9", color="#548235"];
+    X2 [label="奖励向量不变\nerror 列保留且行对齐", fillcolor="#E2F0D9", color="#548235"];
+    X1 -> X2;
+  }
+  L3 -> X1 [style=dashed, color="#548235", label="改为并集"];
+  F3 -> X1 [style=dashed, color="#548235", label="不再中止"];
+}

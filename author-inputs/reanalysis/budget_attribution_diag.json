@@ -1,0 +1,158 @@
+{
+ "what": "诊断：参照段预算终止只记被杀时仍在判的那一行，重新合成后重算主指标（未经审核，不是正式报告）",
+ "run_dir": "<REWARDfail_LOCAL>/stage2/runs/main-20261007-202545",
+ "rows_with_fixed_attempts": 9866,
+ "fixed_attempts": 9866,
+ "reference_classes": {
+  "official": {
+   "正常 0": 22901,
+   "1 分": 699,
+   "0 分：比较超时": 11,
+   "0 分：比较出错": 9,
+   "0 分：回答侧解析出错": 3,
+   "0 分：标准答案侧解析超时": 1,
+   "未裁定（中断两次）": 2,
+   "本机预算终止（未裁定）": 9868
+  },
+  "diagnostic": {
+   "正常 0": 32452,
+   "1 分": 1007,
+   "0 分：比较超时": 14,
+   "0 分：比较出错": 12,
+   "0 分：回答侧解析出错": 4,
+   "0 分：标准答案侧解析超时": 1,
+   "未裁定（中断两次）": 2,
+   "本机预算终止（未裁定）": 2
+  }
+ },
+ "class_changes": {
+  "本机预算终止（未裁定） → 正常 0": 9551,
+  "本机预算终止（未裁定） → 1 分": 308,
+  "本机预算终止（未裁定） → 0 分：比较超时": 3,
+  "本机预算终止（未裁定） → 0 分：比较出错": 3,
+  "本机预算终止（未裁定） → 0 分：回答侧解析出错": 1
+ },
+ "budget_rows_diagnostic": [
+  "m-2a2cbb703cd7d47a",
+  "warm-reference-r21w0-2"
+ ],
+ "interrupted_twice_diagnostic": [
+  "m-8364284f555502b7",
+  "m-ac45c2e3c4109182"
+ ],
+ "main_metric": {
+  "official": {
+   "n": 93733,
+   "k": 1,
+   "u": 9573,
+   "rate_k": 1.0668601239691463e-05,
+   "lower_one_sided_95_k": 5.472275543430922e-07,
+   "upper_one_sided_95_k_plus_u": 0.10378262258742232,
+   "ci95_two_sided_k": [
+    2.7010556115982434e-07,
+    5.944019203413253e-05
+   ],
+   "continue_2_metric": false,
+   "stop_2": false,
+   "k_by_classes": {
+    "0 分：比较超时 → 1 分": 1
+   },
+   "u_reasons": {
+    "参照：0 分：比较超时": 11,
+    "参照：本机预算终止（未裁定）": 9559,
+    "参照：未裁定（中断两次）": 2,
+    "参照：0 分：标准答案侧解析超时": 1
+   }
+  },
+  "diagnostic": {
+   "n": 93733,
+   "k": 1,
+   "u": 18,
+   "rate_k": 1.0668601239691463e-05,
+   "lower_one_sided_95_k": 5.472275543430922e-07,
+   "upper_one_sided_95_k_plus_u": 0.0002974184026113824,
+   "ci95_two_sided_k": [
+    2.7010556115982434e-07,
+    5.944019203413253e-05
+   ],
+   "continue_2_metric": false,
+   "stop_2": false,
+   "k_by_classes": {
+    "0 分：比较超时 → 1 分": 1
+   },
+   "u_reasons": {
+    "参照：0 分：比较超时": 14,
+    "参照：未裁定（中断两次）": 2,
+    "参照：本机预算终止（未裁定）": 1,
+    "参照：0 分：标准答案侧解析超时": 1
+   }
+  }
+ },
+ "k_ids": {
+  "official": [
+   "m-377a40b9adf29ef8"
+  ],
+  "diagnostic": [
+   "m-377a40b9adf29ef8"
+  ]
+ },
+ "u_ids_diagnostic": [
+  "m-3e99df52be81a4a3",
+  "m-bfc80eaa0d4fcfda",
+  "m-e53750f029aa5980",
+  "m-ac45c2e3c4109182",
+  "m-f6e89bd885e1f88f",
+  "m-2a2cbb703cd7d47a",
+  "m-95674e055a0a4cb3",
+  "m-696f7389aa285443",
+  "m-8967f984969c2fb1",
+  "m-6cc6536a39ab6094",
+  "m-f2a5f57d876d0b1e",
+  "m-0be9fc848295320a",
+  "m-691a82a720415dbc",
+  "m-60f96867bd1e6c8c",
+  "m-c2a8844f7413b247",
+  "m-0a55a91128070c4b",
+  "m-fa489af4aead097c",
+  "m-8364284f555502b7"
+ ],
+ "reference_on_default_1": {
+  "official": {
+   "1 分": 695,
+   "本机预算终止（未裁定）": 305
+  },
+  "diagnostic": {
+   "1 分": 1000
+  }
+ },
+ "reference_events": {
+  "official": 9894,
+  "diagnostic": 35
+ },
+ "resynth_stats": {
+  "rows": 33487,
+  "warm_rows": 7,
+  "pools": {
+   "reference-r11w0": 1,
+   "reference-r11w1": 1,
+   "reference-r11w2": 1,
+   "reference-r12w0": 2,
+   "reference-r13w0": 2,
+   "reference-r21w0": 3
+  },
+  "budget_kills": 4,
+  "hard_stops": 3,
+  "interrupted_rows": 3
+ },
+ "raw_files": {
+  "before": [
+   162,
+   "351ce70b0fbbfbfdfead6d090f85ec20662ba2a9c85eac4333a67b2bcd0bf2d4"
+  ],
+  "after": [
+   162,
+   "351ce70b0fbbfbfdfead6d090f85ec20662ba2a9c85eac4333a67b2bcd0bf2d4"
+  ],
+  "unchanged": true
+ }
+}

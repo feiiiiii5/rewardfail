@@ -1,0 +1,84 @@
+{
+ "pass": "reference",
+ "mode": "reference",
+ "extra": [],
+ "tasks": 33487,
+ "P": 1,
+ "P_info": {
+  "budget_gib": 4.144,
+  "available_gib": 5.644,
+  "supervisor_gib": 0.248,
+  "pipeline_gib_from_pilot": 0.839,
+  "child_base_gib_from_pilot": 0.298,
+  "child_limit_gib": 3.0,
+  "formula_P": 1,
+  "max_P": 1,
+  "pilot_report": "results/s2_rev1/pilot/report.json",
+  "override": "申请季 D132：按段设定并发，公式值只记录不拦停；整机保护照常（experiments/s2_main_sched.py）",
+  "schedule": {
+   "reference": 1,
+   "其他各段": 1
+  }
+ },
+ "supervise": {
+  "aborted": null,
+  "history": [
+   {
+    "launch": 1,
+    "P": 1,
+    "codes": [
+     0
+    ],
+    "stopped": false,
+    "interrupted": 0,
+    "orphans_killed": 0
+   }
+  ],
+  "seconds": 1227.5,
+  "guard": {
+   "budget": 4449255424,
+   "child_limit": 3221225472,
+   "avail_start": 6059868160,
+   "swap_start": 1112604672,
+   "swap_base_end": 1112604672,
+   "peak_total_fp": 5041396288,
+   "min_avail": 4143661056,
+   "max_pressure": 1,
+   "budget_kills": 2,
+   "hard_stops": 0
+  }
+ },
+ "stats": {
+  "rows": 33487,
+  "warm_rows": 7,
+  "pools": {
+   "reference-r11w0": 1,
+   "reference-r11w1": 1,
+   "reference-r11w2": 1,
+   "reference-r12w0": 2,
+   "reference-r13w0": 2,
+   "reference-r21w0": 3
+  },
+  "exit_codes": {
+   "-9": 2,
+   "0": 1
+  },
+  "budget_kills": 4,
+  "hard_stops": 3,
+  "interrupted_rows": 3,
+  "file_problems": {
+   "workers": {},
+   "pids": {}
+  },
+  "dup_results": []
+ },
+ "seconds": 1236.1,
+ "load": {
+  "status_records": 173,
+  "load1_p50": 3.5,
+  "load1_max": 17.67,
+  "pressure_max": 2,
+  "avail_min_gib": 3.043,
+  "swap_max_gib": 1.067
+ }
+}

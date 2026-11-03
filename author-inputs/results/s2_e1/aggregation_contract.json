@@ -1,0 +1,1271 @@
+{
+ "source_path": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl/experimental/reward_loop/reward_loop.py",
+ "source_sha256": "f30932e2445ab01ca7fa4fbcec13910c85bfaf2cd8a4f49d040f15d7fe2ed973",
+ "local_patch_ast_sha256": "4ba42b7085bbe730acad4829ecca472f0a3beff19eef90993852f1bea041e325",
+ "patch": "union of all extra keys; missing values None; dtype object",
+ "n": 21,
+ "passed": 21,
+ "baseline_exceptions": 3,
+ "baseline_omitted_columns": 16,
+ "cases": [
+  {
+   "name": "normal",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "empty-extras",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {}
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {}
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-1",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "exception": "KeyError",
+    "message": "'error'"
+   },
+   "proposal": {
+    "scores": [
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "error": [
+      "persistent scoring failure",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-2",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "error": [
+      null,
+      "persistent scoring failure",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-3",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "error": [
+      null,
+      null,
+      "persistent scoring failure",
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-4",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "error": [
+      null,
+      null,
+      null,
+      "persistent scoring failure",
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-5",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "error": [
+      null,
+      null,
+      null,
+      null,
+      "persistent scoring failure",
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-6",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0
+     ],
+     "error": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      "persistent scoring failure",
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-7",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0
+     ],
+     "error": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "persistent scoring failure",
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "error-position-8",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+     ],
+     "error": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "persistent scoring failure"
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-1",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "exception": "KeyError",
+    "message": "'timeout'"
+   },
+   "proposal": {
+    "scores": [
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "timeout": [
+      true,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-2",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "timeout": [
+      null,
+      true,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-3",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "timeout": [
+      null,
+      null,
+      true,
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-4",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "timeout": [
+      null,
+      null,
+      null,
+      true,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-5",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "timeout": [
+      null,
+      null,
+      null,
+      null,
+      true,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-6",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0
+     ],
+     "timeout": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      true,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-7",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0
+     ],
+     "timeout": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      true,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "timeout-position-8",
+   "workers": 1,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+     ],
+     "timeout": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      true
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "mixed-later",
+   "workers": 2,
+   "n": 8,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "error": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "failure",
+      null
+     ],
+     "timeout": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      true
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "mixed-first",
+   "workers": 2,
+   "n": 8,
+   "baseline": {
+    "exception": "KeyError",
+    "message": "'error'"
+   },
+   "proposal": {
+    "scores": [
+     0.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "columns": {
+     "acc": [
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "error": [
+      "failure",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "timeout": [
+      null,
+      true,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   },
+   "pass": true
+  },
+  {
+   "name": "padding-trim",
+   "workers": 2,
+   "n": 7,
+   "baseline": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+     ]
+    }
+   },
+   "proposal": {
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     0.0
+    ],
+    "columns": {
+     "acc": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0
+     ],
+     "error": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "failure"
+     ]
+    }
+   },
+   "pass": true
+  }
+ ],
+ "upstream_unchanged": true,
+ "boundary": "Fixed scoring outputs and local Ray transport; actual pinned batch assembly/extraction. No verifier, model or training run; no downstream masking policy verified."
+}

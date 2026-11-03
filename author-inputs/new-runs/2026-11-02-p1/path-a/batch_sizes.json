@@ -1,0 +1,1907 @@
+{
+  "env": {
+    "verl_file": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/__init__.py",
+    "agent_loop_file": "<WORKSPACE>/thesis-runs/verl-pr8015-original/verl/experimental/agent_loop/agent_loop.py",
+    "fixed_source_sha256": "85f92d1139cd95cc5ae258b2a8a8cb913e87e2144edb505b667c38081638dfaf"
+  },
+  "cases": {
+    "n1_normal": {
+      "n": 1,
+      "failing": [],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      }
+    },
+    "n1_error_first": {
+      "n": 1,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0
+          ],
+          "error": [
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 0.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0
+          ],
+          "error": [
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 0.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      }
+    },
+    "n1_error_middle": {
+      "n": 1,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0
+          ],
+          "error": [
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 0.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0
+          ],
+          "error": [
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 0.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      }
+    },
+    "n1_error_last": {
+      "n": 1,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0
+          ],
+          "error": [
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 0.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0
+          ],
+          "error": [
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 0.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          1,
+          2
+        ]
+      }
+    },
+    "n2_normal": {
+      "n": 2,
+      "failing": [],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          2,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          2,
+          2
+        ]
+      }
+    },
+    "n2_error_first": {
+      "n": 2,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": "KeyError('error')",
+        "exception_type": "KeyError",
+        "non_tensor_keys": null,
+        "meta_reward_extra_keys": null,
+        "extract": null,
+        "reward_sum": null
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0,
+            0.0
+          ],
+          "error": [
+            "injected-failure",
+            null
+          ]
+        },
+        "reward_sum": 0.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          2,
+          2
+        ]
+      }
+    },
+    "n2_error_middle": {
+      "n": 2,
+      "failing": [
+        1
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          2,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0
+          ],
+          "error": [
+            null,
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          2,
+          2
+        ]
+      }
+    },
+    "n2_error_last": {
+      "n": 2,
+      "failing": [
+        1
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          2,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0
+          ],
+          "error": [
+            null,
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          2,
+          2
+        ]
+      }
+    },
+    "n3_normal": {
+      "n": 3,
+      "failing": [],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0
+          ]
+        },
+        "reward_sum": 2.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          3,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0
+          ]
+        },
+        "reward_sum": 2.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          3,
+          2
+        ]
+      }
+    },
+    "n3_error_first": {
+      "n": 3,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": "KeyError('error')",
+        "exception_type": "KeyError",
+        "non_tensor_keys": null,
+        "meta_reward_extra_keys": null,
+        "extract": null,
+        "reward_sum": null
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "error": [
+            "injected-failure",
+            null,
+            null
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          3,
+          2
+        ]
+      }
+    },
+    "n3_error_middle": {
+      "n": 3,
+      "failing": [
+        1
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0
+          ]
+        },
+        "reward_sum": 2.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          3,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "error": [
+            null,
+            "injected-failure",
+            null
+          ]
+        },
+        "reward_sum": 2.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          3,
+          2
+        ]
+      }
+    },
+    "n3_error_last": {
+      "n": 3,
+      "failing": [
+        2
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          3,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "error": [
+            null,
+            null,
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 1.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          3,
+          2
+        ]
+      }
+    },
+    "n7_normal": {
+      "n": 7,
+      "failing": [],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          7,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          7,
+          2
+        ]
+      }
+    },
+    "n7_error_first": {
+      "n": 7,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": "KeyError('error')",
+        "exception_type": "KeyError",
+        "non_tensor_keys": null,
+        "meta_reward_extra_keys": null,
+        "extract": null,
+        "reward_sum": null
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0
+          ],
+          "error": [
+            "injected-failure",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "reward_sum": 3.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          7,
+          2
+        ]
+      }
+    },
+    "n7_error_middle": {
+      "n": 7,
+      "failing": [
+        3
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          7,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0
+          ],
+          "error": [
+            null,
+            null,
+            null,
+            "injected-failure",
+            null,
+            null,
+            null
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          7,
+          2
+        ]
+      }
+    },
+    "n7_error_last": {
+      "n": 7,
+      "failing": [
+        6
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        "reward_sum": 3.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          7,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "error": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 3.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          7,
+          2
+        ]
+      }
+    },
+    "n8_normal": {
+      "n": 8,
+      "failing": [],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          8,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          8,
+          2
+        ]
+      }
+    },
+    "n8_error_first": {
+      "n": 8,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": "KeyError('error')",
+        "exception_type": "KeyError",
+        "non_tensor_keys": null,
+        "meta_reward_extra_keys": null,
+        "extract": null,
+        "reward_sum": null
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "error": [
+            "injected-failure",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "reward_sum": 3.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          8,
+          2
+        ]
+      }
+    },
+    "n8_error_middle": {
+      "n": 8,
+      "failing": [
+        4
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 3.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          8,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "error": [
+            null,
+            null,
+            null,
+            null,
+            "injected-failure",
+            null,
+            null,
+            null
+          ]
+        },
+        "reward_sum": 3.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          8,
+          2
+        ]
+      }
+    },
+    "n8_error_last": {
+      "n": 8,
+      "failing": [
+        7
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          8,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "error": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 4.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          8,
+          2
+        ]
+      }
+    },
+    "n16_normal": {
+      "n": 16,
+      "failing": [],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 8.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          16,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 8.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          16,
+          2
+        ]
+      }
+    },
+    "n16_error_first": {
+      "n": 16,
+      "failing": [
+        0
+      ],
+      "original": {
+        "exception": "KeyError('error')",
+        "exception_type": "KeyError",
+        "non_tensor_keys": null,
+        "meta_reward_extra_keys": null,
+        "extract": null,
+        "reward_sum": null
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "error": [
+            "injected-failure",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "reward_sum": 7.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          16,
+          2
+        ]
+      }
+    },
+    "n16_error_middle": {
+      "n": 16,
+      "failing": [
+        8
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 7.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          16,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "error": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "injected-failure",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "reward_sum": 7.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          16,
+          2
+        ]
+      }
+    },
+    "n16_error_last": {
+      "n": 16,
+      "failing": [
+        15
+      ],
+      "original": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "reward_sum": 8.0,
+        "extract_keys": [
+          "acc"
+        ],
+        "extract_reward_shape": [
+          16,
+          2
+        ]
+      },
+      "union_fill": {
+        "exception": null,
+        "exception_type": null,
+        "non_tensor_keys": [
+          "__num_turns__",
+          "acc",
+          "error",
+          "extras",
+          "max_global_steps",
+          "min_global_steps",
+          "reward_extra_info",
+          "tool_rewards",
+          "turn_scores"
+        ],
+        "meta_reward_extra_keys": [
+          "acc",
+          "error"
+        ],
+        "extract": {
+          "acc": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "error": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "injected-failure"
+          ]
+        },
+        "reward_sum": 8.0,
+        "extract_keys": [
+          "acc",
+          "error"
+        ],
+        "extract_reward_shape": [
+          16,
+          2
+        ]
+      }
+    }
+  }
+}

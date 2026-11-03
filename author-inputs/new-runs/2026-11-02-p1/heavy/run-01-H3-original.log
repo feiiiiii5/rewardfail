@@ -1,0 +1,12 @@
+[36m(AgentLoopWorker pid=59494)[0m WARNING:2026-11-02 16:50:14,933:No supported accelerator detected. Registered: ('nvidia', 'huawei', 'amd'). Falling back to 'nvidia'.
+[36m(AgentLoopWorker pid=59494)[0m WARNING:2026-11-02 16:50:14,934:Platform 'nvidia' (PlatformCUDA) is registered but not available. This may be due to this ray actor being a CPU-only actor.
+WARNING:2026-11-02 16:50:15,128:No supported accelerator detected. Registered: ('nvidia', 'huawei', 'amd'). Falling back to 'nvidia'.
+WARNING:2026-11-02 16:50:15,132:Platform 'nvidia' (PlatformCUDA) is registered but not available. This may be due to this ray actor being a CPU-only actor.
+[36m(RewardLoopWorker pid=59492)[0m WARNING:2026-11-02 16:50:24,328:Timeout during comparison
+[36m(RewardLoopWorker pid=59493)[0m WARNING:2026-11-02 16:50:15,255:No supported accelerator detected. Registered: ('nvidia', 'huawei', 'amd'). Falling back to 'nvidia'.[32m [repeated 3x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(RewardLoopWorker pid=59493)[0m WARNING:2026-11-02 16:50:15,257:Platform 'nvidia' (PlatformCUDA) is registered but not available. This may be due to this ray actor being a CPU-only actor.[32m [repeated 3x across cluster][0m
+[36m(RewardLoopWorker pid=59492)[0m WARNING:2026-11-02 16:50:29,344:Timeout during comparison
+[36m(RewardLoopWorker pid=59492)[0m WARNING:2026-11-02 16:50:34,355:Timeout during comparison
+[36m(AgentLoopWorker pid=59494)[0m Using dataset class: RLHFDataset
+[36m(AgentLoopWorker pid=59495)[0m Using dataset class: RLHFDataset
+RESULT_JSON {"case": "H3", "mode": "original", "outcome": "completed", "row_scores": [0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0], "scores_match_expected": null, "error_original_ids": [], "error_set_matches_expected": true, "exception_type": null, "raise_site": null, "seconds": 26.17, "ledger_counts": {}}

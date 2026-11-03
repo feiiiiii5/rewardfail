@@ -1,0 +1,28 @@
+{
+ "m-0be9fc848295320a": [
+  {
+   "launch": "reference-r11",
+   "why": "整项停止（本机预算干预）"
+  }
+ ],
+ "m-ac45c2e3c4109182": [
+  {
+   "launch": "reference-r11",
+   "why": "整项停止（本机预算干预）"
+  },
+  {
+   "launch": "reference-r12",
+   "why": "整项停止（本机预算干预）"
+  }
+ ],
+ "m-8364284f555502b7": [
+  {
+   "launch": "reference-r12",
+   "why": "整项停止（本机预算干预）"
+  },
+  {
+   "launch": "reference-r13",
+   "why": "整项停止（本机预算干预）"
+  }
+ ]
+}

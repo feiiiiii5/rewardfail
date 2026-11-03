@@ -1,0 +1,23 @@
+Copyright 2026 Yufeiyang Chen
+
+The original companion code and synthetic test fixtures are licensed under
+the Apache License, Version 2.0; see LICENSE. Substantial AI assistance is
+disclosed in the manuscript's author contribution statement.
+
+This code licence does not apply to the manuscript, upstream datasets,
+dependencies, or third-party source copies. The manuscript is licensed under
+Creative Commons Attribution 4.0 International (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/.
+Preparing this archive does not itself submit or publish the manuscript.
+
+sources/main-wrapper.py in the companion archive is an unchanged source
+copy from verl at acad9875a8bdfc81afbcb0a50d146b2630f44093, licensed by its
+upstream copyright holders under Apache-2.0. Its copyright header is retained.
+Other upstream sources are linked by fixed revision rather than redistributed.
+OpenR1's pinned data card declares Apache-2.0; the human-label repository
+declares MIT. Their original notices and licences continue to apply.
+
+Public report copies and derived score records contain path substitutions.
+The package manifest identifies both the distributed bytes and their original
+fingerprints. Original data, raw logs, execution locks and historical reports
+are retained unchanged; the package is not the complete raw-log archive.

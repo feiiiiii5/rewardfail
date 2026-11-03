@@ -1,0 +1,21 @@
+{
+  "case": "H3",
+  "mode": "fixed",
+  "heavy_positions": [
+    0,
+    1,
+    2
+  ],
+  "heavy_ids": [
+    "m-8364284f555502b7",
+    "m-ac45c2e3c4109182",
+    "m-2a2cbb703cd7d47a"
+  ],
+  "heavy_generation_chars": [
+    14366,
+    11611,
+    10167
+  ],
+  "rows_sha256": "e5bd37520b27ce391679821e5a1f2b6e93877a717d154366f947371a1ac809b1",
+  "note": "natural heavy inputs, no injection; conditional propagation, not incidence"
+}

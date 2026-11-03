@@ -1,0 +1,115 @@
+{
+ "lock": {
+  "pre": {
+   "source": "main",
+   "n": 93733,
+   "ids_sha256": "cd6b9c9ce7dae8f5ef9ff63f738f41aaa75ab721aa03a38b0a6032c17b24dbaa",
+   "retest": 963,
+   "retest_sha256": "55fc7b84b73ab35447f473f79cfd853f26c6f990e5892d5c862844c39680a3ed",
+   "limits_random": 874,
+   "limits_random_sha256": "d3e2c491dff450d6a05ac447df215489464a8db01326d9e45a1124be3e8981be",
+   "refone_order_sha256": "09c2ee0c92f7a61c4deec641183422343b3f40c66ac2b79a9225e5abf1ea4b79",
+   "synthetic": false,
+   "child_limit_mib": 3072
+  },
+  "code_sha256": {
+   "experiments/s2_main.py": "29e73e7c96c01c500781216b2094355bd564e381aef3242f666f05f17339595a",
+   "experiments/s2_worker.py": "b4320a74d2e1cf6d49c1a1b75ef5eb0d11daa248ece14d61d569e21509250985",
+   "rewardfail/__init__.py": "90deb4f1667387636b92697c18c1f60428a611e394ecb0aad83f1224f5fc8fa9",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "a8fa21e2b041c327ac5fe2bd8144b3b1c3bc2cc8470cfe994c9550bb63248745",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "425d7369211c1fa6d1603df03b2014e8d200e1378df00745d0e5151e7ca69be6",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "c6094ac81d830e8b6f6a6f6f1f789898284c8a42137f0193e6119af7dee61cc7",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "164bd7936e3c297fdbf20115e7168ed4c1e434a8d0500b4cc55515ce01a7c961",
+   "rewardfail/s2/supervise.py": "ff09a8394ef5d302ff5f1e71886ad26e118c6c3b9b54959aa36871b1fc82e818"
+  },
+  "tested_source": {
+   "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+   "verl_head": "0c4c3d40d46d5f47d1918c905641eea969b7fa09",
+   "verl_dirty": [],
+   "wrapper_sha256": "f04f57d5cdc08d80197577c77d0bb9d47c2ddc6b4f8e80389ddf7ad3c71c8713"
+  },
+  "python": "3.12.8",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "data": {
+   "sample_map_sha256": "aa5dc856e7e3d9b4ae066d9c78ce7295ea0b1824a1a4842b516cae89f84128b6",
+   "shards_sha256": {
+    "train-00000-of-00010.parquet": "ccc3a95e4875dc4cff9bec2f0fb1c93e4c9cbb24fb24853fd0b96c416e1a263c",
+    "train-00001-of-00010.parquet": "a7d3eb54d97f7e1237a872947f2246de54a104be224646f62f588abdf6c7db60",
+    "train-00002-of-00010.parquet": "a44a2354bfa752541ab768b62edf01f3df4b9b2a7660774ab1eb6e7f19f0a86b",
+    "train-00003-of-00010.parquet": "dd7d2f0f04d80b3ae08484b706c4f7fd9dd29eeff4038c36257a307c77b877e9",
+    "train-00004-of-00010.parquet": "e358157990d7744643e25f1e692556ac5fd4a2212c008cf67475b14e040861ea",
+    "train-00005-of-00010.parquet": "30254d14d17b63d1f7963488d53a2d26aa22070f71baa2fe601201b081e38060",
+    "train-00006-of-00010.parquet": "b3bce93c06d4dc22788c04d0a1da5cbadb5b3db31046809c59a4ec26e96ebb52",
+    "train-00007-of-00010.parquet": "7def8029cf6d40f7493e9aa4be4b49c251ae7e0cb23b0b117c485e09ff5d5021",
+    "train-00008-of-00010.parquet": "29cf75a663e91039fc92bffd86a9ad845f992302da52d1fb1563b6c41ae777ed",
+    "train-00009-of-00010.parquet": "14df2775196a701b97a71cf0285fa75d97980fbda4db9ec9af9c2a07658ca256"
+   }
+  }
+ },
+ "env": {
+  "python": "3.12.8",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "versions": {
+   "verl": "0.10.0.dev0",
+   "math-verify": "0.9.0",
+   "sympy": "1.14.0",
+   "torch": "2.14.1",
+   "pyarrow": "25.0.1",
+   "psutil": "7.2.2"
+  },
+  "verl_dir": "<LOCAL_USER>/Desktop/申请季/项目/新项目-rewardfail/third_party/verl-pr8015/verl",
+  "repo_head": "9a8899165645daf642b5b8b55153efbf421ac60a",
+  "repo_dirty": [],
+  "code_sha256": {
+   "experiments/s2_main.py": "29e73e7c96c01c500781216b2094355bd564e381aef3242f666f05f17339595a",
+   "experiments/s2_pilot.py": "1bd097d7f3ced9f59a8ffb0f4418544f1efdbc0823509b5c2c47aca5666623f1",
+   "experiments/s2_reader_check.py": "19341d65c7a5072abd1b45a68b72774953436ceb38d60caa0a9f7759e537bae5",
+   "experiments/s2_rev1_recheck.py": "a272d6f4d405aef0aaa594a274b3cca437e4c85f644a6f2c48284c37ba0aacae",
+   "experiments/s2_rev1_switch_repeat.py": "2b9a15ffcec83ae03e287f766e31ca0280a7142dd2cc4e5dbddeed44ba7914a8",
+   "experiments/s2_rev1_tail.py": "7ddefc81ce853a7d2da074742fb0d219ee9af93dd125fc56dbda1a4a6728876d",
+   "experiments/s2_selftest.py": "387b682cf216a0d59a589420a2e46ecf93a96177fc1bc72b5be7a70a2aade633",
+   "experiments/s2_worker.py": "b4320a74d2e1cf6d49c1a1b75ef5eb0d11daa248ece14d61d569e21509250985",
+   "rewardfail/s2/__init__.py": "5e2cc187a971c804fbc380fb876c3eb3fd026351bc18f694d8c05495a402fe06",
+   "rewardfail/s2/analyze.py": "a8fa21e2b041c327ac5fe2bd8144b3b1c3bc2cc8470cfe994c9550bb63248745",
+   "rewardfail/s2/atype.py": "c22e66ab6b81fba7a98b6bdaa7fa5f3ee76b7c8d7e44b96b8333636fda655c41",
+   "rewardfail/s2/child.py": "ab878545f774eaf668ec95a175d85117477fc71d06f7a98337302a1f0d22a637",
+   "rewardfail/s2/data.py": "c39062f1a9b8f18e0508c9259a2e6653841fcf22bb78a2c2f8a020f02175b987",
+   "rewardfail/s2/envinfo.py": "090240921b5e1e21a3e3224d7c7b22e9adf29a36cdbd6f212aec62772ef705e0",
+   "rewardfail/s2/guard.py": "425d7369211c1fa6d1603df03b2014e8d200e1378df00745d0e5151e7ca69be6",
+   "rewardfail/s2/mem.py": "ea0546a2d6d3921777516e6fe3ef1d8df5ed053114fb2057c65ba0a7f2ae7973",
+   "rewardfail/s2/obs.py": "c6094ac81d830e8b6f6a6f6f1f789898284c8a42137f0193e6119af7dee61cc7",
+   "rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+   "rewardfail/s2/stepguard.py": "164bd7936e3c297fdbf20115e7168ed4c1e434a8d0500b4cc55515ce01a7c961",
+   "rewardfail/s2/supervise.py": "ff09a8394ef5d302ff5f1e71886ad26e118c6c3b9b54959aa36871b1fc82e818"
+  }
+ },
+ "started": "2026-10-07 20:25:47",
+ "resumes": [
+  {
+   "t": "2026-10-07 21:20:49",
+   "compat_allowed": []
+  },
+  {
+   "t": "2026-10-07 21:36:30",
+   "compat_allowed": []
+  },
+  {
+   "t": "2026-10-07 21:44:54",
+   "compat_allowed": []
+  }
+ ]
+}
