@@ -104,3 +104,11 @@ characterisations (`LITERATURE_CHECK.md`). Changes in this pass:
 | `audit/LICENSING_PLAN.md`, `audit/THESIS_SYNC.md` | new: licence/NOTICE proposal (not granted); thesis change list (not applied) | – |
 
 Analysis code, result files and the number checker are unchanged since `da00bd6`.
+
+## Author-confirmation pass (2026-11-03)
+
+The author confirmed: manuscript CC BY 4.0; Apache-2.0 for the original code, records and documentation under
+`audit/` (`audit/LICENSE`, `audit/NOTICE`; third-party parts keep their own terms); public correspondence address;
+categories cs.SE (primary) and cs.LG (cross-list). The appendix licence sentence now names the audit code; PDF and
+arXiv package rebuilt (SHA-256 `6bccf07b…`). `SUBMISSION_CHECKLIST.md` records the confirmations. The author has
+instructed that the paper is **not** to be posted to arXiv yet.
