@@ -12,6 +12,13 @@ The author's header names `tectonic -X compile main.tex`; tectonic was not avail
 environment, so pdfLaTeX (TeX Live 2023, Ubuntu 24.04 packages `texlive-latex-recommended
 texlive-latex-extra texlive-fonts-recommended lmodern`) with BibTeX/`plainnat` was used.
 
-Checks on the committed build (`main-revised-2026-11-03.pdf`, 2026-11-03): no LaTeX errors; no undefined
-references or citations; no BibTeX warnings; no overfull boxes; 21 A4 pages; the pages with new tables and
-paragraphs were rendered and inspected. PDF metadata contains only title, author, keywords and producer.
+## arXiv package
+
+```bash
+bash paper/arxiv/make_arxiv_package.sh <output dir>
+```
+
+builds `rewardfail-arxiv-source.tar.gz` (`main.tex`, `main.bbl`, `refs.bib`) and test-compiles it from a clean
+directory with pdfLaTeX and the shipped `.bbl`, as arXiv does. The committed package and PDF
+(`paper/rewardfail-preprint-2026-11-03.pdf`, 23 pages) were checked as recorded in `VALIDATION_FINAL_2026-11-03.md`.
+Earlier builds are kept in `paper/superseded/`.

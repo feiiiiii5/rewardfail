@@ -1,0 +1,181 @@
+{
+ "checks": 30,
+ "failed": [],
+ "all": [
+  {
+   "claim": "main n",
+   "expect_in_tex": "93,733",
+   "source_value": 93733,
+   "pass": true
+  },
+  {
+   "claim": "Table default: score 1",
+   "expect_in_tex": "61,246",
+   "source_value": 61246,
+   "pass": true
+  },
+  {
+   "claim": "Table default: normal 0",
+   "expect_in_tex": "32,442",
+   "source_value": 32442,
+   "pass": true
+  },
+  {
+   "claim": "54 library-event rows",
+   "expect_in_tex": "54 library-event rows",
+   "source_value": 54,
+   "pass": true
+  },
+  {
+   "claim": "k = 1 (formal)",
+   "expect_in_tex": "$k=1$",
+   "source_value": 1,
+   "pass": true
+  },
+  {
+   "claim": "u = 18 (formal)",
+   "expect_in_tex": "$u=18$",
+   "source_value": 18,
+   "pass": true
+  },
+  {
+   "claim": "uncorrected u",
+   "expect_in_tex": "9{,}573",
+   "source_value": 9573,
+   "pass": true
+  },
+  {
+   "claim": "guard-stopped (uncorrected) 9,559",
+   "expect_in_tex": "9,559",
+   "source_value": 9559,
+   "pass": true
+  },
+  {
+   "claim": "reclassified all rows",
+   "expect_in_tex": "9,866",
+   "source_value": 9866,
+   "pass": true
+  },
+  {
+   "claim": "reclassified non-warm-up",
+   "expect_in_tex": "9,863",
+   "source_value": 9863,
+   "pass": true
+  },
+  {
+   "claim": "originally guard-stopped all rows",
+   "expect_in_tex": "9,868",
+   "source_value": 9868,
+   "pass": true
+  },
+  {
+   "claim": "originally guard-stopped non-warm-up",
+   "expect_in_tex": "9,864",
+   "source_value": 9864,
+   "pass": true
+  },
+  {
+   "claim": "reference rows",
+   "expect_in_tex": "33,487",
+   "source_value": 33487,
+   "pass": true
+  },
+  {
+   "claim": "193,767 answers",
+   "expect_in_tex": "193,767",
+   "source_value": 193767,
+   "pass": true
+  },
+  {
+   "claim": "92,287 eligible",
+   "expect_in_tex": "92,287",
+   "source_value": 92287,
+   "pass": true
+  },
+  {
+   "claim": "103 pairs / 84 both",
+   "expect_in_tex": "There are 103 such pairs, of which 84",
+   "source_value": [
+    103,
+    84
+   ],
+   "pass": true
+  },
+  {
+   "claim": "21 distinct questions",
+   "expect_in_tex": "21 distinct questions",
+   "source_value": null,
+   "pass": true
+  },
+  {
+   "claim": "E3 trials",
+   "expect_in_tex": "22,176",
+   "source_value": 22176,
+   "pass": true
+  },
+  {
+   "claim": "E3 all scores equal historical",
+   "pass": true
+  },
+  {
+   "claim": "21 fixtures",
+   "expect_in_tex": "Twenty-one",
+   "source_value": 21,
+   "pass": true
+  },
+  {
+   "claim": "fixtures: 16 omitted / 3 exceptions",
+   "pass": true
+  },
+  {
+   "claim": "heavy diagnostic naive scenes did not abort (4 runs)",
+   "pass": true
+  },
+  {
+   "claim": "72 complete groups",
+   "expect_in_tex": "72 groups",
+   "source_value": 72,
+   "pass": true
+  },
+  {
+   "claim": "26 constant groups",
+   "expect_in_tex": "26 groups are constant",
+   "source_value": 26,
+   "pass": true
+  },
+  {
+   "claim": "Table policies M1 0.05 P0 disagree",
+   "expect_in_tex": "57.9",
+   "source_value": 57.9,
+   "pass": true
+  },
+  {
+   "claim": "Table policies M1 0.05 P2 disagree",
+   "expect_in_tex": "5.0",
+   "source_value": 5.0,
+   "pass": true
+  },
+  {
+   "claim": "Table policies M1 0.25 P2 no signal",
+   "expect_in_tex": "4.44",
+   "source_value": 4.44,
+   "pass": true
+  },
+  {
+   "claim": "Table policies M3 0.25 no signal",
+   "expect_in_tex": "11.49",
+   "source_value": 11.49,
+   "pass": true
+  },
+  {
+   "claim": "verl cross-check",
+   "expect_in_tex": "2.9\\times10^{-7}",
+   "source_value": 2.9014589397746704e-07,
+   "pass": true
+  },
+  {
+   "claim": "pooled endpoints 2/n and 34/n",
+   "pass": true
+  }
+ ]
+}

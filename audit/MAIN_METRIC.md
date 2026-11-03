@@ -1,8 +1,9 @@
 # Main measurement (n = 93,733): what is verified, and what each next step needs
 
 Recomputed 2026-11-03 with `audit/scripts/recount_main_prefix.py` (standard library, read-only), which imports
-the companion's frozen `rewardfail/s2/report.py` unchanged. Historical output: `audit/results/main_prefix_recount.json` (retained unchanged).
-Population-scoped rerun: `audit/results/main_prefix_recount_scoped.json`.
+the companion's frozen `rewardfail/s2/report.py` unchanged. Current output: `audit/results/main_prefix_recount.json`
+(re-run 2026-11-03 after the population-scope fix; tests in `audit/results/main_prefix_recount_tests.txt`).
+The first output, whose mixed-scope field read `false`, is kept at `audit/results/superseded/main_prefix_recount_9a2fdd5.json`.
 
 ## Four kinds of evidence (do not mix them)
 
@@ -83,9 +84,15 @@ This is the ~2 GB tree; it is not needed for ① or ②.
 ## Population-scope regression checks
 
 The recount now preserves warm-up classes and compares like populations. The
-historical JSON and its `aggregate_reconciliation_matches_formal: false` remain
-unchanged for traceability; the rerun retains that field and explicitly labels
-its incompatible population scopes. The new nested reconciliation checks the
+first output and its `aggregate_reconciliation_matches_formal: false` are kept
+under `audit/results/superseded/`; that comparison subtracted all-row transitions
+(including 3 warm-up rows) from non-warm-up starting counts, so `false` was a
+scope error, not a data mismatch. The current output replaces the field with
+`legacy_mixed_scope_check` (`matches: false`, `expected: false`, with the reason).
+
+Counts to keep apart: rows *originally marked* guard-stopped = 9,868 all rows /
+9,864 non-warm-up; rows *reclassified* by the correction = 9,866 all rows / 9,863
+non-warm-up; rows still guard-stopped after correction = 2 all rows / 1 non-warm-up. The new nested reconciliation checks the
 observed all-row pre-correction counts against the diagnostic report, applies
 reported all-row transitions, and compares with the diagnostic report totals.
 It explicitly reports corrected row-level reconstruction as false.
@@ -97,7 +104,7 @@ are from the unchanged formal report. None of these aggregate checks verifies
 `u = 18` independently of that report.
 
 ```bash
-python3 -I -B audit/scripts/recount_main_prefix.py <author-inputs> <companion> > /tmp/main_prefix_recount_scoped.json
+python3 -I -B audit/scripts/recount_main_prefix.py <author-inputs> <companion> > audit/results/main_prefix_recount.json
 python3 -I -B audit/scripts/test_recount_main_prefix.py
 ```
 

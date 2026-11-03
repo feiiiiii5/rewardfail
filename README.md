@@ -75,6 +75,13 @@ The note also distinguishes reference-protocol unresolved rows from all library
 execution failures and lists the evidence still needed. No training benefit or
 fresh-machine replication has been added.
 
+## Preprint package (3 November 2026, awaiting author review)
+
+- PDF: [`paper/rewardfail-preprint-2026-11-03.pdf`](paper/rewardfail-preprint-2026-11-03.pdf) (23 pages)
+- arXiv source: [`paper/arxiv/rewardfail-arxiv-source.tar.gz`](paper/arxiv/rewardfail-arxiv-source.tar.gz)
+- Validation: [`paper/VALIDATION_FINAL_2026-11-03.md`](paper/VALIDATION_FINAL_2026-11-03.md);
+  author decisions before submission: [`paper/SUBMISSION_CHECKLIST.md`](paper/SUBMISSION_CHECKLIST.md)
+
 ## Evidence audit and editable revision (3 November 2026, awaiting author review)
 
 This branch adds, without changing `paper.pdf` or the companion archive:

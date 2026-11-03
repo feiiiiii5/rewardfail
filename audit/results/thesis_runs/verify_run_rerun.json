@@ -103,5 +103,15 @@
  "vacuous_checks": [
   "rewardfail workspace unchanged except new driver",
   "pinned third_party clean"
- ]
+ ],
+ "accounting": {
+  "total": 249,
+  "substantive_pass": 223,
+  "vacuous_pass": 2,
+  "fail": 24,
+  "vacuous": "'rewardfail workspace unchanged except new driver' and 'pinned third_party clean' run git status on directories that do not exist in the re-run environment; git returns empty output, so they pass without testing anything",
+  "fail_cause": "all 24 are 'imported verl/reward_loop under intended copy' checks. They compare the recorded import path with ROOT/thesis-runs/... of the machine running verify_run.py. Two independent causes act together: the recorded absolute prefix was replaced by <WORKSPACE> during redaction, and the re-run uses a different ROOT (relocation). Inspection shows every recorded path names the intended copy (verl-pr8015-unionfill for C*, verl-pr8015-original for O*), but the original absolute path cannot be checked. Missing files are not a cause of these failures.",
+  "missing_file_effect": "thesis_chain.py is not read by any check; its absence means the ~200 checks that re-read driver-written case.json fields cannot be audited against the driver code. One substantive pass ('original copy reward_loop hash') depends on the reconstructed public verl file supplied in the re-run; one ('unionfill copy AST hash') reads a driver-reported preflight flag.",
+  "independent_cross_check": "scores, error-bearing rows and injection ledgers were re-derived from export/1.jsonl and ledger.jsonl without driver flags (chain_rederive_from_exports.json): all claims confirmed except O6's raise site, which only the driver recorded"
+ }
 }

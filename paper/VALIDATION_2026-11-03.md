@@ -1,3 +1,5 @@
+> Superseded by `VALIDATION_FINAL_2026-11-03.md`; this record describes the intermediate 21-page build now at `paper/superseded/main-preprint-review-2026-11-03.pdf`.
+
 # Integrated manuscript validation
 
 Based on PR #1 `9a2fdd56c5844f3f01d285b5e70f98153fc22a12`, with the independent

@@ -4,7 +4,8 @@
   "<author-inputs>/main-run/reference/rows.jsonl": "f753d64b2dd4a1cb4347830292a5a06888b8c0e7337444ee2d2bdd5652646e94",
   "<companion>/rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
   "<companion>/rewardfail/s2/analyze.py": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
-  "<author-inputs>/reanalysis/s2_main/report.json": "db22d23468f1e2deeddc9d54fca75c0842a904967cfa040b14cbecbbcc5145d4"
+  "<author-inputs>/reanalysis/s2_main/report.json": "db22d23468f1e2deeddc9d54fca75c0842a904967cfa040b14cbecbbcc5145d4",
+  "<author-inputs>/reanalysis/budget_attribution_diag.json": "1945f51c8ebaa274cb156c526129a2d178d0745973c3c4d1b0811c026b853b22"
  },
  "counts": {
   "default_rows": 93733,
@@ -79,7 +80,53 @@
   "本机预算终止（未裁定） → 0 分：比较出错": 3,
   "本机预算终止（未裁定） → 0 分：回答侧解析出错": 1
  },
- "aggregate_reconciliation_matches_formal": false,
+ "legacy_mixed_scope_check": {
+  "matches": false,
+  "expected": false,
+  "why": "non-warm-up starting counts minus all-row transitions (incl. 3 warm-up rows) cannot equal non-warm-up formal totals; not evidence of a mismatch"
+ },
+ "reference_aggregate_reconciliation": {
+  "evidence_level": "raw pre-correction counts plus reported aggregate transitions; not corrected per-row reconstruction",
+  "pre_correction_warmup_classes": {
+   "1 分": 3,
+   "本机预算终止（未裁定）": 4
+  },
+  "pre_correction_all_row_classes": {
+   "正常 0": 22901,
+   "1 分": 699,
+   "0 分：比较超时": 11,
+   "0 分：比较出错": 9,
+   "0 分：回答侧解析出错": 3,
+   "0 分：标准答案侧解析超时": 1,
+   "未裁定（中断两次）": 2,
+   "本机预算终止（未裁定）": 9868
+  },
+  "pre_correction_all_rows_match_diagnostic_report": true,
+  "reported_changes_match_diagnostic_report": true,
+  "reconciled_all_row_classes": {
+   "正常 0": 32452,
+   "1 分": 1007,
+   "0 分：比较超时": 14,
+   "0 分：比较出错": 12,
+   "0 分：回答侧解析出错": 4,
+   "0 分：标准答案侧解析超时": 1,
+   "未裁定（中断两次）": 2,
+   "本机预算终止（未裁定）": 2
+  },
+  "all_row_reconciliation_matches_diagnostic_report": true,
+  "reported_all_rows_minus_formal_nonwarm_classes": {
+   "1 分": 6,
+   "本机预算终止（未裁定）": 1
+  },
+  "residual_is_nonnegative_and_has_warmup_count": true,
+  "corrected_warmup_classes_independently_reconstructed": false,
+  "corrected_nonwarm_classes_independently_reconstructed": false
+ },
+ "reported_reference_rows_reclassified": {
+  "all_rows": 9866,
+  "nonwarm_rows": 9863,
+  "warm_rows": 3
+ },
  "uncorrected_budget_killed_reference_rows": 9864,
  "budget_rows_by_default_class": {
   "正常 0": 9546,

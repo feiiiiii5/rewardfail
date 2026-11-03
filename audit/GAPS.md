@@ -16,7 +16,7 @@ Ordered by how much they limit the claims. Paths are relative to the original ru
 | G9 | Diagnostic heavy-input abort on Linux | **tested, not reproduced** with substitute controls (0/4) | the abort is timing-dependent; whether it occurs with the paper's 8 dataset controls on Linux is unknown | the 8 dataset control texts of the E1 eight-row matrix (ids, `gt`, `out`), e.g. from `e1-eight-20261008-codex/specs.json` |
 | G10 | arXiv and docs sites not reachable from this environment | open | arXiv citations not re-verified here (author's 2 Nov URL audit exists) | access to `arxiv.org` or the author's check |
 | G11 | Full trainer never run | open | consumer findings rely on the real `_validate` with stub infrastructure | a small CPU/GPU PPO run with ≥ 2 validation batches and an injected sparse key |
-| G12 | Exclusion policy and training effect | open by design | no learning claim; flagged rows still enter statistics as zero | a defined policy and a controlled comparison (see offline-first plan) |
+| G12 | Exclusion policy and training effect | advantage-level comparison done offline on 72 labelled groups (§8.2); training effect open by design | no learning claim; flagged rows still enter statistics as zero | a defined policy and a controlled comparison (see offline-first plan) |
 | G13 | `naive` manager aborts on persistent worker death | open upstream | flag contract applies only with `rate_limited` | upstream decision |
 | G14 | Missing vs explicit `None` collapse | open | consumers cannot tell "no flag" from "flag = None" | presence mask or typed sentinel, if needed |
 | G15 | Validation misalignment not reported upstream | open (author's decision) | patch `0002` exists only here | an upstream issue/PR by the author |

@@ -130,10 +130,15 @@ def main():
     unc = Counter(rcls.values())
     changes = formal["reanalysis"]["class_changes_by_pass"]["reference"]
     rec = apply_changes(unc, changes)
-    # Historical field retained: this deliberately mixes all-row changes with
-    # non-warm-up starting counts and is false. The scoped check follows.
-    out["aggregate_reconciliation_matches_formal"] = rec == formal["reference_classes"]
-    out["aggregate_reconciliation_scope"] = "nonwarm starting counts versus all-row transitions; intentionally incompatible scopes"
+    # A first version (output kept in audit/results/superseded/) compared non-warm-up starting
+    # counts with all-row transitions and reported "false". That comparison mixes populations; it
+    # is kept only as a labelled diagnostic. The population-consistent result is
+    # reference_aggregate_reconciliation below.
+    out["legacy_mixed_scope_check"] = {
+        "matches": rec == formal["reference_classes"],
+        "expected": False,
+        "why": "non-warm-up starting counts minus all-row transitions (incl. 3 warm-up rows) cannot equal non-warm-up formal totals; not evidence of a mismatch",
+    }
     out["reference_aggregate_reconciliation"] = reconcile_reference(
         unc, rwarm, changes, diagnostic, formal["reference_classes"])
     out["reported_reference_rows_reclassified"] = {

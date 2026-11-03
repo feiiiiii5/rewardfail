@@ -62,3 +62,12 @@ Linux abort reproduction without turning the discrepancy into a causal finding.
 No experiment output, historical count, raw input or scoring code was altered.
 No original remote branch was modified during this writing pass; any publication
 uses a separate integration branch.
+
+## Status after integration (third pass, 2026-11-03)
+
+- This patch was integrated by fast-forward into `claude/trusting-mccarthy-du7c3t` (commit `06688da`), then extended.
+- Gate 5 is done: the combined source was rebuilt (23 pages), the bibliography regenerated, every page inspected, and
+  30 manuscript numbers checked against the result files (`VALIDATION_FINAL_2026-11-03.md`).
+- The "Changed GRPO advantages" row now also has an offline comparison on 72 complete human-labelled groups (§8.2,
+  `audit/results/offline_policy/`); it still says nothing about gradients, trajectories or performance.
+- Gates 1, 2 and 4 remain open (`SUBMISSION_CHECKLIST.md`).

@@ -54,11 +54,15 @@ class ReconciliationTests(unittest.TestCase):
 
     def test_committed_recount_population_regression(self):
         root = Path(__file__).resolve().parents[1] / 'results'
-        historical = json.loads((root / 'main_prefix_recount.json').read_text())
-        revised = json.loads((root / 'main_prefix_recount_scoped.json').read_text())
+        historical = json.loads((root / 'superseded' / 'main_prefix_recount_9a2fdd5.json').read_text())
+        revised = json.loads((root / 'main_prefix_recount.json').read_text())
         for key, value in historical.items():
-            if key != 'inputs_sha256':
+            if key == 'aggregate_reconciliation_matches_formal':
+                self.assertEqual(revised['legacy_mixed_scope_check']['matches'], value)
+                self.assertFalse(revised['legacy_mixed_scope_check']['expected'])
+            elif key != 'inputs_sha256':
                 self.assertEqual(revised[key], value, key)
+        self.assertNotIn('aggregate_reconciliation_matches_formal', revised)
         self.assertEqual(revised['uncorrected_budget_killed_reference_rows'], 9864)
         self.assertEqual(revised['reported_reference_rows_reclassified'], {'all_rows': 9866, 'nonwarm_rows': 9863, 'warm_rows': 3})
         result = revised['reference_aggregate_reconciliation']
