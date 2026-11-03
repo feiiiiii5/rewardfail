@@ -71,3 +71,10 @@ uses a separate integration branch.
 - The "Changed GRPO advantages" row now also has an offline comparison on 72 complete human-labelled groups (§8.2,
   `audit/results/offline_policy/`); it still says nothing about gradients, trajectories or performance.
 - Gates 1, 2 and 4 remain open (`SUBMISSION_CHECKLIST.md`).
+
+## Status after the fourth pass
+
+The independent review's four points (abstract overclaim, string-only checker, two table cells, evaluation sets and
+the 500-draw share) are addressed as listed in `VALIDATION_FINAL_2026-11-03.md`. The independent review's revised
+`dot` commit was not available on the remote at the time of this pass (branch still at `06688da`); the fixes were
+implemented independently and should be compared with it when it is pushed.

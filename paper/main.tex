@@ -70,10 +70,12 @@ as unresolved widens it to one to thirty-five. A 22,176-trial replay of
 human-labelled extracted answers reproduces every historical score on
 Linux. Natural heavy inputs caused a shared-pool batch abort on the original
 host under relaxed diagnostic limits; a Linux run with substitute controls
-did not abort. On 72 complete human-labelled response groups, synthetic
-failures show that zero-filling gives every failed correct answer a negative
-advantage, masking only the loss still shifts its siblings' baselines, and
-excluding failed rows trades these distortions for groups without signal.
+did not abort. On 72 complete human-labelled response groups with synthetic
+failures, zero-filling gives a failed correct answer a negative advantage
+whenever a correct sibling survives (and zero otherwise); masking only the
+loss leaves the failed zero in its siblings' baseline; and excluding failed
+rows from the group statistics avoids that distortion but removes signal from
+more groups and shrinks the loss.
 The results argue for testing failure information at the wrapper, assembly
 and consumer boundaries. They estimate neither training-time incidence nor
 a learning effect, and longer verification limits are not ground truth.
@@ -172,8 +174,9 @@ added value is the composed trace and the measurements.
 \item \textbf{An offline comparison of handling policies on real groups.}
   On 72 complete human-labelled groups and verl's own estimator, we quantify
   how zero-filling, loss-only masking and exclusion from group statistics
-  distort advantages under independent, correctness-correlated and
-  whole-group synthetic failures (\S\ref{sec:update}). The policies
+  change advantages, which rows they retain and how much signal they discard
+  under independent, correctness-correlated and whole-group synthetic
+  failures (\S\ref{sec:update}). The policies
   themselves already exist in other frameworks; the comparison is a
   mechanism analysis, not a training result.
 \end{enumerate}
@@ -1271,58 +1274,83 @@ convention of mean~0 and std~1 for a single score.
 \begin{table}[h]
 \centering
 \caption{Offline handling-policy comparison on 72 labelled groups (576
-responses), means over 2,000 synthetic failure draws (Monte Carlo standard
-errors at most 0.7). Disagree: loss-contributing responses
-whose advantage sign differs from the clean advantage. Neg.\,correct:
-label-1 responses with a negative advantage in the loss. No signal: of the 46
-clean non-constant groups, those left with no non-zero loss-contributing
-advantage. Not a training result.}
+responses); means per draw over 2,000 synthetic failure draws (Monte Carlo
+standard errors at most 0.7). \emph{Own disagree}: responses in the policy's
+own loss whose advantage sign (negative, zero or positive) differs from the
+clean advantage; the evaluated rows differ between policies. The next three
+columns use one common set for all policies, the responses that did not fail
+(as many rows as P1/P2's loss): \emph{0$\to$nz} and \emph{nz$\to$0} count
+clean advantages that change from zero to non-zero and from non-zero to zero,
+and $|\Delta A|$ is the mean absolute advantage error. No surviving response
+changes sign between positive and negative under any policy. \emph{Neg.\,correct}:
+label-1 responses with a negative advantage in the loss. \emph{No signal}: of
+the 46 clean non-constant groups, those with no non-zero advantage left in the
+loss. Not a training result.}
 \label{tab:policies}
-\small
-\begin{tabular}{@{}llrrrrr@{}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllrrrrrrr@{}}
 \toprule
-Failure & $p$ & Policy & Loss rows & Disagree & Neg.\,correct & No signal \\
+ & & & & Own & \multicolumn{3}{c}{Common set (not failed)} & Neg. & No \\
+\cmidrule(lr){6-8}
+Failure & $p$ & Policy & Loss rows & disagree & 0$\to$nz & nz$\to$0 & $|\Delta A|$ & correct & signal \\
 \midrule
-M1 independent & 0.05 & P0 & 576.0 & 57.9 & 17.2 & 0.19 \\
- & & P1 & 547.2 & 40.4 & 0 & 0.19 \\
- & & P2 & 547.2 & 5.0 & 0 & 0.75 \\
- & 0.25 & P0 & 576.0 & 183.7 & 85.5 & 1.26 \\
- & & P1 & 432.2 & 94.3 & 0 & 1.26 \\
- & & P2 & 432.2 & 22.5 & 0 & 4.44 \\
+%% BEGIN GENERATED: policy table rows (audit/scripts/make_policy_table.py)
+M1 independent & 0.05 & P0 & 576.0 & 57.9 & 39.1 & 1.2 & 0.060 & 17.2 & 0.19 \\
+ &  & P1 & 547.2 & 40.4 & 39.1 & 1.2 & 0.060 & 0 & 0.19 \\
+ &  & P2 & 547.2 & 5.0 & 0 & 5.0 & 0.024 & 0 & 0.75 \\
+ & 0.25 & P0 & 576.0 & 183.6 & 88.0 & 6.3 & 0.275 & 85.5 & 1.26 \\
+ &  & P1 & 432.2 & 94.3 & 88.0 & 6.3 & 0.275 & 0 & 1.26 \\
+ &  & P2 & 432.2 & 22.5 & 0 & 22.5 & 0.098 & 0 & 4.44 \\
 \addlinespace
-M2 correct only & 0.05 & P0 & 576.0 & 57.7 & 17.2 & 0.21 \\
- & & P1 & 558.6 & 40.3 & 0 & 0.21 \\
- & & P2 & 558.6 & 1.5 & 0 & 0.21 \\
- & 0.25 & P0 & 576.0 & 184.2 & 85.6 & 1.29 \\
- & & P1 & 488.6 & 96.8 & 0 & 1.29 \\
- & & P2 & 488.6 & 8.6 & 0 & 1.29 \\
+M2 correct only & 0.05 & P0 & 576.0 & 57.7 & 38.9 & 1.4 & 0.060 & 17.2 & 0.21 \\
+ &  & P1 & 558.6 & 40.3 & 38.9 & 1.4 & 0.060 & 0 & 0.21 \\
+ &  & P2 & 558.6 & 1.4 & 0 & 1.4 & 0.013 & 0 & 0.21 \\
+ & 0.25 & P0 & 576.0 & 184.2 & 88.3 & 8.5 & 0.264 & 85.6 & 1.29 \\
+ &  & P1 & 488.6 & 96.8 & 88.3 & 8.5 & 0.264 & 0 & 1.29 \\
+ &  & P2 & 488.6 & 8.6 & 0 & 8.5 & 0.076 & 0 & 1.29 \\
 \addlinespace
-M3 whole group & 0.05 & P0 & 576.0 & 18.2 & 0 & 2.28 \\
- & & P1, P2 & 547.2 & 0 & 0 & 2.28 \\
- & 0.25 & P0 & 576.0 & 92.0 & 0 & 11.49 \\
- & & P1, P2 & 432.1 & 0 & 0 & 11.49 \\
+M3 whole group & 0.05 & P0 & 576.0 & 18.2 & 0 & 0 & 0 & 0 & 2.28 \\
+ &  & P1 & 547.2 & 0 & 0 & 0 & 0 & 0 & 2.28 \\
+ &  & P2 & 547.2 & 0 & 0 & 0 & 0 & 0 & 2.28 \\
+ & 0.25 & P0 & 576.0 & 92.0 & 0 & 0 & 0 & 0 & 11.49 \\
+ &  & P1 & 432.1 & 0 & 0 & 0 & 0 & 0 & 11.49 \\
+ &  & P2 & 432.1 & 0 & 0 & 0 & 0 & 0 & 11.49 \\
+%% END GENERATED: policy table rows
 \bottomrule
 \end{tabular}
 \end{table}
 
-Three patterns follow (Table~\ref{tab:policies}). First, zero-filling gives
-almost every failed correct response a negative advantage, so the error is
-largest exactly when failures hide correct answers. Second, removing the
-failed row only from the loss removes that negative advantage but keeps its
-zero in the baseline: siblings' advantages remain shifted, and in
-all-correct groups a single failure creates positive advantages where the
-clean group had none; 91--96\% of P1's remaining disagreements occur in
-groups that were constant before failure. Third, excluding failed rows from the statistics removes most
-disagreements but leaves more groups with no signal when failures are
-independent (removing the only correct or only wrong answer makes a group
-constant) and reduces the loss denominator; with exactly one surviving
-response verl's convention assigns it its raw score as advantage, which
-occurred in at most 0.03 groups per draw. For whole-group failures the
-policies agree on rewards but differ in whether the failed group still
-counts in the loss denominator. None of these quantities is a gradient or a
-training outcome: clipping, token weighting and optimiser state are absent,
-the 72 groups are a stratified selection, and the failures are injected.
-Which policy helps learning remains an empirical question.
+Table~\ref{tab:policies} separates three effects. First, under zero-filling a
+failed correct response receives a negative advantage exactly when another
+correct response in its group did not fail; if every correct response in the
+group failed, all observed rewards are zero and so are the advantages. An
+exhaustive enumeration over all label and failure patterns of an
+eight-response group confirms this condition, and in the per-response
+settings (M1, M2) it holds for 98--99\% of failed correct responses. Under
+whole-group failure (M3) no correct response receives a negative advantage;
+the group simply loses its signal. Second, on the responses that survive,
+which form the same set for every policy, zero-filling and loss-only masking
+are identical: the zero stays in the baseline. Neither flips a positive
+advantage to a negative one or vice versa; their disagreements are clean
+zeros that become non-zero (91--97\% of P1's disagreements on the same draws;
+with binary rewards such zeros exist only in groups that were all-correct or
+all-wrong before failure) and,
+less often, non-zero advantages that become zero. Third, excluding failed rows
+from the statistics creates essentially no new signal (at most 0.007 such
+changes per draw) and has the smallest mean advantage error on the common
+set, but it zeroes more surviving advantages when failures are independent
+(5.0 versus 1.2 per draw at $p=0.05$), leaves more groups with no signal
+(4.44 versus 1.26 at $p=0.25$) and shrinks the loss denominator; with
+exactly one surviving response verl's convention assigns it its raw score as
+advantage, which occurred in at most 0.03 groups per draw. Smaller error on
+retained rows is therefore not by itself a better policy: the policies keep
+different rows and differ in how much signal they discard. For whole-group
+failures the policies agree on rewards and differ only in whether the failed
+group still counts in the loss denominator. None of these quantities is a
+gradient or a training outcome: clipping, token weighting and optimiser state
+are absent, the 72 groups are a stratified selection, and the failures are
+injected. Which policy helps learning remains an empirical question.
 
 %% ---------------------------------------------------------------------------
 \section{Implications for reward-pipeline design}
@@ -1528,8 +1556,9 @@ to an already reported reset interaction under relaxed diagnostic limits.
 These results support testing failures across the wrapper, manager,
 aggregation and consumer boundaries together. Once a failure is observable,
 the choice of handling policy matters at the advantage level: zero-filling
-penalises hidden correct answers, loss-only masking still shifts baselines,
-and exclusion trades distortion for lost groups. The results do not
+penalises a hidden correct answer whenever a correct sibling survives,
+loss-only masking still shifts the survivors' baselines, and exclusion avoids
+that shift at the cost of retained rows and of signal in more groups. The results do not
 establish training incidence or a learning benefit from any of these
 policies.
 

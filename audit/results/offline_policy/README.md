@@ -52,3 +52,28 @@ non-zero loss-contributing advantage; mean absolute advantage error over loss-co
 
 Reading: advantages are not gradients, the 72 groups are a stratified selection, failures are injected, and none
 of these numbers is a training outcome or a natural failure rate.
+
+## Supplement (same draws) and corrections, 2026-11-03
+
+`supplement.json` (from `audit/experiments/offline_policy/supplement.py`) re-derives the main run's per-draw means
+on the same seed and streams and checks them for exact equality with `results.json` (0 mismatches), then adds:
+
+* a **common evaluation set** (responses that did not fail; identical across policies). The main-run metrics
+  above use each policy's own loss rows, which differ between policies, so their sizes are not directly
+  comparable. On the common set no surviving response ever changes sign between positive and negative under
+  any policy; P0 and P1 are identical there;
+* a decomposition of disagreements into flips, zero→non-zero and non-zero→zero. "Sign disagreement" in the main
+  table therefore includes zero→non-zero and non-zero→zero changes, not only flips; the only flips are P0's
+  failed rows;
+* an **exhaustive enumeration** over all 2^8 label × 2^8 failure patterns (131,072 failed-correct cases):
+  under P0 a failed correct response has a negative advantage iff a non-failed correct response remains in its
+  group, otherwise 0 (0 violations). So "every failed correct answer gets a negative advantage" is false; in
+  M1/M2 it holds for 98–99% of failed correct responses, and for none under M3.
+
+`p1_breakdown.json` is an earlier, separate 500-draw sample (seed 1) giving 91–96% for the share of P1
+disagreements in clean-constant groups. The manuscript now cites the same-draw decomposition (91–97%) instead.
+
+The manuscript table is generated from these files by `audit/scripts/make_policy_table.py`. Two cells printed in
+the previous version were wrong by double rounding (M1, p = 0.25, P0 disagreement 183.646 printed 183.7; M2,
+p = 0.05, P2 1.447 printed 1.5); both are now 183.6 and 1.4, and `audit/scripts/check_paper_numbers.py`
+compares every cell with its source value.

@@ -71,3 +71,13 @@ characterisations (`LITERATURE_CHECK.md`). Changes in this pass:
 | §9, §11, §12 | policy analysis connected to implications; limitation of the 72-group selection; conclusion | – |
 | Appendix A | fifth evidence level (offline); repository URL; Linux memory-helper port mentioned | – |
 | `main.bbl` | regenerated | – |
+
+## Fourth pass (submission candidate, 2026-11-03)
+
+| Location | Change | Evidence |
+|---|---|---|
+| Abstract | zero-fill claim restricted to "whenever a correct sibling survives (and zero otherwise)"; exclusion described by what it keeps and discards, not as better | `supplement.json` enumeration |
+| §1 contribution 4 | names retained rows and discarded signal | – |
+| §8.2, Table 10 | table generated from result files (`make_policy_table.py`); two corrected cells (183.6, 1.4); new common-set columns (0→nz, nz→0, mean abs error) and caption explaining that "own disagree" uses each policy's own rows and includes zero changes; text: exact condition and M1/M2 scope (98–99%), M3 separately, no sign flips among survivors, same-draw 91–97% share, exclusion's costs | `audit/results/offline_policy/` |
+| §12 | conclusion qualified the same way | – |
+| `main.bbl` | regenerated | – |

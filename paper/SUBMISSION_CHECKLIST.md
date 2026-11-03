@@ -24,6 +24,8 @@ technical checks:
    (`LITERATURE_CHECK.md`); this environment could not reach arXiv to repeat it. GitHub and pinned-commit references
    were checked here (`CHANGES.md`). Spot-check any you rely on heavily.
 9. **Offline policy analysis.** New in this version (§8.2). It uses the public MIT-licensed label CSV and synthetic
-   failures; confirm you are comfortable presenting it as a mechanism analysis, not a training result.
+   failures; confirm you are comfortable presenting it as a mechanism analysis, not a training result. Its
+   numbers are now generated from and checked against the result files; your independent re-run of the 2,000-draw
+   statistics matched, and the real-verl estimator cross-check was run in this environment.
 10. **Thesis consistency.** The Chinese thesis has known mismatches with these results (`audit/THESIS_REVIEW.md`);
     keep the two documents consistent in numbers and in what each claims.
