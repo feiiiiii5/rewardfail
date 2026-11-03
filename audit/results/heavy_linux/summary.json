@@ -1,0 +1,1003 @@
+[
+ {
+  "scene": "S1",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 30.07,
+  "intervention": null,
+  "max_scene_rss_bytes": 3128958976,
+  "min_mem_available_bytes": 14416883712,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S2",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 27.05,
+  "intervention": null,
+  "max_scene_rss_bytes": 3915812864,
+  "min_mem_available_bytes": 13508059136,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0.0,
+     0.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S3",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 28.54,
+  "intervention": null,
+  "max_scene_rss_bytes": 1905106944,
+  "min_mem_available_bytes": 15007629312,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0.0,
+     0.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S4",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 14.02,
+  "intervention": null,
+  "max_scene_rss_bytes": 1273556992,
+  "min_mem_available_bytes": 14750838784,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0.0,
+     0.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S5a",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 48.56,
+  "intervention": null,
+  "max_scene_rss_bytes": 3894149120,
+  "min_mem_available_bytes": 10722021376,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0,
+     0,
+     0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S5b",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 48.56,
+  "intervention": null,
+  "max_scene_rss_bytes": 3899236352,
+  "min_mem_available_bytes": 10307760128,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0,
+     0,
+     0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S5c",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 48.06,
+  "intervention": null,
+  "max_scene_rss_bytes": 3899715584,
+  "min_mem_available_bytes": 10288275456,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0,
+     0,
+     0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S6",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 108.13,
+  "intervention": null,
+  "max_scene_rss_bytes": 3372224512,
+  "min_mem_available_bytes": 13536448512,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0,
+     0,
+     0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S7",
+  "tree": "verl-pr8015",
+  "exit": 0,
+  "wall": 13.02,
+  "intervention": null,
+  "max_scene_rss_bytes": 1918803968,
+  "min_mem_available_bytes": 15103287296,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S2f",
+  "tree": "verl-fixed",
+  "exit": 0,
+  "wall": 24.03,
+  "intervention": null,
+  "max_scene_rss_bytes": 3908878336,
+  "min_mem_available_bytes": 13216231424,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0.0,
+     0.0,
+     0.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 0.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ },
+ {
+  "scene": "S5f",
+  "tree": "verl-fixed",
+  "exit": 0,
+  "wall": 48.09,
+  "intervention": null,
+  "max_scene_rss_bytes": 3978797056,
+  "min_mem_available_bytes": 10012893184,
+  "batches": [
+   {
+    "name": "test",
+    "scores": [
+     0,
+     0,
+     0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   },
+   {
+    "name": "following",
+    "scores": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "extras": [
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     },
+     {
+      "acc": 1.0
+     }
+    ],
+    "exception": null
+   }
+  ]
+ }
+]

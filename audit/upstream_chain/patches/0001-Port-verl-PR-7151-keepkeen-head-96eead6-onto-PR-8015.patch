@@ -1,0 +1,689 @@
+From 5e44a39d5e77c136c8f995583bfae9ba378e9bb4 Mon Sep 17 00:00:00 2001
+From: audit <audit@localhost>
+Date: Tue, 3 Nov 2026 08:09:14 +0000
+Subject: [PATCH 1/2] Port verl PR #7151 (keepkeen, head 96eead6) onto PR #8015
+ head 0c4c3d4
+
+Unmodified source hunks from https://github.com/verl-project/verl/pull/7151
+applied with git apply; one import-line conflict in a test resolved to the
+PR's version. No behavioural change beyond the PR.
+---
+ ...t_agent_loop_extra_fields_schema_on_cpu.py | 102 +++++++++++++++-
+ .../test_reward_extra_info_on_cpu.py          |  75 ++++++++++++
+ .../test_reward_extra_info_assembly_on_cpu.py | 115 ++++++++++++++++++
+ ...test_reward_extra_info_call_site_on_cpu.py |  93 ++++++++++++++
+ verl/experimental/agent_loop/agent_loop.py    |  63 +++++++---
+ .../fully_async_rollouter.py                  |   5 +-
+ verl/experimental/reward_loop/reward_loop.py  |   8 +-
+ verl/utils/reward_score/reward_extra_info.py  |  46 +++++++
+ 8 files changed, 483 insertions(+), 24 deletions(-)
+ create mode 100644 tests/experimental/fully_async_policy/test_reward_extra_info_on_cpu.py
+ create mode 100644 tests/experimental/reward_loop/test_reward_extra_info_assembly_on_cpu.py
+ create mode 100644 tests/experimental/reward_loop/test_reward_extra_info_call_site_on_cpu.py
+ create mode 100644 verl/utils/reward_score/reward_extra_info.py
+
+diff --git a/tests/experimental/agent_loop/test_agent_loop_extra_fields_schema_on_cpu.py b/tests/experimental/agent_loop/test_agent_loop_extra_fields_schema_on_cpu.py
+index 19bf2a8c..b641d537 100644
+--- a/tests/experimental/agent_loop/test_agent_loop_extra_fields_schema_on_cpu.py
++++ b/tests/experimental/agent_loop/test_agent_loop_extra_fields_schema_on_cpu.py
+@@ -23,7 +23,7 @@ import pytest
+ import torch
+ from omegaconf import OmegaConf
+ 
+-import verl.experimental.agent_loop.agent_loop as agent_loop_module
++from verl.experimental.agent_loop import agent_loop as agent_loop_module
+ from verl.experimental.agent_loop.agent_loop import (
+     AgentLoopMetrics,
+     AgentLoopOutput,
+@@ -226,6 +226,7 @@ def _to_internal(
+     num_turns: int,
+     prompt_len: int,
+     response_len: int,
++    reward_score: float | None = None,
+ ) -> _InternalAgentLoopOutput:
+     prompt_ids = _pad_1d(output_prompt_ids, length=prompt_len, pad_id=0)
+     response_ids = _pad_1d(output_response_ids, length=response_len, pad_id=0)
+@@ -254,7 +255,7 @@ def _to_internal(
+         routed_experts=None,
+         multi_modal_inputs=None,
+         multi_modal_data=None,
+-        reward_score=None,
++        reward_score=reward_score,
+         num_turns=num_turns,
+         metrics=metrics,
+         extra_fields=extra_fields,
+@@ -337,6 +338,7 @@ async def test_agent_loop_extra_fields_schema_stable_for_training_concat_on_cpu(
+         "min_global_steps",
+         "max_global_steps",
+         "extras",
++        "reward_extra_info",
+     )
+     for key in stable_keys:
+         assert key in merged.non_tensor_batch, f"missing key in merged batch: {key}"
+@@ -349,6 +351,102 @@ async def test_agent_loop_extra_fields_schema_stable_for_training_concat_on_cpu(
+     assert merged.non_tensor_batch["tool_rewards"][0] == []
+ 
+ 
++@pytest.mark.parametrize("rich_first", [True, False])
++def test_agent_loop_assembles_reward_extra_info_after_worker_concat(rich_first):
++    rich_info = {"score": 1.0, "acc": True, "pred": "42"}
++    poor_info = {"acc": 0.0}
++    infos = [rich_info, poor_info] if rich_first else [poor_info, rich_info]
++    dummy_worker = type(
++        "_DummyWorker",
++        (),
++        {"reward_loop_worker_handles": None, "distillation_enabled": False},
++    )()
++    worker_outputs = [
++        AgentLoopWorker._postprocess(
++            dummy_worker,
++            [
++                _to_internal(
++                    output_prompt_ids=[101],
++                    output_response_ids=[11],
++                    output_response_mask=[1],
++                    metrics=AgentLoopMetrics(),
++                    extra_fields={"reward_extra_info": info},
++                    num_turns=1,
++                    prompt_len=1,
++                    response_len=1,
++                    reward_score=info["acc"],
++                )
++            ],
++        )
++        for info in infos
++    ]
++
++    # Each worker carries the raw dict in one stable object column. Assembly before
++    # this point would leave worker chunks with incompatible flattened schemas.
++    for worker_output in worker_outputs:
++        assert "reward_extra_info" in worker_output.non_tensor_batch
++        assert "score" not in worker_output.non_tensor_batch
++
++    merged = agent_loop_module.DataProto.concat(worker_outputs)
++    prompts = agent_loop_module.DataProto(
++        batch=merged.batch.select(),
++        non_tensor_batch={"uid": np.array(["a", "b"], dtype=object)},
++    )
++    agent_loop_module._finalize_agent_loop_reward_extra_info(merged, prompts)
++
++    expected_keys = ["score", "acc", "pred"] if rich_first else ["acc", "score", "pred"]
++    assert merged.meta_info["reward_extra_keys"] == expected_keys
++    assert "reward_extra_info" not in merged.non_tensor_batch
++    assert merged.non_tensor_batch["score"].tolist() == ([1.0, None] if rich_first else [None, 1.0])
++    assert merged.non_tensor_batch["acc"].tolist() == ([1.0, 0.0] if rich_first else [0.0, 1.0])
++    assert merged.non_tensor_batch["pred"].tolist() == (["42", None] if rich_first else [None, "42"])
++    assert merged.non_tensor_batch["score"].dtype == object
++
++
++def test_agent_loop_rejects_reward_extra_info_key_collisions():
++    dummy_worker = type(
++        "_DummyWorker",
++        (),
++        {"reward_loop_worker_handles": None, "distillation_enabled": False},
++    )()
++    worker_output = AgentLoopWorker._postprocess(
++        dummy_worker,
++        [
++            _to_internal(
++                output_prompt_ids=[101],
++                output_response_ids=[11],
++                output_response_mask=[1],
++                metrics=AgentLoopMetrics(),
++                extra_fields={"reward_extra_info": {"turn_scores": 1.0}},
++                num_turns=1,
++                prompt_len=1,
++                response_len=1,
++                reward_score=1.0,
++            )
++        ],
++    )
++
++    with pytest.raises(ValueError, match="turn_scores"):
++        agent_loop_module._assemble_agent_loop_reward_extra_info(worker_output)
++
++
++def test_agent_loop_rejects_reward_key_colliding_with_source_field():
++    output = agent_loop_module.DataProto(
++        batch=agent_loop_module.TensorDict(
++            {"rm_scores": torch.zeros((1, 1), dtype=torch.float32)},
++            batch_size=1,
++        ),
++        non_tensor_batch={"reward_extra_info": np.array([{"uid": "shadow"}], dtype=object)},
++    )
++    prompts = agent_loop_module.DataProto(
++        batch=agent_loop_module.TensorDict({}, batch_size=1),
++        non_tensor_batch={"uid": np.array(["original"], dtype=object)},
++    )
++
++    with pytest.raises(ValueError, match="uid"):
++        agent_loop_module._finalize_agent_loop_reward_extra_info(output, prompts)
++
++
+ @pytest.mark.asyncio
+ async def test_agent_loop_postprocess_accepts_read_only_routed_experts_on_cpu():
+     class _DummyWorker:
+diff --git a/tests/experimental/fully_async_policy/test_reward_extra_info_on_cpu.py b/tests/experimental/fully_async_policy/test_reward_extra_info_on_cpu.py
+new file mode 100644
+index 00000000..55e2b252
+--- /dev/null
++++ b/tests/experimental/fully_async_policy/test_reward_extra_info_on_cpu.py
+@@ -0,0 +1,75 @@
++# Copyright 2026 Bytedance Ltd. and/or its affiliates
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++"""Regression coverage for fully-async reward metadata finalization."""
++
++import concurrent.futures
++
++import numpy as np
++import pytest
++import torch
++from tensordict import TensorDict
++
++from verl.experimental.fully_async_policy.fully_async_rollouter import FullyAsyncAgentLoopManager
++from verl.protocol import DataProto
++
++
++class _FakeObjectRef:
++    def __init__(self, output):
++        self.output = output
++
++    def future(self):
++        future = concurrent.futures.Future()
++        future.set_result(self.output)
++        return future
++
++
++class _FakeRemoteMethod:
++    def __init__(self, output):
++        self.output = output
++
++    def remote(self, prompts):
++        assert isinstance(prompts, DataProto)
++        return _FakeObjectRef(self.output)
++
++
++class _FakeWorker:
++    def __init__(self, output):
++        self.generate_sequences = _FakeRemoteMethod(output)
++
++
++@pytest.mark.asyncio
++async def test_fully_async_manager_finalizes_reward_extra_info():
++    prompts = DataProto(
++        batch=TensorDict({"input_ids": torch.ones((1, 1), dtype=torch.long)}, batch_size=1),
++        non_tensor_batch={"uid": np.array(["sample-0"], dtype=object)},
++    )
++    worker_output = DataProto(
++        batch=TensorDict({"rm_scores": torch.ones((1, 1), dtype=torch.float32)}, batch_size=1),
++        non_tensor_batch={"reward_extra_info": np.array([{"score": 1.0, "acc": True, "pred": "42"}], dtype=object)},
++        meta_info={"metrics": [{}]},
++    )
++    manager = object.__new__(FullyAsyncAgentLoopManager)
++    manager.agent_loop_workers = [_FakeWorker(worker_output)]
++
++    generate_sequences_single = FullyAsyncAgentLoopManager.generate_sequences_single
++    while hasattr(generate_sequences_single, "__wrapped__"):
++        generate_sequences_single = generate_sequences_single.__wrapped__
++    result = await generate_sequences_single(manager, prompts)
++
++    assert result.meta_info["reward_extra_keys"] == ["score", "acc", "pred"]
++    assert "reward_extra_info" not in result.non_tensor_batch
++    assert result.non_tensor_batch["score"].tolist() == [1.0]
++    assert result.non_tensor_batch["acc"].tolist() == [True]
++    assert result.non_tensor_batch["pred"].tolist() == ["42"]
+diff --git a/tests/experimental/reward_loop/test_reward_extra_info_assembly_on_cpu.py b/tests/experimental/reward_loop/test_reward_extra_info_assembly_on_cpu.py
+new file mode 100644
+index 00000000..e4c88676
+--- /dev/null
++++ b/tests/experimental/reward_loop/test_reward_extra_info_assembly_on_cpu.py
+@@ -0,0 +1,115 @@
++# Copyright 2025 Bytedance Ltd. and/or its affiliates
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++"""Regression tests for batch assembly of per-sample ``reward_extra_info`` dicts.
++
++``RewardLoopManager.compute_rm_score`` used to infer the extra-info schema from
++sample 0 only (``list(reward_extra_infos[0].keys())``), which either crashed with
++``KeyError`` or silently dropped columns whenever samples emitted different keys —
++e.g. a reward function that adds a diagnostic key only on parse success, or a
++mixed-dataset batch where ``default_compute_score`` returns a dict for one data
++source (``math_dapo``) and a bare float for another (``openai/gsm8k``).
++
++These tests import the NumPy-only shared helper, not the Ray-backed reward loop.
++They cover assembly and alignment only; downstream handling of ``None`` values
++belongs to validation metric processing.
++"""
++
++import numpy as np
++import pytest
++
++from verl.utils.reward_score import default_compute_score
++from verl.utils.reward_score.reward_extra_info import assemble_reward_extra_info
++
++
++def test_uniform_keys_preserve_alignment_and_dtype():
++    infos = [
++        {"acc": 1.0, "pred": "42"},
++        {"acc": 0.0, "pred": "7"},
++        {"acc": 1.0, "pred": "42"},
++    ]
++    out = assemble_reward_extra_info(infos)
++
++    assert set(out.keys()) == {"acc", "pred"}
++    assert out["acc"].tolist() == [1.0, 0.0, 1.0]
++    assert out["acc"].dtype == np.float64  # dense keys keep the natural numpy dtype
++    assert out["pred"].tolist() == ["42", "7", "42"]
++    assert all(len(v) == len(infos) for v in out.values())
++
++
++def test_key_missing_from_sample_zero_is_not_dropped():
++    """The old schema-from-sample-0 logic silently discarded this column."""
++    infos = [
++        {"acc": 1.0},
++        {"acc": 0.0, "cp": -30.0},
++        {"acc": 1.0, "cp": 120.0},
++    ]
++    out = assemble_reward_extra_info(infos)
++
++    assert "cp" in out
++    assert out["cp"].tolist() == [None, -30.0, 120.0]
++    assert out["cp"].dtype == object  # None fill requires object dtype
++
++
++def test_key_missing_from_later_sample_does_not_raise():
++    """The old logic raised KeyError: info[key] on the sample that omitted the key."""
++    infos = [
++        {"score": 1.0, "acc": True, "pred": "42"},  # e.g. math_dapo sample
++        {"acc": 0.0},  # e.g. gsm8k sample (float score -> only "acc")
++    ]
++    out = assemble_reward_extra_info(infos)
++
++    assert set(out.keys()) == {"score", "acc", "pred"}
++    assert out["score"].tolist() == [1.0, None]
++    assert out["pred"].tolist() == ["42", None]
++    assert out["acc"].tolist() == [True, 0.0]
++    assert all(len(v) == len(infos) for v in out.values())
++
++
++def test_key_order_is_first_seen():
++    infos = [{"b": 1}, {"a": 2, "b": 3}]
++    assert list(assemble_reward_extra_info(infos).keys()) == ["b", "a"]
++
++
++def test_all_empty_infos():
++    assert assemble_reward_extra_info([]) == {}
++    assert assemble_reward_extra_info([{}, {}, {}]) == {}
++
++
++def test_explicit_none_value_is_kept_dense():
++    """A key uniformly present with a None value is not the same as a missing key."""
++    infos = [{"cp": None}, {"cp": 1.0}]
++    out = assemble_reward_extra_info(infos)
++    assert out["cp"].tolist() == [None, 1.0]
++
++
++@pytest.mark.parametrize("rich_first", [True, False])
++def test_builtin_scorer_schema_difference_is_aligned_in_either_order(rich_first):
++    """Built-in float and dict scorers produce heterogeneous extra-info schemas."""
++    float_result = default_compute_score("openai/gsm8k", "The answer is #### 42", "42")
++    dict_result = default_compute_score("math_dapo", "Answer: 42", "42")
++
++    assert float_result == 1.0
++    assert set(dict_result) == {"score", "acc", "pred"}
++
++    poor = {"acc": float_result}
++    rich = dict_result
++    labeled_infos = [("rich", rich), ("poor", poor)] if rich_first else [("poor", poor), ("rich", rich)]
++    out = assemble_reward_extra_info([info for _, info in labeled_infos])
++
++    assert set(out) == {"score", "acc", "pred"}
++    aligned = {label: {key: out[key][index] for key in out} for index, (label, _) in enumerate(labeled_infos)}
++    assert aligned["rich"] == {"score": 1.0, "acc": True, "pred": "42"}
++    assert aligned["poor"] == {"score": None, "acc": 1.0, "pred": None}
++    assert out["score"].dtype == object
++    assert out["pred"].dtype == object
+diff --git a/tests/experimental/reward_loop/test_reward_extra_info_call_site_on_cpu.py b/tests/experimental/reward_loop/test_reward_extra_info_call_site_on_cpu.py
+new file mode 100644
+index 00000000..3a277213
+--- /dev/null
++++ b/tests/experimental/reward_loop/test_reward_extra_info_call_site_on_cpu.py
+@@ -0,0 +1,93 @@
++# Copyright 2026 Bytedance Ltd. and/or its affiliates
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++"""Focused RewardLoopManager integration coverage without a Ray cluster."""
++
++import torch
++
++from verl.experimental.reward_loop import reward_loop as reward_loop_module
++from verl.experimental.reward_loop.reward_loop import RewardLoopManager
++
++
++class _FakeBatch:
++    def __len__(self):
++        return 2
++
++    def chunk(self, num_chunks):
++        assert num_chunks == 1
++        return [self]
++
++
++class _FakeRemoteCall:
++    def __init__(self, outputs):
++        self.outputs = outputs
++
++    def remote(self, chunk):
++        assert isinstance(chunk, _FakeBatch)
++        return self.outputs
++
++
++class _FakeWorker:
++    def __init__(self, outputs):
++        self.compute_score_batch = _FakeRemoteCall(outputs)
++
++
++class _FakeRewardManager:
++    @classmethod
++    def assemble_rm_scores(cls, data, scores):
++        assert isinstance(data, _FakeBatch)
++        assert scores == [1.0, -1.0]
++        return torch.zeros((len(data), 1), dtype=torch.float32)
++
++
++def test_reward_loop_manager_uses_shared_reward_extra_info_assembly(monkeypatch):
++    rich_info = {"score": 1.0, "acc": True, "pred": "42"}
++    poor_info = {"acc": 0.0}
++    outputs = [
++        {"reward_score": 1.0, "reward_extra_info": rich_info},
++        {"reward_score": -1.0, "reward_extra_info": poor_info},
++    ]
++    manager = type(
++        "_FakeRewardLoopManager",
++        (),
++        {
++            "reward_model_manager": None,
++            "reward_loop_workers": [_FakeWorker(outputs)],
++            "reward_manager_cls": _FakeRewardManager,
++        },
++    )()
++
++    calls = []
++    shared_assembler = reward_loop_module.assemble_reward_extra_info
++
++    def assembly_spy(reward_extra_infos):
++        calls.append(reward_extra_infos)
++        return shared_assembler(reward_extra_infos)
++
++    monkeypatch.setattr(reward_loop_module, "assemble_reward_extra_info", assembly_spy)
++    monkeypatch.setattr(reward_loop_module.ray, "get", lambda pending: pending)
++    monkeypatch.setattr(
++        reward_loop_module,
++        "pad_dataproto_to_divisor",
++        lambda data, divisor: (data, 0),
++    )
++
++    result = RewardLoopManager.compute_rm_score(manager, _FakeBatch())
++
++    assert calls == [[rich_info, poor_info]]
++    assert result.meta_info["reward_extra_keys"] == ["score", "acc", "pred"]
++    assert result.non_tensor_batch["score"].tolist() == [1.0, None]
++    assert result.non_tensor_batch["acc"].tolist() == [1.0, 0.0]
++    assert result.non_tensor_batch["pred"].tolist() == ["42", None]
++    assert result.non_tensor_batch["score"].dtype == object
+diff --git a/verl/experimental/agent_loop/agent_loop.py b/verl/experimental/agent_loop/agent_loop.py
+index d0e3038e..2e7b6a1d 100644
+--- a/verl/experimental/agent_loop/agent_loop.py
++++ b/verl/experimental/agent_loop/agent_loop.py
+@@ -54,6 +54,7 @@ from verl.utils.import_utils import resolve_config_path
+ from verl.utils.model import compute_position_id_with_mask
+ from verl.utils.profiler import simple_timer
+ from verl.utils.ray_utils import auto_await, get_event_loop
++from verl.utils.reward_score.reward_extra_info import assemble_reward_extra_info
+ from verl.utils.rollout_trace import (
+     RolloutTraceConfig,
+     rollout_trace_attr,
+@@ -76,6 +77,47 @@ logger.setLevel(os.getenv("VERL_LOGGING_LEVEL", "WARN"))
+ DEFAULT_ROUTING_CACHE_SIZE = 10000
+ 
+ 
++def _assemble_agent_loop_reward_extra_info(output: DataProto, reserved_keys: set[str] | None = None) -> list[str]:
++    """Assemble reward metadata after all agent-loop worker chunks are concatenated."""
++    raw_infos = output.non_tensor_batch.pop("reward_extra_info", None)
++    if raw_infos is None:
++        return []
++
++    reward_extra_infos = []
++    for info in raw_infos:
++        if info is None:
++            reward_extra_infos.append({})
++        elif isinstance(info, dict):
++            reward_extra_infos.append(info)
++        else:
++            raise TypeError(f"reward_extra_info must be a dict or None, got {type(info).__name__}")
++
++    assembled = assemble_reward_extra_info(reward_extra_infos)
++    occupied_keys = set(output.non_tensor_batch)
++    if output.batch is not None:
++        occupied_keys.update(output.batch.keys())
++    if reserved_keys:
++        occupied_keys.update(reserved_keys)
++    collisions = set(assembled).intersection(occupied_keys)
++    if collisions:
++        names = ", ".join(sorted(collisions))
++        raise ValueError(f"reward_extra_info keys collide with existing batch fields: {names}")
++
++    output.non_tensor_batch.update(assembled)
++    return list(assembled)
++
++
++def _finalize_agent_loop_reward_extra_info(output: DataProto, prompts: DataProto) -> DataProto:
++    """Finalize reward metadata for both regular and fully-async agent-loop managers."""
++    source_keys = set(prompts.non_tensor_batch)
++    if prompts.batch is not None:
++        source_keys.update(prompts.batch.keys())
++    reward_extra_keys = _assemble_agent_loop_reward_extra_info(output, reserved_keys=source_keys)
++    if output.batch is not None and "rm_scores" in output.batch.keys():
++        output.meta_info["reward_extra_keys"] = reward_extra_keys
++    return output
++
++
+ class AgentLoopMetrics(BaseModel):
+     """Agent loop performance metrics."""
+ 
+@@ -1104,12 +1146,6 @@ class AgentLoopWorker:
+         if self.reward_loop_worker_handles is None and input_non_tensor_batch:
+             non_tensor_batch.update(input_non_tensor_batch)
+ 
+-        # add reward_extra_info to non_tensor_batch
+-        reward_extra_infos = [input.extra_fields.get("reward_extra_info", {}) for input in inputs]
+-        reward_extra_keys = list(reward_extra_infos[0].keys())
+-        for key in reward_extra_keys:
+-            non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
+-
+         # Add multi_modal_inputs to non_tensor_batch if any samples have them
+         multi_modal_inputs_list = [input.multi_modal_inputs for input in inputs]
+         if any(mmi is not None for mmi in multi_modal_inputs_list):
+@@ -1125,6 +1161,10 @@ class AgentLoopWorker:
+             "min_global_steps",
+             "max_global_steps",
+             "extras",
++            # Keep the raw per-sample dicts schema-stable across workers. The manager
++            # assembles them only after concatenating every worker chunk, so keys that
++            # appear in one chunk cannot disappear or make DataProto.concat fail.
++            "reward_extra_info",
+         }
+         all_keys = set(key for input_item in inputs for key in input_item.extra_fields) | default_extra_keys
+         for key in all_keys:
+@@ -1134,17 +1174,10 @@ class AgentLoopWorker:
+ 
+         non_tensor_batch.update(extra_fields)
+ 
+-        # Only include reward_extra_keys in meta_info if rm_scores is in batch
+-        # This avoids conflicts when reward_tensor is merged later in ray_trainer.py
+-        if "rm_scores" in batch.keys():
+-            meta_info = {"metrics": metrics, "reward_extra_keys": reward_extra_keys}
+-        else:
+-            meta_info = {"metrics": metrics}
+-
+         return DataProto(
+             batch=batch,
+             non_tensor_batch=non_tensor_batch,
+-            meta_info=meta_info,
++            meta_info={"metrics": metrics},
+         )
+ 
+ 
+@@ -1258,7 +1291,7 @@ class AgentLoopManager:
+         timing = self._performance_metrics(metrics, output)
+ 
+         output.meta_info = {"timing": timing, **outputs[0].meta_info}
+-        return output
++        return _finalize_agent_loop_reward_extra_info(output, prompts)
+ 
+     def _performance_metrics(self, metrics: list[list[dict[str, str]]], output: DataProto) -> dict[str, float]:
+         timing = {}
+diff --git a/verl/experimental/fully_async_policy/fully_async_rollouter.py b/verl/experimental/fully_async_policy/fully_async_rollouter.py
+index 818dbd59..8f2b1c32 100644
+--- a/verl/experimental/fully_async_policy/fully_async_rollouter.py
++++ b/verl/experimental/fully_async_policy/fully_async_rollouter.py
+@@ -24,7 +24,7 @@ import ray
+ import torch
+ from omegaconf import DictConfig, open_dict
+ 
+-from verl.experimental.agent_loop.agent_loop import AgentLoopManager
++from verl.experimental.agent_loop.agent_loop import AgentLoopManager, _finalize_agent_loop_reward_extra_info
+ from verl.experimental.fully_async_policy.detach_utils import (
+     RolloutSample,
+     prepare_single_generation_data,
+@@ -314,7 +314,8 @@ class FullyAsyncAgentLoopManager(AgentLoopManager):
+         """
+         worker = self._select_best_worker()
+         output_future = worker.generate_sequences.remote(prompts)
+-        return await asyncio.wrap_future(output_future.future())
++        output = await asyncio.wrap_future(output_future.future())
++        return _finalize_agent_loop_reward_extra_info(output, prompts)
+ 
+     def _select_best_worker(self):
+         """Select the best worker, simple round-robin load balancing"""
+diff --git a/verl/experimental/reward_loop/reward_loop.py b/verl/experimental/reward_loop/reward_loop.py
+index 695485e7..68dd57cb 100644
+--- a/verl/experimental/reward_loop/reward_loop.py
++++ b/verl/experimental/reward_loop/reward_loop.py
+@@ -17,7 +17,6 @@ import logging
+ import os
+ 
+ import aiohttp
+-import numpy as np
+ import ray
+ from omegaconf import DictConfig, open_dict
+ from ray.actor import ActorHandle
+@@ -29,6 +28,7 @@ from verl.trainer.ppo.reward import load_reward_manager, resolve_reward_manager_
+ from verl.utils import hf_tokenizer
+ from verl.utils.fs import copy_to_local
+ from verl.utils.ray_utils import get_event_loop
++from verl.utils.reward_score.reward_extra_info import assemble_reward_extra_info
+ 
+ from .reward_model import RewardModelManager
+ 
+@@ -363,10 +363,8 @@ class RewardLoopManager:
+         batch = TensorDict({"rm_scores": rm_scores}, batch_size=len(data))
+ 
+         reward_extra_infos = [output.get("reward_extra_info", {}) for output in outputs_flat]
+-        reward_extra_keys = list(reward_extra_infos[0].keys())
+-        non_tensor_batch = {}
+-        for key in reward_extra_keys:
+-            non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])
++        non_tensor_batch = assemble_reward_extra_info(reward_extra_infos)
++        reward_extra_keys = list(non_tensor_batch.keys())
+ 
+         if self.reward_model_manager is not None:
+             self.reward_model_manager.sleep()
+diff --git a/verl/utils/reward_score/reward_extra_info.py b/verl/utils/reward_score/reward_extra_info.py
+new file mode 100644
+index 00000000..83e14302
+--- /dev/null
++++ b/verl/utils/reward_score/reward_extra_info.py
+@@ -0,0 +1,46 @@
++# Copyright 2026 Bytedance Ltd. and/or its affiliates
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++"""Batch assembly helpers for per-sample reward metadata."""
++
++import numpy as np
++
++
++def assemble_reward_extra_info(reward_extra_infos: list[dict]) -> dict[str, np.ndarray]:
++    """Align per-sample reward metadata into batch-level arrays.
++
++    Keys are collected from every sample in stable first-seen order. A key that
++    is absent from any sample is filled with ``None`` and stored in an object
++    array; fully populated keys retain NumPy's natural inferred dtype.
++
++    This helper only assembles and aligns columns. Downstream metric handling is
++    responsible for interpreting the resulting values, including ``None``.
++    """
++    keys: list[str] = []
++    seen: set[str] = set()
++    for info in reward_extra_infos:
++        for key in info:
++            if key not in seen:
++                seen.add(key)
++                keys.append(key)
++
++    non_tensor_batch = {}
++    for key in keys:
++        values = [info.get(key) for info in reward_extra_infos]
++        if all(key in info for info in reward_extra_infos):
++            non_tensor_batch[key] = np.array(values)
++        else:
++            non_tensor_batch[key] = np.array(values, dtype=object)
++
++    return non_tensor_batch
+-- 
+2.43.0
+

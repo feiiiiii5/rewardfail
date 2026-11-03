@@ -1,0 +1,354 @@
+{
+ "entries": 81,
+ "summary": {
+  "differs": 30,
+  "missing": 7,
+  "match": 43,
+  "self-reference (a manifest cannot contain its own final hash)": 1
+ },
+ "rows": [
+  {
+   "path": "README.md",
+   "status": "differs",
+   "manifest_bytes": 7267,
+   "delivered_bytes": 7358,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "driver/c1c_chain.py",
+   "status": "missing",
+   "manifest_bytes": 14067
+  },
+  {
+   "path": "driver/fixed_agent_loop.py",
+   "status": "missing",
+   "manifest_bytes": 1453
+  },
+  {
+   "path": "driver/inject.py",
+   "status": "missing",
+   "manifest_bytes": 1501
+  },
+  {
+   "path": "driver/reward_fn.py",
+   "status": "missing",
+   "manifest_bytes": 694
+  },
+  {
+   "path": "driver/thesis_chain.py",
+   "status": "missing",
+   "manifest_bytes": 22819
+  },
+  {
+   "path": "env/preflight_env.json",
+   "status": "differs",
+   "manifest_bytes": 2279,
+   "delivered_bytes": 2179,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "env/preflight_source.json",
+   "status": "differs",
+   "manifest_bytes": 2402,
+   "delivered_bytes": 2342,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "logs/C0.smoke.log",
+   "status": "differs",
+   "manifest_bytes": 3348,
+   "delivered_bytes": 3208,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "logs/adapted.stderr.log",
+   "status": "differs",
+   "manifest_bytes": 14868,
+   "delivered_bytes": 14368,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "logs/adapted.stdout.log",
+   "status": "differs",
+   "manifest_bytes": 3219,
+   "delivered_bytes": 3019,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "logs/run-01.stdout.log",
+   "status": "differs",
+   "manifest_bytes": 5427,
+   "delivered_bytes": 5127,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "logs/summary-first-attempt.json",
+   "status": "differs",
+   "manifest_bytes": 5675,
+   "delivered_bytes": 5435,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "manifest-all.json",
+   "status": "self-reference (a manifest cannot contain its own final hash)",
+   "manifest_bytes": 10296,
+   "delivered_bytes": 11086
+  },
+  {
+   "path": "run-01/C0/case.json",
+   "status": "differs",
+   "manifest_bytes": 8825,
+   "delivered_bytes": 8565,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C1/case.json",
+   "status": "differs",
+   "manifest_bytes": 9625,
+   "delivered_bytes": 9365,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C1/case.log",
+   "status": "differs",
+   "manifest_bytes": 3679,
+   "delivered_bytes": 3539,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C1r/case.json",
+   "status": "differs",
+   "manifest_bytes": 9657,
+   "delivered_bytes": 9397,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C2/case.json",
+   "status": "differs",
+   "manifest_bytes": 9627,
+   "delivered_bytes": 9367,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C2/case.log",
+   "status": "differs",
+   "manifest_bytes": 3664,
+   "delivered_bytes": 3524,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C2r/case.json",
+   "status": "differs",
+   "manifest_bytes": 9657,
+   "delivered_bytes": 9397,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C3/case.json",
+   "status": "differs",
+   "manifest_bytes": 12613,
+   "delivered_bytes": 12353,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C3/case.log",
+   "status": "differs",
+   "manifest_bytes": 4948,
+   "delivered_bytes": 4808,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C4/case.json",
+   "status": "differs",
+   "manifest_bytes": 9627,
+   "delivered_bytes": 9367,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C4/case.log",
+   "status": "differs",
+   "manifest_bytes": 3662,
+   "delivered_bytes": 3522,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C5/case.json",
+   "status": "differs",
+   "manifest_bytes": 9312,
+   "delivered_bytes": 9052,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/C6/case.json",
+   "status": "differs",
+   "manifest_bytes": 9651,
+   "delivered_bytes": 9391,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/O4/case.json",
+   "status": "differs",
+   "manifest_bytes": 7929,
+   "delivered_bytes": 7669,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/O4/case.log",
+   "status": "differs",
+   "manifest_bytes": 3660,
+   "delivered_bytes": 3520,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/O5/case.json",
+   "status": "differs",
+   "manifest_bytes": 7637,
+   "delivered_bytes": 7377,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/O6/case.json",
+   "status": "differs",
+   "manifest_bytes": 4462,
+   "delivered_bytes": 4202,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/failures/C5-two-agent-workers/case.json",
+   "status": "differs",
+   "manifest_bytes": 6787,
+   "delivered_bytes": 6473,
+   "placeholders_in_delivered": [
+    "<LOCAL_USER>",
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/failures/O5-two-agent-workers/case.json",
+   "status": "differs",
+   "manifest_bytes": 5539,
+   "delivered_bytes": 5225,
+   "placeholders_in_delivered": [
+    "<LOCAL_USER>",
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/summary.json",
+   "status": "differs",
+   "manifest_bytes": 5675,
+   "delivered_bytes": 5435,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/verification.json",
+   "status": "differs",
+   "manifest_bytes": 39479,
+   "delivered_bytes": 38699,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "run-01/verification.md",
+   "status": "differs",
+   "manifest_bytes": 18565,
+   "delivered_bytes": 17785,
+   "placeholders_in_delivered": [
+    "<WORKSPACE>"
+   ],
+   "explanation": "consistent with path redaction (not proven: original bytes not delivered)"
+  },
+  {
+   "path": "verl-pr8015-original/reward_loop.py",
+   "status": "missing",
+   "manifest_bytes": 17110
+  },
+  {
+   "path": "verl-pr8015-unionfill/reward_loop.py",
+   "status": "missing",
+   "manifest_bytes": 17160
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+  "case": "A5_rows4to7",
+  "path": "A",
+  "manager": "rate_limited",
+  "failing_rows": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "prediction": "两个生成进程键名不同，跨进程合并时报错",
+  "outcome": "aborted",
+  "exception_type": "AssertionError",
+  "exception_mro": [
+    "AssertionError",
+    "Exception",
+    "BaseException",
+    "object"
+  ],
+  "exception_message_head": "Key 'error' is not present in the keys of the first dictionary in the list.",
+  "traceback": "Traceback (most recent call last):\n  File \"<SCRATCH>/work/companion/experiments/c1c_chain.py\", line 216, in run_case\n    out = alm.generate_sequences(prompts=batch)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/utils/ray_utils.py\", line 123, in wrapper\n    return asyncio.run(coro)\n           ^^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/asyncio/runners.py\", line 194, in run\n    return runner.run(main)\n           ^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/asyncio/base_events.py\", line 686, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/utils/skip/skip_manager.py\", line 89, in async_wrapper\n    return await func(*args, **kwargs_inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py\", line 1254, in generate_sequences\n    output = DataProto.concat(outputs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/protocol.py\", line 929, in concat\n    non_tensor_batch = list_of_dict_to_dict_of_list(list_of_dict=[d.non_tensor_batch for d in data])\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/utils/py_functional.py\", line 366, in list_of_dict_to_dict_of_list\n    assert key in output, f\"Key '{key}' is not present in the keys of the first dictionary in the list.\"\n           ^^^^^^^^^^^^^\nAssertionError: Key 'error' is not present in the keys of the first dictionary in the list.\n",
+  "raise_site": "verl/utils/py_functional.py:366",
+  "seconds": 16.55,
+  "worker_log_lines_reward_failed": [
+    "\u001b[36m(RewardLoopWorker pid=8277)\u001b[0m ERROR:2026-11-03 08:22:22,993:Reward computation failed for data_source=rewardfail_c1c: A process in the process pool was terminated abruptly while the future was running or pending.. Response preview: \\boxed{9} [[INJECT_WORKER_DEATH]]#row=5...",
+    "\u001b[36m(RewardLoopWorker pid=8274)\u001b[0m ERROR:2026-11-03 08:22:23,264:Reward computation failed for data_source=rewardfail_c1c: A process in the process pool was terminated abruptly while the future was running or pending.. Response preview: \\boxed{7} [[INJECT_WORKER_DEATH]]#row=4...",
+    "\u001b[36m(RewardLoopWorker pid=8277)\u001b[0m ERROR:2026-11-03 08:22:23,338:Reward computation failed for data_source=rewardfail_c1c: A process in the process pool was terminated abruptly while the future was running or pending.. Response preview: \\boxed{3} [[INJECT_WORKER_DEATH]]#row=7..."
+  ],
+  "injected_worker_deaths_by_row": {
+    "5": 2,
+    "4": 2,
+    "7": 1,
+    "6": 1
+  }
+}

@@ -1,0 +1,17 @@
+| 情形 | 管理器 | 失败行 | 运行前预测 | 结局 | 报错位置 | extract_reward 返回的附加列 | 各行分数 | 原样附加信息里带 error 的行 | 注入触发的行 |
+|---|---|---|---|---|---|---|---|---|---|
+| A0_none | rate_limited | 无 | 完成；没有 error 列 | 完成 | — | acc | 1 0 1 0 1 0 1 1 | 无 | 无 |
+| A1_row2 | rate_limited | [2] | 完成；第 2 行由 1 变 0，训练器读到的列里没有 error | 完成 | — | acc | 1 0 0 0 1 0 1 1 | [2] | [2] |
+| A2_row0 | rate_limited | [0] | 第 0 个生成进程的汇总 KeyError，整批中止 | 中止：RayTaskError(KeyError) KeyError: 'error' | verl/experimental/agent_loop/agent_loop.py:1111 | — | — | — | [0] |
+| A3_row4 | rate_limited | [4] | 第 1 个生成进程的汇总 KeyError，整批中止 | 中止：RayTaskError(KeyError) KeyError: 'error' | verl/experimental/agent_loop/agent_loop.py:1111 | — | — | — | [4] |
+| A4_all | rate_limited | [0, 1, 2, 3, 4, 5, 6, 7] | 完成；8 行都有 error 列 | 完成 | — | error, acc | 0 0 0 0 0 0 0 0 | [0, 1, 2, 3, 4, 5, 6, 7] | [0, 1, 2, 3, 4, 5, 6, 7] |
+| A5_rows4to7 | rate_limited | [4, 5, 6, 7] | 两个生成进程键名不同，跨进程合并时报错 | 中止：AssertionError Key 'error' is not present in the keys of the first dictionary in the list. | verl/utils/py_functional.py:366 | — | — | — | [4, 5, 6, 7] |
+| A6_rows0to3 | rate_limited | [0, 1, 2, 3] | 两个生成进程键名不同，跨进程合并时报错或列长度不齐 | 中止：AssertionError Conflicting values for meta_info key 'reward_extra_keys' | verl/protocol.py:949 | — | — | — | [0, 1, 2, 3] |
+| B0_none | rate_limited | 无 | 完成；没有 error 列 | 完成 | — | acc | 1 0 1 0 1 0 1 1 | — | 无 |
+| B1_row2 | rate_limited | [2] | 完成；第 2 行由 1 变 0，训练器读到的列里没有 error | 完成 | — | acc | 1 0 0 0 1 0 1 1 | — | [2] |
+| B2_row0 | rate_limited | [0] | 汇总 KeyError，整批中止 | 中止：KeyError 'error' | verl/experimental/reward_loop/reward_loop.py:369 | — | — | — | [0] |
+| B3_all | rate_limited | [0, 1, 2, 3, 4, 5, 6, 7] | 完成；8 行都有 error 列 | 完成 | — | error, acc | 0 0 0 0 0 0 0 0 | — | [0, 1, 2, 3, 4, 5, 6, 7] |
+| N1_naive_A_row2 | naive | [2] | naive 不接异常：整批中止，报的是真实原因 BrokenProcessPool | 中止：RayTaskError(BrokenProcessPool) concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending. | verl/utils/reward_score/math_verify.py:84 | — | — | — | [2] |
+| N2_naive_B_row2 | naive | [2] | 同上 | 中止：RayTaskError(BrokenProcessPool) concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending. | verl/utils/reward_score/math_verify.py:84 | — | — | — | [2] |
+
+两轮不一致项：无

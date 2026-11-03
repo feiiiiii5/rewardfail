@@ -1,0 +1,117 @@
+{
+ "wrapper": "pr",
+ "lib": null,
+ "outer": 30,
+ "observe": true,
+ "variant": "normal",
+ "repeat": 1,
+ "manager": "naive",
+ "rows": [
+  {
+   "id": "ctl-2",
+   "gt": "2",
+   "out": "The answer is \\boxed{2}."
+  },
+  {
+   "id": "ctl-3",
+   "gt": "3",
+   "out": "The answer is \\boxed{3}."
+  },
+  {
+   "id": "ctl-4",
+   "gt": "4",
+   "out": "The answer is \\boxed{4}."
+  },
+  {
+   "id": "ctl-5",
+   "gt": "5",
+   "out": "The answer is \\boxed{5}."
+  },
+  {
+   "id": "ctl-6",
+   "gt": "6",
+   "out": "The answer is \\boxed{6}."
+  },
+  {
+   "id": "ctl-7",
+   "gt": "7",
+   "out": "The answer is \\boxed{7}."
+  },
+  {
+   "id": "ctl-8",
+   "gt": "8",
+   "out": "The answer is \\boxed{8}."
+  },
+  {
+   "id": "ctl-9",
+   "gt": "9",
+   "out": "The answer is \\boxed{9}."
+  }
+ ],
+ "warm": [
+  {
+   "id": "warm-0",
+   "gt": "1",
+   "out": "\\boxed{1}"
+  },
+  {
+   "id": "warm-1",
+   "gt": "1",
+   "out": "\\boxed{1}"
+  },
+  {
+   "id": "warm-2",
+   "gt": "1",
+   "out": "\\boxed{1}"
+  },
+  {
+   "id": "warm-3",
+   "gt": "1",
+   "out": "\\boxed{1}"
+  }
+ ],
+ "following": [
+  {
+   "id": "following-ctl-2",
+   "gt": "2",
+   "out": "The answer is \\boxed{2}."
+  },
+  {
+   "id": "following-ctl-3",
+   "gt": "3",
+   "out": "The answer is \\boxed{3}."
+  },
+  {
+   "id": "following-ctl-4",
+   "gt": "4",
+   "out": "The answer is \\boxed{4}."
+  },
+  {
+   "id": "following-ctl-5",
+   "gt": "5",
+   "out": "The answer is \\boxed{5}."
+  },
+  {
+   "id": "following-ctl-6",
+   "gt": "6",
+   "out": "The answer is \\boxed{6}."
+  },
+  {
+   "id": "following-ctl-7",
+   "gt": "7",
+   "out": "The answer is \\boxed{7}."
+  },
+  {
+   "id": "following-ctl-8",
+   "gt": "8",
+   "out": "The answer is \\boxed{8}."
+  },
+  {
+   "id": "following-ctl-9",
+   "gt": "9",
+   "out": "The answer is \\boxed{9}."
+  }
+ ],
+ "dir": "<SCRATCH>/work/new_runs/heavy_linux/S1/scene",
+ "sources": "<SCRATCH>/work/new_runs/heavy_linux/source"
+}

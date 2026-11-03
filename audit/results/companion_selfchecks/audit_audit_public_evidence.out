@@ -1,0 +1,71 @@
+{
+  "status": "supported_checks_pass_with_evidence_gaps",
+  "fingerprinted_files_checked": 724,
+  "main_default": {
+    "n": 93733,
+    "warmups_excluded": 1,
+    "classes": {
+      "正常 0": 32442,
+      "1 分": 61246,
+      "0 分：比较出错": 12,
+      "0 分：比较超时": 27,
+      "0 分：回答侧解析出错": 4,
+      "0 分：回答侧解析超时": 1,
+      "0 分：标准答案侧解析超时": 1
+    },
+    "scores": {
+      "0.0": 32487,
+      "1.0": 61246
+    },
+    "library_event_rows": 54,
+    "library_event_score_one": 9,
+    "outer_timeout_rows": 0,
+    "max_wall_seconds": 5.235
+  },
+  "complement_default": {
+    "n": 100034,
+    "warmups_excluded": 1,
+    "classes": {
+      "正常 0": 32664,
+      "1 分": 67330,
+      "0 分：比较出错": 11,
+      "0 分：比较超时": 26,
+      "0 分：回答侧解析出错": 2,
+      "0 分：标准答案侧解析超时": 1
+    },
+    "scores": {
+      "0.0": 32704,
+      "1.0": 67330
+    },
+    "library_event_rows": 49,
+    "library_event_score_one": 9,
+    "outer_timeout_rows": 0,
+    "max_wall_seconds": 5.3699
+  },
+  "comparisons": {
+    "main_n": true,
+    "main_table_2": true,
+    "complement_n": true,
+    "combined_n": true,
+    "combined_classes": true,
+    "main_events": true,
+    "combined_events": true,
+    "combined_event_ones": true,
+    "default_outer_timeouts": true,
+    "recorded_contract_cases": true,
+    "recorded_contract_outcomes": true,
+    "recorded_contract_pass_flags": true
+  },
+  "issues": [],
+  "reported_not_independently_reconstructed": {
+    "main_recoveries_k": 1,
+    "main_unresolved_u": 18,
+    "reason": "Public archive omits corrected main reference rows and complete raw events; historical reanalysis also needs unpublished execution history."
+  },
+  "boundaries": [
+    "Counts reconstruct distributed derived records, not original scorer events or mathematical ground truth.",
+    "Recorded fixture checks inspect saved outcomes; no fixture or scoring code was executed.",
+    "Fingerprints check consistency with the supplied manifest, not authenticity or chronology.",
+    "No claim of fresh-machine, Linux, full-trainer, or independent experimental replication."
+  ]
+}

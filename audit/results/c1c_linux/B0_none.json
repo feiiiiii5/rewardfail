@@ -1,0 +1,56 @@
+{
+  "case": "B0_none",
+  "path": "B",
+  "manager": "rate_limited",
+  "failing_rows": [],
+  "prediction": "完成；没有 error 列",
+  "outcome": "completed",
+  "row_scores": [
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0
+  ],
+  "raw_reward_extra_info_column_present": false,
+  "raw_reward_extra_info_rows_with_error": null,
+  "reward_extra_keys": [
+    "acc"
+  ],
+  "non_tensor_keys": [
+    "__num_turns__",
+    "acc",
+    "agent_name",
+    "data_source",
+    "extra_info",
+    "extras",
+    "index",
+    "max_global_steps",
+    "min_global_steps",
+    "multi_modal_inputs",
+    "priority",
+    "raw_prompt",
+    "reward_model",
+    "tool_rewards",
+    "turn_scores"
+  ],
+  "extract_reward_columns": {
+    "acc": [
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0
+    ]
+  },
+  "has_error_column": false,
+  "seconds": 14.99,
+  "worker_log_lines_reward_failed": [],
+  "injected_worker_deaths_by_row": {}
+}

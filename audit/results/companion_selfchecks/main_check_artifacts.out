@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "files_checked": 721,
+  "files_not_checked": 0,
+  "reports_matched": 32,
+  "reports_not_checked": 0,
+  "missing_roots": [],
+  "issues": [],
+  "boundary": "Indexed bytes and frozen report values only; no rescoring or independent replication."
+}

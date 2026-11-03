@@ -1,0 +1,22 @@
+{
+ "M1_independent|p=0.05": {
+  "disagreements": 20209,
+  "in_clean_constant_groups": 19479,
+  "share": 0.9638774803305458
+ },
+ "M2_correct_only|p=0.05": {
+  "disagreements": 20245,
+  "in_clean_constant_groups": 19479,
+  "share": 0.9621634971597925
+ },
+ "M1_independent|p=0.25": {
+  "disagreements": 47389,
+  "in_clean_constant_groups": 44159,
+  "share": 0.9318407225305451
+ },
+ "M2_correct_only|p=0.25": {
+  "disagreements": 48477,
+  "in_clean_constant_groups": 44159,
+  "share": 0.9109268312808135
+ }
+}

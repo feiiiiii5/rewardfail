@@ -1,0 +1,307 @@
+\begin{thebibliography}{39}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{abinggo}(2026)]{verl6845}
+{abinggo}.
+\newblock {verl} pull request \#6845: fix \texttt{process\_validation\_metrics}
+  crash on {None}-filled sparse reward keys.
+\newblock \url{https://github.com/verl-project/verl/pull/6845}, 2026.
+\newblock Opened 2026-06-25; open when checked through the GitHub search API on
+  2026-11-03.
+
+\bibitem[{Allen Institute for AI}(2026)]{openinstruct2026failure}
+{Allen Institute for AI}.
+\newblock Reward-service failure policies, in {Open Instruct} {MILES}
+  documentation (data and evaluation).
+\newblock
+  \url{https://github.com/allenai/open-instruct/blob/65ff854953144ce5db5d152e17e79a794ac154f7/docs/miles/data-and-evaluation.md},
+  2026.
+\newblock Documentation source read at commit 65ff854 on 2026-11-03; the
+  rendered site was not reachable from the checking environment. Title given
+  descriptively.
+
+\bibitem[Cai et~al.(2025)Cai, Wang, Liu, Liu, Niu, and Sugiyama]{cai2025noisy}
+Xin-Qiang Cai, Wei Wang, Feng Liu, Tongliang Liu, Gang Niu, and Masashi
+  Sugiyama.
+\newblock Reinforcement learning with verifiable yet noisy rewards under
+  imperfect verifiers.
+\newblock arXiv:2510.00915, 2025.
+\newblock URL \url{https://arxiv.org/abs/2510.00915v5}.
+\newblock Version 5.
+
+\bibitem[Clopper and Pearson(1934)]{clopper1934}
+C.~J. Clopper and E.~S. Pearson.
+\newblock The use of confidence or fiducial limits illustrated in the case of
+  the binomial.
+\newblock \emph{Biometrika}, 26\penalty0 (4):\penalty0 404--413, 1934.
+
+\bibitem[{DeepSeek-AI} et~al.(2025){DeepSeek-AI}, Guo, Yang, Zhang,
+  et~al.]{deepseek2025r1}
+{DeepSeek-AI}, Daya Guo, Dejian Yang, Haowei Zhang, et~al.
+\newblock {DeepSeek-R1}: Incentivizing reasoning capability in {LLMs} via
+  reinforcement learning.
+\newblock arXiv:2501.12948, 2025.
+\newblock URL \url{https://arxiv.org/abs/2501.12948v2}.
+
+\bibitem[Egashira et~al.(2026)Egashira, Vero, Dekoninck, Dorner, Staab, and
+  Vechev]{egashira2026delay}
+Kazuki Egashira, Mark Vero, Jasper Dekoninck, Florian~E. Dorner, Robin Staab,
+  and Martin Vechev.
+\newblock Delay, plateau, or collapse: Evaluating the impact of systematic
+  verification error on {RLVR}.
+\newblock arXiv:2605.02909, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.02909v2}.
+\newblock Version 2; checked 2026-10-08.
+
+\bibitem[{fuergaosi233}(2026)]{verl6545}
+{fuergaosi233}.
+\newblock Union-key assembly of reward extra information in {verl} pull request
+  \#6545.
+\newblock \url{https://github.com/verl-project/verl/pull/6545}, 2026.
+\newblock Closed without merging on 2026-06-02; uniform-key contract discussed
+  by wuxibin89. Public record read 2026-10-12; status re-checked 2026-11-03.
+
+\bibitem[{giladfrid009}(2026)]{verl6830}
+{giladfrid009}.
+\newblock {verl} issue \#6830: \texttt{process\_validation\_metrics()} crashes
+  on {None}-filled sparse \texttt{reward\_extra\_info} keys.
+\newblock \url{https://github.com/verl-project/verl/issues/6830}, 2026.
+\newblock Opened 2026-06-24; open when checked through the GitHub search API on
+  2026-11-03.
+
+\bibitem[Hu et~al.(2026{\natexlab{a}})Hu, Hu, Guo, Wang,
+  et~al.]{hu2026routeaudit}
+Miaobo Hu, Shuhao Hu, Xiaobo Guo, Xin Wang, et~al.
+\newblock {ROUTEAUDIT}: Interaction-aware identification for budgeted
+  multi-verifier routing.
+\newblock arXiv:2610.02808, 2026{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2610.02808v2}.
+
+\bibitem[Hu et~al.(2026{\natexlab{b}})Hu, Hu, Guo, Wang, et~al.]{hu2026vstress}
+Miaobo Hu, Shuhao Hu, Xiaobo Guo, Xin Wang, et~al.
+\newblock {VStress}: Correlation-aware auditing and adaptive budget allocation
+  for repeated verifiers.
+\newblock arXiv:2609.36958, 2026{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2609.36958v2}.
+
+\bibitem[{Hugging Face}(n.d.{\natexlab{a}})]{mathverify}
+{Hugging Face}.
+\newblock {Math-Verify}.
+\newblock \url{https://github.com/huggingface/Math-Verify}, n.d.{\natexlab{a}}.
+\newblock Version 0.9.0, identical to commit
+  ba3d3aaff23b3f4cac7a14672b4f6e293d97c98b.
+
+\bibitem[{Hugging Face}(n.d.{\natexlab{b}})]{openr1math}
+{Hugging Face}.
+\newblock {OpenR1-Math-220k}.
+\newblock \url{https://huggingface.co/datasets/open-r1/OpenR1-Math-220k},
+  n.d.{\natexlab{b}}.
+\newblock Configuration default, revision
+  e4e141ec9dea9f8326f4d347be56105859b2bd68; Apache-2.0.
+
+\bibitem[{Hugging Face}(n.d.{\natexlab{c}})]{trl}
+{Hugging Face}.
+\newblock {TRL}: Transformer reinforcement learning.
+\newblock \url{https://github.com/huggingface/trl}, n.d.{\natexlab{c}}.
+\newblock Commit bbf50f4db3f212df0a1635a56a407d05579d385e.
+
+\bibitem[{keepkeen}(2026)]{verl7151}
+{keepkeen}.
+\newblock Sparse reward extra information across batch paths in {verl} pull
+  request \#7151.
+\newblock \url{https://github.com/verl-project/verl/pull/7151}, 2026.
+\newblock Reward-loop, agent-loop and fully asynchronous paths; head
+  96eead6f6a8d87f8c872fda263d3e3d41bf7cdc8; open and unmerged when read on
+  2026-10-12 and re-checked on 2026-11-03. Title given descriptively.
+
+\bibitem[Lambert et~al.(2024)Lambert, Morrison, Pyatkin, Huang,
+  et~al.]{lambert2024tulu3}
+Nathan Lambert, Jacob Morrison, Valentina Pyatkin, Shengyi Huang, et~al.
+\newblock Tulu 3: Pushing frontiers in open language model post-training.
+\newblock arXiv:2411.15124, 2024.
+\newblock URL \url{https://arxiv.org/abs/2411.15124v5}.
+
+\bibitem[Masters et~al.(2026)Masters, Liu, and
+  Albrecht]{masters2026rolloutcards}
+Charlie Masters, Ziyuan Liu, and Stefano~V. Albrecht.
+\newblock Rollout cards: A reproducibility standard for agent research.
+\newblock arXiv:2605.12131, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.12131v1}.
+
+\bibitem[Nie et~al.(2026)Nie, Wu, Liu, Li, et~al.]{nie2026starvation}
+Wenhua Nie, Jianan Wu, Junlin Liu, Ziwei Li, et~al.
+\newblock Gradient starvation in binary-reward {GRPO}: Why group-mean centering
+  fails and why the simplest fix works.
+\newblock arXiv:2605.07689, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.07689v1}.
+
+\bibitem[{NVIDIA NeMo RL contributors}(2026)]{nemorl2026masked}
+{NVIDIA NeMo RL contributors}.
+\newblock Masked rewards in advantage statistics, in {NeMo RL} {GRPO} guide.
+\newblock
+  \url{https://github.com/NVIDIA-NeMo/RL/blob/db03c2c9c48c4b5adf9aa342ed8d31d03b09f29d/docs/guides/grpo.md},
+  2026.
+\newblock Documentation source read at commit db03c2c on 2026-11-03; the
+  rendered site was not reachable from the checking environment. Title given
+  descriptively.
+
+\bibitem[{OpenRLHF contributors}(n.d.)]{openrlhf}
+{OpenRLHF contributors}.
+\newblock {OpenRLHF}.
+\newblock \url{https://github.com/OpenRLHF/OpenRLHF}, n.d.
+\newblock Commit dc2a7ad326f619fc5a47737ea47d1920ce2c0b53, read 2026-10-08.
+
+\bibitem[Pan(2026)]{pan2026probe}
+Taiheng Pan.
+\newblock Probe the harness: Setup checks for stale-data {RL} comparisons in
+  language models.
+\newblock arXiv:2610.02911, 2026.
+\newblock URL \url{https://arxiv.org/abs/2610.02911v1}.
+
+\bibitem[Plesner et~al.(2026)Plesner, Guzm{\'a}n, and
+  Athalye]{plesner2026imperfect}
+Andreas Plesner, Francisco Guzm{\'a}n, and Anish Athalye.
+\newblock An imperfect verifier is good enough: Learning with noisy rewards.
+\newblock arXiv:2604.07666, 2026.
+\newblock URL \url{https://arxiv.org/abs/2604.07666v2}.
+\newblock Version 2; checked 2026-10-08.
+
+\bibitem[Ray(2026)]{ray2026fuzzing}
+Jaideep Ray.
+\newblock Before the model learns the bug: Fuzzing {RLVR} verifiers.
+\newblock arXiv:2606.01066, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.01066v1}.
+
+\bibitem[{Ray contributors}(n.d.)]{raytrl}
+{Ray contributors}.
+\newblock Reinforcement learning with {TRL} on {Ray Train} (example).
+\newblock
+  \url{https://github.com/ray-project/ray/blob/0fe2388b9d4e4cf541609b4a11d5d95e348f1288/doc/source/train/examples/transformers/transformer_reinforcement_learning/README.md},
+  n.d.
+\newblock Commit 0fe2388b9d4e4cf541609b4a11d5d95e348f1288, read 2026-10-08;
+  title given descriptively.
+
+\bibitem[Shao et~al.(2024)Shao, Wang, Zhu, Xu, et~al.]{shao2024deepseekmath}
+Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, et~al.
+\newblock {DeepSeekMath}: Pushing the limits of mathematical reasoning in open
+  language models.
+\newblock arXiv:2402.03300, 2024.
+\newblock URL \url{https://arxiv.org/abs/2402.03300v3}.
+
+\bibitem[{shaurya416} and {ChdDongyang}(2026)]{verl8015discussion}
+{shaurya416} and {ChdDongyang}.
+\newblock Discussion of concurrent reset behaviour in {verl} pull request
+  \#8015.
+\newblock
+  \url{https://github.com/verl-project/verl/pull/8015#issuecomment-5829231207},
+  2026.
+\newblock Report on 25 September; author response on 28 September at
+  \url{https://github.com/verl-project/verl/pull/8015#issuecomment-5862189678}.
+  Read 2026-10-08.
+
+\bibitem[Sheng et~al.(2024)Sheng, Zhang, Ye, Wu, et~al.]{sheng2024hybridflow}
+Guangming Sheng, Chi Zhang, Zilingfeng Ye, Xibin Wu, et~al.
+\newblock {HybridFlow}: A flexible and efficient {RLHF} framework.
+\newblock arXiv:2409.19256, 2024.
+\newblock URL \url{https://arxiv.org/abs/2409.19256v2}.
+
+\bibitem[Tian et~al.(2026)Tian, Li, Xu, Zou, et~al.]{tian2026stargrpo}
+Wan Tian, Zhongyi Li, Xiang Xu, Minhao Zou, et~al.
+\newblock {STAR-GRPO}: Canonical anchoring and reliability-first advantages
+  against representation-dependent reward hacking.
+\newblock arXiv:2609.36900, 2026.
+\newblock URL \url{https://arxiv.org/abs/2609.36900v1}.
+
+\bibitem[{verl contributors}(2026{\natexlab{a}})]{verl5635}
+{verl contributors}.
+\newblock {verl} pull request \#5635.
+\newblock \url{https://github.com/verl-project/verl/pull/5635},
+  2026{\natexlab{a}}.
+
+\bibitem[{verl contributors}(2026{\natexlab{b}})]{verl5839}
+{verl contributors}.
+\newblock {verl} pull request \#5839.
+\newblock \url{https://github.com/verl-project/verl/pull/5839},
+  2026{\natexlab{b}}.
+
+\bibitem[{verl contributors}(2026{\natexlab{c}})]{verl8011}
+{verl contributors}.
+\newblock {verl} issue \#8011.
+\newblock \url{https://github.com/verl-project/verl/issues/8011},
+  2026{\natexlab{c}}.
+
+\bibitem[{verl contributors}(2026{\natexlab{d}})]{verl8015}
+{verl contributors}.
+\newblock {verl} pull request \#8015.
+\newblock \url{https://github.com/verl-project/verl/pull/8015},
+  2026{\natexlab{d}}.
+\newblock Head 0c4c3d40d46d5f47d1918c905641eea969b7fa09; open on 2026-10-09
+  and, with the same head, on 2026-11-03.
+
+\bibitem[{verl contributors}(2026{\natexlab{e}})]{verlmain}
+{verl contributors}.
+\newblock {verl} reward routing and {prime\_math} grader.
+\newblock
+  \url{https://github.com/verl-project/verl/blob/acad9875a8bdfc81afbcb0a50d146b2630f44093/verl/utils/reward_score/prime_math/grader.py},
+  2026{\natexlab{e}}.
+\newblock Routing, grader and py\_functional.py read at the same pinned
+  revision on 2026-10-08.
+
+\bibitem[Xin(2026{\natexlab{a}})]{humanlabels}
+Esther Xin.
+\newblock Human-labelled extracted answers for {rlvr\_group\_correlation}.
+\newblock
+  \url{https://github.com/ethxin0011/rlvr_group_correlation/blob/ccb330209370ddbbd76717658074abd54a7c45d0/README.md},
+  2026{\natexlab{a}}.
+\newblock CSV SHA-256
+  90fca106cb07f031a7ac169e009e6ab9cc0839126912218d0763b0ab6e037005; sampling
+  and schema read 2026-10-08.
+
+\bibitem[Xin(2026{\natexlab{b}})]{xin2026groupcorr}
+Esther Xin.
+\newblock Are verifier errors independent within a {GRPO} group? evidence from
+  {Qwen2.5} rollouts.
+\newblock arXiv:2609.06386, 2026{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2609.06386v1}.
+
+\bibitem[Xin(2026{\natexlab{c}})]{xin2026wherefails}
+Esther Xin.
+\newblock Where the verifier fails: A category-level audit of reward signals in
+  {RLVR}.
+\newblock arXiv:2609.01354, 2026{\natexlab{c}}.
+\newblock URL \url{https://arxiv.org/abs/2609.01354v1}.
+
+\bibitem[Yang et~al.(2026{\natexlab{a}})Yang, Lyu, Liu, Zhang,
+  et~al.]{yang2026icoder}
+Cheng Yang, Jiayang Lyu, Shangyuan Liu, Guibin Zhang, et~al.
+\newblock {iCoder-27B}: Recursive {AI}-led development of frontier industrial
+  coding model.
+\newblock arXiv:2609.29626, 2026{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2609.29626v1}.
+
+\bibitem[Yang et~al.(2026{\natexlab{b}})Yang, Chen, Wang, Lu,
+  et~al.]{yang2026biased}
+Fengkai Yang, Zherui Chen, Xiaohan Wang, Xiaodong Lu, et~al.
+\newblock Your group-relative advantage is biased.
+\newblock arXiv:2601.08521, 2026{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2601.08521v3}.
+
+\bibitem[Zhang(2026)]{zhang2026leaky}
+Chuyifei Zhang.
+\newblock When the reward suite is leaky: A preregistered causal contrast of
+  natural verifier false positives in {RLVR}.
+\newblock arXiv:2607.11022, 2026.
+\newblock URL \url{https://arxiv.org/abs/2607.11022v1}.
+
+\bibitem[Zhang et~al.(2026)Zhang, Jia, Zhai, Fang, et~al.]{zhang2026rftfailure}
+Lingzhe Zhang, Tong Jia, Yunpeng Zhai, Liancheng Fang, et~al.
+\newblock Towards robust {LLM} post-training: Automatic failure management for
+  reinforcement fine-tuning.
+\newblock arXiv:2605.04431, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.04431v1}.
+
+\end{thebibliography}

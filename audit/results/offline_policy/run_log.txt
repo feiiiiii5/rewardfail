@@ -1,0 +1,27 @@
+{
+ "protocol": "PROTOCOL.md",
+ "csv_sha256": "90fca106cb07f031a7ac169e009e6ab9cc0839126912218d0763b0ab6e037005",
+ "groups": 72,
+ "positives_per_group": {
+  "0": 9,
+  "1": 4,
+  "2": 2,
+  "3": 5,
+  "4": 11,
+  "5": 9,
+  "6": 4,
+  "7": 11,
+  "8": 17
+ },
+ "constant_groups": 26,
+ "draws": 2000,
+ "seed": 20261103,
+ "verl_crosscheck": {
+  "cases": 288,
+  "max_abs_difference": 2.9014589397746704e-07
+ }
+}
+
+real	3m23.686s
+user	3m20.817s
+sys	0m0.790s

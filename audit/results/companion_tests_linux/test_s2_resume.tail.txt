@@ -1,0 +1,5 @@
+通过 段参数的行集合变了：拒绝 | "limit2s 段的参数与已有记录不同，停下（不删原记录、不自动重判）：\n  ids_sha256：464e8be6dd5360913a99261fbf32c19a2ada24a87e6648553d12cad9f838fe39 → c79829cc4feccdbb8230ef699540c5e433c4fc61715dde4c539c7e1a2c3f7904\n  n：5 → 4"
+通过 段参数的模式变了：拒绝 | "limit2s 段的参数与已有记录不同，停下（不删原记录、不自动重判）：\n  mode：observe → reference\n  row_limit：150 → 690"
+通过 段参数的单子进程上限变了：拒绝 | "limit2s 段的参数与已有记录不同，停下（不删原记录、不自动重判）：\n  child_limit：805306368 → 3221225472"
+通过 段目录已有记录却没有 pass_spec.json：拒绝 | "default 段已有记录却没有 pass_spec.json，确认不了参数，停下"
+25 项，失败 0 项；写 <SCRATCH>/work/companion/results/s2_rev2/resume_check.json

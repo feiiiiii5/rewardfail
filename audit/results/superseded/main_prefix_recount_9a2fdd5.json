@@ -1,0 +1,102 @@
+{
+ "inputs_sha256": {
+  "<author-inputs>/main-run/default/rows.jsonl": "7a2e9fcfaa4bb3cb64256602c148dd936f818a6641d4bd289c6f2fe5cd89ee99",
+  "<author-inputs>/main-run/reference/rows.jsonl": "f753d64b2dd4a1cb4347830292a5a06888b8c0e7337444ee2d2bdd5652646e94",
+  "<companion>/rewardfail/s2/report.py": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+  "<companion>/rewardfail/s2/analyze.py": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
+  "<author-inputs>/reanalysis/s2_main/report.json": "db22d23468f1e2deeddc9d54fca75c0842a904967cfa040b14cbecbbcc5145d4"
+ },
+ "counts": {
+  "default_rows": 93733,
+  "default_warmups": [
+   "warm-default1w0-1"
+  ],
+  "reference_rows": 33487,
+  "reference_warmups": [
+   "warm-reference-r11w0-1",
+   "warm-reference-r11w1-1",
+   "warm-reference-r11w2-1",
+   "warm-reference-r12w0-1",
+   "warm-reference-r13w0-1",
+   "warm-reference-r21w0-1",
+   "warm-reference-r21w0-2"
+  ]
+ },
+ "ids_sha256": {
+  "default_file_order": false,
+  "default_sorted": false,
+  "reference_file_order": false,
+  "reference_sorted": false
+ },
+ "companion_default_value_identical": true,
+ "reference_ids_subset_of_default": true,
+ "reference_covers_all_default_nonone": true,
+ "reference_extra_default_one_controls": 1000,
+ "uncorrected_metric": {
+  "n": 93733,
+  "k": 1,
+  "u": 9573,
+  "k_by_classes": {
+   "0 分：比较超时 → 1 分": 1
+  },
+  "u_reasons": {
+   "参照：0 分：比较超时": 11,
+   "参照：本机预算终止（未裁定）": 9559,
+   "参照：未裁定（中断两次）": 2,
+   "参照：0 分：标准答案侧解析超时": 1
+  },
+  "lower_one_sided_95_k": 5.472275542777254e-07,
+  "upper_one_sided_95_k_plus_u": 0.10378262258748011
+ },
+ "uncorrected_k_ids": [
+  "m-377a40b9adf29ef8"
+ ],
+ "k_ids_equal_formal": true,
+ "uncorrected_reference_classes": {
+  "正常 0": 22901,
+  "1 分": 696,
+  "0 分：比较超时": 11,
+  "0 分：比较出错": 9,
+  "0 分：回答侧解析出错": 3,
+  "0 分：标准答案侧解析超时": 1,
+  "未裁定（中断两次）": 2,
+  "本机预算终止（未裁定）": 9864
+ },
+ "formal_reference_classes": {
+  "正常 0": 32452,
+  "1 分": 1001,
+  "0 分：比较超时": 14,
+  "0 分：比较出错": 12,
+  "0 分：回答侧解析出错": 4,
+  "0 分：标准答案侧解析超时": 1,
+  "未裁定（中断两次）": 2,
+  "本机预算终止（未裁定）": 1
+ },
+ "formal_class_changes_reported": {
+  "本机预算终止（未裁定） → 正常 0": 9551,
+  "本机预算终止（未裁定） → 1 分": 308,
+  "本机预算终止（未裁定） → 0 分：比较超时": 3,
+  "本机预算终止（未裁定） → 0 分：比较出错": 3,
+  "本机预算终止（未裁定） → 0 分：回答侧解析出错": 1
+ },
+ "aggregate_reconciliation_matches_formal": false,
+ "uncorrected_budget_killed_reference_rows": 9864,
+ "budget_rows_by_default_class": {
+  "正常 0": 9546,
+  "1 分": 305,
+  "0 分：比较出错": 3,
+  "0 分：比较超时": 9,
+  "0 分：回答侧解析出错": 1
+ },
+ "formal_u_ids_check_LABELLED_CONSISTENCY_ONLY": {
+  "all_in_uncorrected_u": true,
+  "uncorrected_reference_class_of_formal_u": {
+   "0 分：比较超时": 11,
+   "本机预算终止（未裁定）": 4,
+   "未裁定（中断两次）": 2,
+   "0 分：标准答案侧解析超时": 1
+  },
+  "formal_u_reference_class_equal_uncorrected": 15
+ },
+ "uncorrected_reference_error_zero_rows": 12
+}

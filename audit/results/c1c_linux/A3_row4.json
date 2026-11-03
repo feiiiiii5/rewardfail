@@ -1,0 +1,31 @@
+{
+  "case": "A3_row4",
+  "path": "A",
+  "manager": "rate_limited",
+  "failing_rows": [
+    4
+  ],
+  "prediction": "第 1 个生成进程的汇总 KeyError，整批中止",
+  "outcome": "aborted",
+  "exception_type": "RayTaskError(KeyError)",
+  "exception_mro": [
+    "RayTaskError(KeyError)",
+    "RayTaskError",
+    "RayError",
+    "KeyError",
+    "LookupError",
+    "Exception",
+    "BaseException",
+    "object"
+  ],
+  "exception_message_head": "KeyError: 'error'",
+  "traceback": "Traceback (most recent call last):\n  File \"<SCRATCH>/work/companion/experiments/c1c_chain.py\", line 216, in run_case\n    out = alm.generate_sequences(prompts=batch)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/utils/ray_utils.py\", line 123, in wrapper\n    return asyncio.run(coro)\n           ^^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/asyncio/runners.py\", line 194, in run\n    return runner.run(main)\n           ^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/asyncio/base_events.py\", line 686, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/utils/skip/skip_manager.py\", line 89, in async_wrapper\n    return await func(*args, **kwargs_inner)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py\", line 1248, in generate_sequences\n    outputs = await asyncio.gather(\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/asyncio/tasks.py\", line 684, in _wrap_awaitable\n    return await awaitable\n           ^^^^^^^^^^^^^^^\nray.exceptions.RayTaskError(KeyError): \u001b[36mray::AgentLoopWorker.generate_sequences()\u001b[39m (pid=7237, ip=192.0.2.2, actor_id=63ce8d780e86d3158eb4fcd401000000, repr=<verl.experimental.agent_loop.agent_loop.AgentLoopWorker object at 0x7f8c8843b980>)\n  File \"<PYTHON>/lib/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"<PYTHON>/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py\", line 656, in generate_sequences\n    output = self._postprocess(\n             ^^^^^^^^^^^^^^^^^^\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<SCRATCH>/work/companion/third_party/verl-pr8015/verl/experimental/agent_loop/agent_loop.py\", line 1111, in _postprocess\n    non_tensor_batch[key] = np.array([info[key] for info in reward_extra_infos])\n                                      ~~~~^^^^^\nKeyError: 'error'\n",
+  "raise_site": "verl/experimental/agent_loop/agent_loop.py:1111",
+  "seconds": 22.38,
+  "worker_log_lines_reward_failed": [
+    "\u001b[36m(RewardLoopWorker pid=7235)\u001b[0m ERROR:2026-11-03 08:21:24,512:Reward computation failed for data_source=rewardfail_c1c: A process in the process pool was terminated abruptly while the future was running or pending.. Response preview: \\boxed{7} [[INJECT_WORKER_DEATH]]#row=4..."
+  ],
+  "injected_worker_deaths_by_row": {
+    "4": 2
+  }
+}

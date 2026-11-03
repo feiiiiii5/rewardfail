@@ -1,0 +1,5 @@
+    src = subprocess.run(["git", "-C", str(ROOT), "show", f"{OLD_COMMIT}:rewardfail/s2/stepguard.py"],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON>/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', '-C', '<SCRATCH>/work/companion', 'show', '99b086d:rewardfail/s2/stepguard.py']' returned non-zero exit status 128.
