@@ -75,6 +75,24 @@ The note also distinguishes reference-protocol unresolved rows from all library
 execution failures and lists the evidence still needed. No training benefit or
 fresh-machine replication has been added.
 
+## Evidence audit and editable revision (3 November 2026, awaiting author review)
+
+This branch adds, without changing `paper.pdf` or the companion archive:
+
+- [`audit/EVIDENCE_MAP.md`](audit/EVIDENCE_MAP.md): claim-to-evidence table and every check run.
+- [`audit/GAPS.md`](audit/GAPS.md): what still cannot be verified and the smallest input that would close each gap.
+- [`audit/REPRODUCE.md`](audit/REPRODUCE.md): commands, environment and stored results.
+- [`audit/upstream_chain/`](audit/upstream_chain/): real-function failure-chain tests and two patches
+  for verl `0c4c3d4` (a port of the open upstream PR #7151, and a validation-accumulation fix).
+- [`audit/experiments/e3_linux/`](audit/experiments/e3_linux/): a new, pre-specified Linux replay of the labelled answer set.
+- [`paper/`](paper/): an **editable LaTeX reconstruction from the public PDF** (not the original
+  source), its revision log, build notes and the compiled revised PDF.
+- [`audit/THESIS_HANDOFF.md`](audit/THESIS_HANDOFF.md): items a dependent thesis must re-check.
+
+New executions ran on Linux x86-64 (CPython 3.12.8); they are additional verification, not a replay
+of the historical macOS environment. Recounting the distributed derived records is not an independent
+reproduction from raw data, and k = 1 / u = 18 remain report-only values.
+
 ## Contribution and assistance
 
 The author selected the research topic, research route and methods. AI agents
