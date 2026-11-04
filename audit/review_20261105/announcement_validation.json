@@ -1,0 +1,27 @@
+{
+  "offline_tests_exit": 0,
+  "offline_tests": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.011s\n\nOK",
+  "submission_number_exit": 2,
+  "submission_number_result": {
+    "status": "invalid_input_or_parse_error",
+    "error": "use a public arXiv identifier YYMM.NNNNN[ vN without spaces ]; submit/ numbers are not arXiv IDs"
+  },
+  "live_wrong_paper_exit": 1,
+  "live_wrong_paper": {
+    "status": "mismatch",
+    "checks": {
+      "identifier": true,
+      "version": true,
+      "title": false,
+      "authors": false,
+      "abstract": false,
+      "pdf_pages": false
+    },
+    "local_pdf_pages": 23,
+    "public_pdf_pages": 31,
+    "local_files_unchanged": true
+  },
+  "local_files_unchanged": true,
+  "actual_rewardfail_id_known": false,
+  "announcement_checked": false
+}
