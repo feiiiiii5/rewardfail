@@ -1,4 +1,4 @@
-# 原始事件独立复算（2026-11-05 CST）
+# 原始事件独立复算（2026-11-05审查轮次，实际执行起于11-04 CST）
 
 审核对象：GitHub `main` `d9ef9cb3cf50d6b55d9491dd8d8b6adadef7ce7c`，23页稿 `paper/main.tex` 与 `paper/rewardfail-preprint-2026-11-03.pdf`。新clone `/Users/fei/.local/share/rewardfail/review-2026-11-05`，`review/2026-11-05`。申请季与旧clone全程只读。本记录供研究审核，不是新论文版本或申请稿批准。
 
@@ -6,7 +6,7 @@
 
 **本机现在已从完整原始事件重建主测量的更正结果，不再只有报告级核对。** 77个原始输入文件来自仓外保留目录 `/Users/fei/.local/share/rewardfail/stage2/runs/main-20261007-202545/`；`rebuilt_events.json` 逐个记录绝对路径、bytes与SHA-256，并在结束重新哈希，`inputs_unchanged=true`。这些原始事件仍不在GitHub主分支/companion中；公开读者仅靠现有分发包仍不能重建。此区别必须保留，不能因本机成功就说公开复现缺口全闭合。
 
-结果：`n=93,733, k=1, u=18`；`upper_one_sided_95_k_plus_u=0.0002974184026113824`（0.02974184026113824%）；`[k/n,(k+u)/n]=[0.000010668601239691463,0.000202703423554139]`。与companion中**更正后**正式报告的整个 `main_metric` 字典精确相等，退出0。所有8个pass严格序号检查均无file problems/重复结果。未重新调用Math-Verify，也未重新生成回答。
+结果：`n=93,733, k=1, u=18`；`upper_one_sided_95_k_plus_u=0.0002974184026113824`（0.02974184026113824%）；`[k/n,(k+u)/n]=[0.000010668601239691463,0.00020270342355413782]`。与companion中**更正后**正式报告的整个 `main_metric` 字典精确相等，退出0。所有8个pass严格序号检查均无file problems/重复结果。未重新调用Math-Verify，也未重新生成回答。
 
 | pass | 重建的非warmup行 | 与原目录 retained rows 的class差异 |
 |---|---:|---:|

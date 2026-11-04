@@ -1,0 +1,234 @@
+{
+  "source_run": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex",
+  "analyzer_sha256": "f6e70c6c1f65e3d7d307cc25dbc795cad689c01a7fde58383e21ea79d3760e1a",
+  "report_code_sha256": "3d610a251fc5cda26715f1fe82cd017ee379f0aa8644887e7c1b13135a0288c6",
+  "inputs": [
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/default/child_logs/child-2436.jsonl",
+      "bytes": 340122113,
+      "sha256": "45180051ba3a6afb0a68ff6f55903cd7295e998b098c287bb38ab0559029658d"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/default/guard-default.jsonl",
+      "bytes": 30762,
+      "sha256": "0cb5dc9b7fecb45e2db859ce56d254e05d7171bd9c9ac37db59119ad07bc394b"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/default/interrupts.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/default/obs-default1w0.jsonl",
+      "bytes": 66657460,
+      "sha256": "cc760156d35be346f880f66e17b19c312586b1bad863d8375bcbd6b1dce39172"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/default/results-default1w0.jsonl",
+      "bytes": 42093015,
+      "sha256": "3f1c4a096d8ee79b6573bc58ea521a0ebcbbc5a7b44fdf31743ff3a95e58d3f4"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/default/warm-default1w0.jsonl",
+      "bytes": 301,
+      "sha256": "73e31f4f516d0b0b73a8d37284a79a888e71bd697a502bb385cb923c0ae9944a"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/child_logs/child-18500.jsonl",
+      "bytes": 97063159,
+      "sha256": "2f20c31ad2937287753ef24f7db6b488470f8666151d4df069463b63fc7dacbd"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/child_logs/child-6069.jsonl",
+      "bytes": 27611175,
+      "sha256": "718752db9edebee7b21967d7d1329a050156465eca2eefe6d7c83a821550a24c"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/guard-reference-r1.jsonl",
+      "bytes": 45227,
+      "sha256": "acc181bb9179f7ee018df6343e9bde75e35a3ed7f5d4a31ca0d50502b145bd52"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/guard-reference.jsonl",
+      "bytes": 10897,
+      "sha256": "6fbedd217759c896d0955fb4168199faa5f3212e95e5b343a6d81d1ef6a543bf"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/interrupts.json",
+      "bytes": 200,
+      "sha256": "21c8de513e941f1c85990030dbb8413f88b3787d12f494a1ab0d419a492656d9"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/obs-reference-r11w0.jsonl",
+      "bytes": 18025713,
+      "sha256": "797541aa3af43c7ba114102a833fb4a2760135467fb2fbf4a7571cfd9274e23f"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/obs-reference1w0.jsonl",
+      "bytes": 5230115,
+      "sha256": "dc27bed5d1f1f0d17bbc51317fcc82454b633341283e2d13973aee348fc09025"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/results-reference-r11w0.jsonl",
+      "bytes": 11171735,
+      "sha256": "22ca3498f8517821139ddc40bd2c6561eda9b53f27f0e8ab62e68b7de5151908"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/results-reference1w0.jsonl",
+      "bytes": 3223758,
+      "sha256": "85e31d693d1c4a46a60f23732b1a69b5c2a826b151e5b8f3195680c566273843"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/warm-reference-r11w0.jsonl",
+      "bytes": 317,
+      "sha256": "d86bb48924235b91f3ff4f50e066c4d38db14c4da19c0bb8088f06e88a629c7d"
+    },
+    {
+      "path": "/Users/fei/.local/share/rewardfail/stage2/runs/e2-complement-20261008-codex/reference/warm-reference1w0.jsonl",
+      "bytes": 260,
+      "sha256": "f15b3b683576ad5beab43deb825af4359e27a0b9628c87ae81456fb04a6d3675"
+    }
+  ],
+  "segments": {
+    "default": {
+      "stats": {
+        "rows": 100034,
+        "warm_rows": 1,
+        "pools": {
+          "default1w0": 1
+        },
+        "exit_codes": {
+          "0": 1
+        },
+        "budget_kills": 0,
+        "hard_stops": 0,
+        "interrupted_rows": 0,
+        "file_problems": {
+          "workers": {},
+          "pids": {}
+        },
+        "dup_results": []
+      },
+      "classes": {
+        "1 分": 67330,
+        "正常 0": 32664,
+        "0 分：比较出错": 11,
+        "0 分：比较超时": 26,
+        "0 分：回答侧解析出错": 2,
+        "0 分：标准答案侧解析超时": 1
+      },
+      "warm_classes": {
+        "1 分": 1
+      },
+      "retained_row_class_differences": [],
+      "rows_sha256": "328f6d901a2a2e832e378f868cfd6d328fce89554647ce171fab40852356107f"
+    },
+    "reference": {
+      "stats": {
+        "rows": 33704,
+        "warm_rows": 2,
+        "pools": {
+          "reference-r11w0": 1,
+          "reference1w0": 1
+        },
+        "exit_codes": {
+          "0": 1
+        },
+        "budget_kills": 0,
+        "hard_stops": 0,
+        "interrupted_rows": 1,
+        "file_problems": {
+          "workers": {},
+          "pids": {}
+        },
+        "dup_results": []
+      },
+      "classes": {
+        "正常 0": 32676,
+        "1 分": 1001,
+        "0 分：比较出错": 11,
+        "0 分：比较超时": 13,
+        "0 分：回答侧解析出错": 2,
+        "0 分：标准答案侧解析超时": 1
+      },
+      "warm_classes": {
+        "1 分": 2
+      },
+      "retained_row_class_differences": [],
+      "rows_sha256": "e1668a63b65374121064414ea6d8014042308f76dbb3d35b9617d67d788e9370"
+    }
+  },
+  "metric": {
+    "n": 100034,
+    "k": 1,
+    "u": 14,
+    "rate_k": 9.996601155607094e-06,
+    "lower_one_sided_95_k": 5.127584744913241e-07,
+    "upper_one_sided_95_k_plus_u": 0.0002308834493125271,
+    "ci95_two_sided_k": [
+      2.5309199652663007e-07,
+      5.569622406505319e-05
+    ],
+    "continue_2_metric": false,
+    "stop_2": false,
+    "k_by_classes": {
+      "0 分：比较超时 → 1 分": 1
+    },
+    "u_reasons": {
+      "参照：0 分：标准答案侧解析超时": 1,
+      "参照：0 分：比较超时": 13
+    }
+  },
+  "k_ids": [
+    "e2-377a40b9adf29ef8-1"
+  ],
+  "u_ids": [
+    "e2-0a55a91128070c4b-0",
+    "e2-265d3ca8a169b29b-0",
+    "e2-2a2cbb703cd7d47a-0",
+    "e2-566490b9a679c052-1",
+    "e2-691a82a720415dbc-1",
+    "e2-696f7389aa285443-0",
+    "e2-6cc6536a39ab6094-0",
+    "e2-8364284f555502b7-1",
+    "e2-8967f984969c2fb1-1",
+    "e2-ac45c2e3c4109182-0",
+    "e2-c2a8844f7413b247-0",
+    "e2-ccefd538365e14b3-1",
+    "e2-f6e89bd885e1f88f-0",
+    "e2-fa489af4aead097c-1"
+  ],
+  "formal_comparison_type": "n_k_u_and_id_sets",
+  "formal_metric_equal": true,
+  "formal_report_sha256": "696d11cf2793087be714a48f19bf203ffa0bc92c7f8d820065aae46cbe5b0c21",
+  "formal_report_path": "/private/tmp/rewardfail-review-20261105-work/companion/results/s2_e2/report.json",
+  "retained_run_report_sha256": "d27ebb78397cf81c95c517c62b9318ce74df22bdad4d2a492b865aa8cfe1a143",
+  "reference_error_zero_ids": [
+    "e2-01fa6f37d6adffe3-0",
+    "e2-49dad38e1e489c47-0",
+    "e2-4d58bc713af3e80c-1",
+    "e2-684855505496e7a9-1",
+    "e2-6869e38fd5799fc3-1",
+    "e2-69732ecea7f5d647-0",
+    "e2-9d18e21e41a2137c-1",
+    "e2-ab154e1ade1b3437-0",
+    "e2-ac7bf01ed3fab4fd-1",
+    "e2-d5932ea325a9c529-1",
+    "e2-dd07584f8819bc0e-1",
+    "e2-eaf4ee63f33741a0-0",
+    "e2-eb45b97e859bc719-0"
+  ],
+  "error_inclusive": {
+    "u": 27,
+    "upper_count": 28
+  },
+  "pooled": {
+    "n": 193767,
+    "k": 2,
+    "u": 32,
+    "same_recovery_question": true,
+    "unresolved_questions": 21,
+    "formal_counts_equal": true
+  },
+  "inputs_unchanged": true
+}

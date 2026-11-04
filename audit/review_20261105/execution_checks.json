@@ -1,0 +1,99 @@
+{
+  "review_base_main": "d9ef9cb3cf50d6b55d9491dd8d8b6adadef7ce7c",
+  "execution_local_date": "2026-11-04",
+  "environment": {
+    "platform": "macOS-27.3-arm64-arm-64bit",
+    "python": "3.12.8",
+    "packages": {
+      "torch": "2.14.1",
+      "ray": "2.59.0",
+      "transformers": "5.12.1",
+      "numpy": "2.5.3",
+      "math-verify": "0.9.0",
+      "sympy": "1.14.0",
+      "peft": "0.21.2"
+    }
+  },
+  "checks": {
+    "original_13": true,
+    "original_contracts_match_stored_linux": true,
+    "fixed_13": true,
+    "fixed_rate_limited_complete": true,
+    "fixed_injected_all_flags": true,
+    "naive_still_abort": true,
+    "rewards_preserved_where_original_completed": true,
+    "fixed_contracts_match_stored_linux": true,
+    "offline_exact_json": true,
+    "supplement_exact_json": true,
+    "e3_trials_22176": true,
+    "e3_all_scores_and_events_agree": true
+  },
+  "executions": {
+    "chain_original": {
+      "exit_code": 1,
+      "log_sha256": "d4607f3ed39bb1f9bdc3f21e19cd307b693a1aaa82c97c89b0ff231aada62791"
+    },
+    "chain_fixed": {
+      "exit_code": 0,
+      "log_sha256": "dbc7ca031e2822dd6fa8af7fe5061ef770f58c089547656b95864fe40cc70bbb"
+    },
+    "offline": {
+      "exit_code": 0,
+      "log_sha256": "fec96c3989dc83778a80c15f62523884c9420559f60a00f4aed0480b12dd45fc"
+    },
+    "supplement": {
+      "exit_code": 0,
+      "log_sha256": "c70fff09c25c02373dd7cb8aa032a3f3cf12a954880fe48966332cb64cc77344"
+    },
+    "c1c": {
+      "exit_code": 0,
+      "log_sha256": "d3efc640c1b402821ed18fa169e82527f212fc446eb943b5cc4c7c43324e415d"
+    },
+    "c1c_fixed_corrected": {
+      "exit_code": 0,
+      "log_sha256": "da8831a77b6bc621379aae191abba66c9bcf2d8c1852643e7d5a858f4768abbd"
+    },
+    "e3": {
+      "exit_code": 0,
+      "log_sha256": "23182586de34255f1faf6f3ff643c73563b8681fe460222c07194432e3b75121"
+    },
+    "rebuild": {
+      "exit_code": 0,
+      "log_sha256": "5c95601a08a31557c23a36f959202182f9f1deb1ef807e174c21e0935919999e"
+    },
+    "complement": {
+      "exit_code": 0,
+      "log_sha256": "397e5d50c278a23f0b1bfe15ef1fd50a0b5da1c7b8d3c0a9423d395e86440e7f"
+    },
+    "pilot": {
+      "exit_code": 0,
+      "log_sha256": "acfd1088237ce1e681a8efbaa72867b2e07f3e9e515db49bf8c2a22c19c8f196"
+    },
+    "wrong_fixed_invocation": {
+      "exit_code": 0,
+      "excluded_from_scientific_results": true,
+      "reason": "driver parent missed PYTHONPATH and loaded unpatched manager; rerun with same patched tree in parent and Ray workers",
+      "log_sha256": "d6ff8ab051e506b7fab5eae7f99688892e56a90e14268fd4293ab6765907f09a"
+    }
+  },
+  "independent_binomial_cdf_upper": 0.00029741840261100555,
+  "difference_from_frozen_report_upper": -3.7686867515596134e-16,
+  "budget_correction_test": {
+    "passed": 51,
+    "failed": 0,
+    "old_analyzer_source_loader_override_only": true
+  },
+  "rendered_pdf": {
+    "pages": 23,
+    "all_pages_contact_sheets_inspected": true,
+    "tables_enlarged_pages": [
+      9,
+      16
+    ],
+    "tex_rebuilt": false
+  },
+  "measured_pressure_values": [
+    1,
+    2
+  ]
+}

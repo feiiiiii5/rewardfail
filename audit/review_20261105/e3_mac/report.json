@@ -1,0 +1,105 @@
+{
+ "protocol": "PROTOCOL.md",
+ "csv_sha256": "90fca106cb07f031a7ac169e009e6ab9cc0839126912218d0763b0ab6e037005",
+ "wrapper_sha256": "f04f57d5cdc08d80197577c77d0bb9d47c2ddc6b4f8e80389ddf7ad3c71c8713",
+ "passes": {
+  "L5": {
+   "raw_trials": 5556,
+   "boxed_trials": 5532,
+   "aliases": 24,
+   "seconds": {
+    "raw": 39.8,
+    "boxed": 63.4
+   }
+  },
+  "L60": {
+   "raw_trials": 5556,
+   "boxed_trials": 5532,
+   "aliases": 24,
+   "seconds": {
+    "raw": 151.5,
+    "boxed": 231.8
+   }
+  }
+ },
+ "tables": {
+  "raw-L5": {
+   "n": 5556,
+   "label_pos_score0": 1487,
+   "label_neg_score1": 43,
+   "event_zero": 3,
+   "event_zero_label_pos": 0,
+   "incomplete": 0,
+   "disagreement": 1530
+  },
+  "boxed-L5": {
+   "n": 5556,
+   "label_pos_score0": 113,
+   "label_neg_score1": 91,
+   "event_zero": 4,
+   "event_zero_label_pos": 0,
+   "incomplete": 0,
+   "disagreement": 204
+  },
+  "raw-L60": {
+   "n": 5556,
+   "label_pos_score0": 1487,
+   "label_neg_score1": 43,
+   "event_zero": 2,
+   "event_zero_label_pos": 0,
+   "incomplete": 0,
+   "disagreement": 1530
+  },
+  "boxed-L60": {
+   "n": 5556,
+   "label_pos_score0": 113,
+   "label_neg_score1": 91,
+   "event_zero": 3,
+   "event_zero_label_pos": 0,
+   "incomplete": 0,
+   "disagreement": 204
+  }
+ },
+ "historical_agreement": {
+  "raw-L5": {
+   "compared_rows": 5556,
+   "same_score": 5556,
+   "score_differs": [],
+   "event_rows_new": 3,
+   "event_rows_historical": 3,
+   "event_only_new": [],
+   "event_only_historical": [],
+   "max_wall_new": 5.0813
+  },
+  "boxed-L5": {
+   "compared_rows": 5532,
+   "same_score": 5532,
+   "score_differs": [],
+   "event_rows_new": 4,
+   "event_rows_historical": 4,
+   "event_only_new": [],
+   "event_only_historical": [],
+   "max_wall_new": 5.1797
+  },
+  "raw-L60": {
+   "compared_rows": 5556,
+   "same_score": 5556,
+   "score_differs": [],
+   "event_rows_new": 2,
+   "event_rows_historical": 2,
+   "event_only_new": [],
+   "event_only_historical": [],
+   "max_wall_new": 60.0733
+  },
+  "boxed-L60": {
+   "compared_rows": 5532,
+   "same_score": 5532,
+   "score_differs": [],
+   "event_rows_new": 3,
+   "event_rows_historical": 3,
+   "event_only_new": [],
+   "event_only_historical": [],
+   "max_wall_new": 60.1798
+  }
+ }
+}

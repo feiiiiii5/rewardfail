@@ -75,6 +75,9 @@ def main():
     ap.add_argument('--run', type=Path, required=True)
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--formal-report', type=Path, required=True, help='corrected formal report; the retained run report may be pre-correction')
+    ap.add_argument('--formal-key', choices=('main_metric','extension'), default='main_metric')
+    ap.add_argument('--segments', nargs='+', default=['default','reference','limit2s','limit10s','replay1','replay2','replay3','retest'])
+    ap.add_argument('--main-rebuild', type=Path, help='for complement: combine independently reconstructed main counts')
     ap.add_argument('--old-analyzer', type=Path)
     a = ap.parse_args()
     if a.out.exists():
@@ -83,7 +86,7 @@ def main():
     rp = a.companion / 'rewardfail/s2/report.py'
     sys.path.insert(0, str(a.companion.resolve()))
     analyzer, report = module(source, 'rf_analyze'), module(rp, 'rf_report')
-    names = ('default', 'reference', 'limit2s', 'limit10s', 'replay1', 'replay2', 'replay3', 'retest')
+    names = tuple(a.segments)
     paths = [p for name in names for p in files(a.run / name)]
     manifest = [{'path': str(p.resolve()), 'bytes': p.stat().st_size, 'sha256': sha(p)} for p in paths]
     result = {'source_run': str(a.run.resolve()), 'analyzer_sha256': sha(source),
@@ -101,15 +104,29 @@ def main():
         ids = sorted(classes['default'])
         metric, k_ids, u_ids = report.main_metric(ids, classes['default'], classes['reference'])
         formal = json.loads(a.formal_report.read_text())
+        expected = formal[a.formal_key]
+        same = metric == expected if a.formal_key=='main_metric' else (
+            all(metric[k]==expected[k] for k in ('n','k','u')) and
+            set(k_ids)==set(expected['k_ids']) and set(u_ids)==set(expected['u_ids']))
         result.update(metric=metric, k_ids=k_ids, u_ids=u_ids,
-                      formal_metric_equal=metric == formal['main_metric'], formal_report_sha256=sha(a.formal_report),
+                      formal_comparison_type='full_metric' if a.formal_key=='main_metric' else 'n_k_u_and_id_sets',
+                      formal_metric_equal=same, formal_report_sha256=sha(a.formal_report),
                       formal_report_path=str(a.formal_report.resolve()), retained_run_report_sha256=sha(a.run / 'report.json'))
         errors = [k for k in ids if report.default_verdict(classes['default'][k]) == 0
                   and '出错' in classes['reference'].get(k, '')]
         result['reference_error_zero_ids'] = errors
         result['error_inclusive'] = {'u': len(set(u_ids) | set(errors)), 'upper_count': len(k_ids) + len(set(u_ids) | set(errors))}
-        result['limits'] = report.limits_table(sorted(classes['limit2s']), classes['limit2s'], classes['default'], classes['limit10s'])
-        result['retest'] = report.retest(sorted(classes['retest']), classes['default'], classes['retest'])
+        if 'limit2s' in classes and 'limit10s' in classes:
+            result['limits'] = report.limits_table(sorted(classes['limit2s']), classes['limit2s'], classes['default'], classes['limit10s'])
+        if 'retest' in classes:
+            result['retest'] = report.retest(sorted(classes['retest']), classes['default'], classes['retest'])
+        if a.main_rebuild:
+            main_result=json.loads(a.main_rebuild.read_text())
+            pooled={k:metric[k]+main_result['metric'][k] for k in ('n','k','u')}
+            pooled['same_recovery_question']=set(k.split('-')[1] for k in k_ids)==set(k.split('-')[1] for k in main_result['k_ids'])
+            pooled['unresolved_questions']=len(set(k.split('-')[1] for k in u_ids+main_result['u_ids']))
+            pooled['formal_counts_equal']=all(pooled[k]==formal['all_answers'][k] for k in ('n','k','u'))
+            result['pooled']=pooled
         if a.old_analyzer:
             old = module(a.old_analyzer, 'rf_old_analyze')
             old_rows, old_info = rebuild(old, a.run / 'reference', Path(t) / 'old_reference')
