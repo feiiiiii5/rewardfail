@@ -1,0 +1,423 @@
+{
+  "protocol": "TRAINING_PROTOCOL.md",
+  "model_revision": "12fd25f77366fa6b3b4b768ec3050bf629380bac",
+  "model_file_sha256": "5af571cbf074e6d21a03528d2330792e532ca608f24ac70a143f6b369968ab8c",
+  "model_bytes": 269060552,
+  "environment": {
+    "platform": "macOS-27.3-arm64-arm-64bit",
+    "python": "3.12.8",
+    "torch": "2.14.1",
+    "device": "mps"
+  },
+  "trainable_parameters": 230400,
+  "initial_adapter_sha256": "1e84ffef9b56b0f3fa2b690dab744b98914117580044c0114587fa46a97a6530",
+  "calibration": {
+    "bin_counts": [
+      732,
+      164,
+      23,
+      31,
+      39,
+      9,
+      1,
+      1,
+      0,
+      0
+    ],
+    "bin_positive": [
+      74.0,
+      16.0,
+      3.0,
+      5.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "q": [
+      0.10217983651226158,
+      0.10240963855421686,
+      0.16,
+      0.18181818181818182,
+      0.024390243902439025,
+      0.18181818181818182,
+      0.3333333333333333,
+      0.6666666666666666,
+      0.5,
+      0.5
+    ],
+    "test_brier_all_candidates": 0.09074692212096118,
+    "split_sha256": "b8408bfa33d7a146998f1bdb32c681211c61f59893dffc26ee6493b193e39d44"
+  },
+  "steps": 24,
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "runs": [
+    {
+      "seed": 11,
+      "policy": "oracle",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12687788903713226,
+          "kl_to_initial": 0.0083766495808959
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.12999999523162842,
+          "expected_oracle_reward": 0.12424425035715103,
+          "kl_to_initial": 0.02793625183403492
+        }
+      ],
+      "max_grad_norm": 1.052432894706726,
+      "adapter_update_l2": 0.8935643972718744,
+      "adapter_final_sha256": "b17e54c0f87ad3b3c30ce8a6a286496bdc075720394e839bea2f135ece56cd38",
+      "injected_missing": 189,
+      "true_positive_actions": 92,
+      "seconds": 6.819762292001542
+    },
+    {
+      "seed": 11,
+      "policy": "zero",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12522055208683014,
+          "kl_to_initial": 0.007800080813467503
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.12999999523162842,
+          "expected_oracle_reward": 0.1222449317574501,
+          "kl_to_initial": 0.038922786712646484
+        }
+      ],
+      "max_grad_norm": 0.9267725348472595,
+      "adapter_update_l2": 0.9046909874620733,
+      "adapter_final_sha256": "099f1d824963a547f2e2a463014cd3e32c6408001749f004c1b9a01dcba97df4",
+      "injected_missing": 189,
+      "true_positive_actions": 97,
+      "seconds": 3.8374682499998016
+    },
+    {
+      "seed": 11,
+      "policy": "exclude",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12529629468917847,
+          "kl_to_initial": 0.009300575591623783
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12244489789009094,
+          "kl_to_initial": 0.042156629264354706
+        }
+      ],
+      "max_grad_norm": 1.008352518081665,
+      "adapter_update_l2": 0.9124729695489939,
+      "adapter_final_sha256": "6ed508c8e512753c08daef7cc4aeccbca25619dfa8ec5c3047443af26d71a109",
+      "injected_missing": 189,
+      "true_positive_actions": 97,
+      "seconds": 4.4655033749986615
+    },
+    {
+      "seed": 11,
+      "policy": "calibrated",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.1267148107290268,
+          "kl_to_initial": 0.012591397389769554
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12358944118022919,
+          "kl_to_initial": 0.04238203912973404
+        }
+      ],
+      "max_grad_norm": 0.9528903961181641,
+      "adapter_update_l2": 1.0050532980221736,
+      "adapter_final_sha256": "f48286754e3cc3ccea9a906850ab066443aed176247306717be2d84085d1e0da",
+      "injected_missing": 189,
+      "true_positive_actions": 96,
+      "seconds": 3.7799282499981928
+    },
+    {
+      "seed": 22,
+      "policy": "oracle",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.1280471682548523,
+          "kl_to_initial": 0.0067884898744523525
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.1599999964237213,
+          "expected_oracle_reward": 0.13350501656532288,
+          "kl_to_initial": 0.03109203837811947
+        }
+      ],
+      "max_grad_norm": 0.9900102615356445,
+      "adapter_update_l2": 1.0749284467649436,
+      "adapter_final_sha256": "6bf5c58dd7760fcadd80e95bf4f21a7c291db46be135c0d9303434b9105e5bf5",
+      "injected_missing": 197,
+      "true_positive_actions": 101,
+      "seconds": 3.8268474169999536
+    },
+    {
+      "seed": 22,
+      "policy": "zero",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12606197595596313,
+          "kl_to_initial": 0.004319450352340937
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12860733270645142,
+          "kl_to_initial": 0.009152407757937908
+        }
+      ],
+      "max_grad_norm": 0.6948180794715881,
+      "adapter_update_l2": 0.7111682236627319,
+      "adapter_final_sha256": "a11e8004e23eb942bf3791623c415ce275ce7dbf11f0d0c23dd1904e733507b1",
+      "injected_missing": 197,
+      "true_positive_actions": 99,
+      "seconds": 4.10324374999982
+    },
+    {
+      "seed": 22,
+      "policy": "exclude",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12399718165397644,
+          "kl_to_initial": 0.00334145943634212
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12766090035438538,
+          "kl_to_initial": 0.0072539751417934895
+        }
+      ],
+      "max_grad_norm": 0.7856424450874329,
+      "adapter_update_l2": 0.7224306116767543,
+      "adapter_final_sha256": "6b033f527c69e732bcedbbf944b43fd895208846fbf8559f991fbd3a256abec2",
+      "injected_missing": 197,
+      "true_positive_actions": 99,
+      "seconds": 4.687354249999771
+    },
+    {
+      "seed": 22,
+      "policy": "calibrated",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12672163546085358,
+          "kl_to_initial": 0.0049621062353253365
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.12555070221424103,
+          "kl_to_initial": 0.01770697720348835
+        }
+      ],
+      "max_grad_norm": 0.9890691041946411,
+      "adapter_update_l2": 0.9926206246930105,
+      "adapter_final_sha256": "b054b2dd1a3e68499aabb40c1fa7061400adaa04bf7456428c4a98af0af7274d",
+      "injected_missing": 197,
+      "true_positive_actions": 105,
+      "seconds": 4.066586875000212
+    },
+    {
+      "seed": 33,
+      "policy": "oracle",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.1599999964237213,
+          "expected_oracle_reward": 0.13139651715755463,
+          "kl_to_initial": 0.03148519620299339
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.1899999976158142,
+          "expected_oracle_reward": 0.15505939722061157,
+          "kl_to_initial": 0.24484969675540924
+        }
+      ],
+      "max_grad_norm": 1.2356984615325928,
+      "adapter_update_l2": 1.2591155234519165,
+      "adapter_final_sha256": "55d4701d86a4cc3e2d233fa142bf62eed5b4dcc59c7f5d090040a187331898a1",
+      "injected_missing": 189,
+      "true_positive_actions": 123,
+      "seconds": 3.9709168749977835
+    },
+    {
+      "seed": 33,
+      "policy": "zero",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.17000000178813934,
+          "expected_oracle_reward": 0.12996070086956024,
+          "kl_to_initial": 0.03909292072057724
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.18000000715255737,
+          "expected_oracle_reward": 0.14527001976966858,
+          "kl_to_initial": 0.19021697342395782
+        }
+      ],
+      "max_grad_norm": 1.6243032217025757,
+      "adapter_update_l2": 1.1531721438025588,
+      "adapter_final_sha256": "706d4df45dbbb9a9b200b872141ad53b96aa692f3167432b2a353479c2cd7f0b",
+      "injected_missing": 189,
+      "true_positive_actions": 123,
+      "seconds": 4.1343507090023195
+    },
+    {
+      "seed": 33,
+      "policy": "exclude",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.1599999964237213,
+          "expected_oracle_reward": 0.12754036486148834,
+          "kl_to_initial": 0.031348709017038345
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.18000000715255737,
+          "expected_oracle_reward": 0.134103924036026,
+          "kl_to_initial": 0.07996854186058044
+        }
+      ],
+      "max_grad_norm": 1.3237699270248413,
+      "adapter_update_l2": 0.9193391212005468,
+      "adapter_final_sha256": "60a542350831a0e9cd6d1674599c3bf37096c4adb3ff2e45a8a3bf234d7d0ea1",
+      "injected_missing": 189,
+      "true_positive_actions": 124,
+      "seconds": 4.246384666999802
+    },
+    {
+      "seed": 33,
+      "policy": "calibrated",
+      "metrics": [
+        {
+          "step": 0,
+          "greedy_accuracy": 0.15000000596046448,
+          "expected_oracle_reward": 0.12281980365514755,
+          "kl_to_initial": 0.0
+        },
+        {
+          "step": 12,
+          "greedy_accuracy": 0.14000000059604645,
+          "expected_oracle_reward": 0.1253550499677658,
+          "kl_to_initial": 0.01798909343779087
+        },
+        {
+          "step": 24,
+          "greedy_accuracy": 0.17000000178813934,
+          "expected_oracle_reward": 0.140342578291893,
+          "kl_to_initial": 0.11145469546318054
+        }
+      ],
+      "max_grad_norm": 1.6165837049484253,
+      "adapter_update_l2": 1.0579479641172487,
+      "adapter_final_sha256": "ec6190492530abb9fdc68c907c688d48c9a177d71fea838014f126fc7c2244c6",
+      "injected_missing": 189,
+      "true_positive_actions": 123,
+      "seconds": 3.9422287499983213
+    }
+  ],
+  "seconds": 60.50421124999775
+}

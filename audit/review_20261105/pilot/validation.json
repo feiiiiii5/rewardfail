@@ -1,0 +1,51 @@
+{
+  "checks": {
+    "runs_12": true,
+    "steps_288": true,
+    "all_nonzero_updates": true,
+    "unique_final_adapters": true,
+    "same_initial_eval": true,
+    "no_red_pressure": true,
+    "finite_losses": true
+  },
+  "summary": {
+    "oracle": {
+      "greedy_accuracy_by_seed": [
+        0.12999999523162842,
+        0.1599999964237213,
+        0.1899999976158142
+      ],
+      "mean_expected_oracle_reward": 0.13760288804769516
+    },
+    "zero": {
+      "greedy_accuracy_by_seed": [
+        0.12999999523162842,
+        0.15000000596046448,
+        0.18000000715255737
+      ],
+      "mean_expected_oracle_reward": 0.13204076141119003
+    },
+    "exclude": {
+      "greedy_accuracy_by_seed": [
+        0.14000000059604645,
+        0.14000000059604645,
+        0.18000000715255737
+      ],
+      "mean_expected_oracle_reward": 0.1280699074268341
+    },
+    "calibrated": {
+      "greedy_accuracy_by_seed": [
+        0.15000000596046448,
+        0.14000000059604645,
+        0.17000000178813934
+      ],
+      "mean_expected_oracle_reward": 0.1298275738954544
+    }
+  },
+  "script_sha256": "40e1f19357b309e2ad0e133682c1ad9136aa69cd2690917425587fff5b72f88d",
+  "model_source": "https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct/tree/12fd25f77366fa6b3b4b768ec3050bf629380bac",
+  "exit_code": 0,
+  "resource_pressure_seen": [
+    1
+  ]
+}
