@@ -30,6 +30,17 @@ class AnnouncementControls(unittest.TestCase):
         self.assertEqual(parsed['version'],1)
         self.assertEqual(parsed['pdf_url'],'https://arxiv.org/pdf/2611.00001v1')
 
+    def test_explicit_short_abstract_keeps_paper_difference_visible(self):
+        expected=(HERE/'expected_submission_abstract.txt').read_text().strip()
+        remote={**self.remote,'abstract':expected}
+        self.assertFalse(self.compare(remote)['checks']['abstract'])
+        result=M.compare(self.local,remote,'2611.00001',1,23,23,expected)
+        self.assertEqual(result['status'],'match')
+        self.assertFalse(result['paper_abstract_matches_public'])
+        self.assertTrue(result['paper_abstract_diff'])
+        changed={**remote,'abstract':expected+' Unsupported added claim.'}
+        self.assertFalse(M.compare(self.local,changed,'2611.00001',1,23,23,expected)['checks']['abstract'])
+
     def test_submission_number_rejected(self):
         for value in ('submit/8326462','8326462','https://arxiv.org/abs/2611.00001'):
             with self.assertRaises(ValueError):M.identifier(value)

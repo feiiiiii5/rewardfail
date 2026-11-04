@@ -159,16 +159,24 @@ def fetch(url,max_bytes):
         return data
 
 
-def compare(local,remote,rid,expected_version,local_pages,remote_pages):
+def compare(local,remote,rid,expected_version,local_pages,remote_pages,expected_abstract=None):
+    abstract_reference = local['abstract'] if expected_abstract is None else expected_abstract
     checks={'identifier':remote['arxiv_id']==rid,'version':remote['version']==expected_version,
             'title':normalize(local['title'])==normalize(remote['title']),
             'authors':[author_normalize(x) for x in local['authors']]==[author_normalize(x) for x in remote['authors']],
-            'abstract':normalize(local['abstract'])==normalize(remote['abstract']),
+            'abstract':normalize(abstract_reference)==normalize(remote['abstract']),
             'pdf_pages':local_pages==remote_pages}
     out={'status':'match' if all(checks.values()) else 'mismatch','checks':checks,'local':local,
-         'public':remote,'local_pdf_pages':local_pages,'public_pdf_pages':remote_pages}
+         'public':remote,'local_pdf_pages':local_pages,'public_pdf_pages':remote_pages,
+         'abstract_reference':'paper' if expected_abstract is None else 'explicit_submission_abstract',
+         'paper_abstract_matches_public':normalize(local['abstract'])==normalize(remote['abstract'])}
+    if expected_abstract is not None:
+        out['expected_submission_abstract']=expected_abstract
+        if not out['paper_abstract_matches_public']:
+            out['paper_abstract_diff']=list(difflib.unified_diff(normalize(local['abstract']).split(),
+                                                               normalize(remote['abstract']).split(),lineterm=''))
     if not checks['abstract']:
-        out['abstract_diff']=list(difflib.unified_diff(normalize(local['abstract']).split(),
+        out['abstract_diff']=list(difflib.unified_diff(normalize(abstract_reference).split(),
                                                      normalize(remote['abstract']).split(),lineterm=''))
     return out
 
@@ -179,21 +187,26 @@ def main():
     ap.add_argument('--expected-version',type=int,default=1)
     ap.add_argument('--local-tex',type=Path,required=True)
     ap.add_argument('--local-pdf',type=Path,required=True)
+    ap.add_argument('--expected-abstract-file',type=Path,help='Explicitly compare the public abstract to this prepared submission text; still report differences from the paper abstract.')
     a=ap.parse_args()
     try:
         rid,requested_version=identifier(a.arxiv_id)
         expected=requested_version or a.expected_version
         if expected<1: raise ValueError('expected-version must be positive')
         local=local_metadata(a.local_tex.read_text())
-        before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in (a.local_tex,a.local_pdf)}
+        expected_abstract=a.expected_abstract_file.read_text().strip() if a.expected_abstract_file else None
+        if expected_abstract is not None and not expected_abstract:
+            raise ValueError('expected abstract file is empty')
+        local_paths=[a.local_tex,a.local_pdf]+([a.expected_abstract_file] if a.expected_abstract_file else [])
+        before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in local_paths}
         remote=remote_metadata(fetch('https://arxiv.org/abs/'+a.arxiv_id,4*1024*1024).decode('utf-8'),rid)
         pdf=fetch(remote['pdf_url'],50*1024*1024)
         if not pdf.startswith(b'%PDF-'): raise ValueError('public PDF URL did not return a PDF')
         with tempfile.TemporaryDirectory(prefix='rewardfail-arxiv-') as t:
             p=Path(t)/'public.pdf';p.write_bytes(pdf)
-            out=compare(local,remote,rid,expected,page_count(a.local_pdf),page_count(p))
+            out=compare(local,remote,rid,expected,page_count(a.local_pdf),page_count(p),expected_abstract)
         out['local_sha256']=before;out['public_pdf_sha256']=hashlib.sha256(pdf).hexdigest()
-        out['local_files_unchanged']=all(hashlib.sha256(p.read_bytes()).hexdigest()==before[str(p)] for p in (a.local_tex,a.local_pdf))
+        out['local_files_unchanged']=all(hashlib.sha256(p.read_bytes()).hexdigest()==before[str(p)] for p in local_paths)
         print(json.dumps(out,ensure_ascii=False,indent=2))
         return 0 if out['status']=='match' and out['local_files_unchanged'] else 1
     except urllib.error.HTTPError as e:
