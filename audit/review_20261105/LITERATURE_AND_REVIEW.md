@@ -1,6 +1,6 @@
 # 近一年原始论文更新与最强审稿质疑
 
-2026-11-05审查轮次；实际联网访问日 **2026-11-04 UTC / CST**。检索窗口为近一年（2025-11起），按“verifier failure / noisy RLVR / missing evaluation / MNAR reward”检查arXiv原始论文正文；下列短引文均来自链接原文，每篇不足25个英文词。没有依赖聚合站或模型评论，也不声称穷尽优先权。现稿中的Cai `2510.00915v5`继续作为较早基础工作，不能把其2025-10首版算成近一年新论文。
+2026-11-05审查轮次；首轮实际联网访问日 **2026-11-04 UTC / CST**；主会话补核Wei §3及Wu v3于 **2026-11-05 CST**。检索窗口为近一年（2025-11起），按“verifier failure / noisy RLVR / missing evaluation / MNAR reward”检查arXiv原始论文正文；下列短引文均来自链接原文，每篇不足25个英文词。没有依赖聚合站或模型评论，也不声称穷尽优先权。现稿中的Cai `2510.00915v5`继续作为较早基础工作，不能把其2025-10首版算成近一年新论文。
 
 ## 新增/应补的直接比较
 
@@ -10,8 +10,8 @@
 | [Zhu & Kang, Noisy Data is Destructive…, 2603.16140v2](https://arxiv.org/html/2603.16140v2)，§3.3、§4 | “noisy data used in prior work is not 100% noisy” | 【明文】对原有噪声数据再验证，指出所谓全错标签中混有正确标签，重新训练后呈现不同结论。【分析】合成失败必须与答案真值独立记录，不能把超时零分自动计作false negative；证明训练伤害也需先审真值与noise construction。其标签污染问题不等于本稿availability failure。 |
 | [Milikic et al., Learning Lean Feedback…, 2610.21881v1](https://arxiv.org/html/2610.21881v1)，摘要与训练评估章节 | “withhold rewards from potentially correct proofs” | 【明文】明确讨论慢检查/超时使潜在正确证明拿不到奖励，训练GPU评估器预测Lean反馈并进行训练比较。【分析】这是应补的近邻：不能声称首先提出“超时丢监督”或首先给出替代验证器训练策略。本稿仍可独立贡献Math-Verify到consumer的row-position追踪与固定事件复算；此处的1条恢复不是它所说潜在正确证明的真值认证。 |
 | [Kim, Augmenting Human Evaluation with LLM Judges…, 2605.16354v1](https://arxiv.org/html/2605.16354v1)，§2–3 | “missingness model is known by design” | 【明文】将全部LLM评价加部分人工复核做两阶段抽样，以已知抽样机制的DR估计与方差做样本量设计。【分析】失败案例的随机抽审可把不可识别MNAR问题部分转成已知抽样设计，但需要真实人工/oracle结果与入样概率；不能把训练中的任意故障当作已知抽样。 |
-| [Off-Policy Evaluation for Missingness-Aware Policies…, 2606.20206v1](https://arxiv.org/html/2606.20206v1)，§3、Appendix B | “identification typically requires additional assumptions” | 【明文】用reward-dependent propensity和next-state shadow variable，在排除限制/相关性假设下识别MNAR奖励并做OPE。【分析】没有这些结构时，幸存者校准不能识别失败奖励；不可把其MDP/OPE定理直接移到单次Math-Verify/组标准化训练。本稿应给识别界/敏感性，而非提出无条件“校准修复”。 |
-| [Wu, Nair & Candès, Efficient Evaluation of LLM Performance…, 2601.20251v1](https://arxiv.org/html/2601.20251v1)，§3、Appendix A | “coverage-preserving finite-population extension of active inference” | 【明文】有限题库视角下用有设计的自适应选题和推断构造覆盖率区间，预测模型只提高效率。【分析】值得借鉴其区分finite-bank与superpopulation的做法；本稿[k/n,(k+u)/n]是已测行的补全范围，CP是另加二项工作模型。未设计随机审计就不能借其coverage保证。 |
+| [Off-Policy Evaluation for Missingness-Aware Policies…, 2606.20206v1](https://arxiv.org/html/2606.20206v1)，§3、Appendix B | “identification typically requires additional assumptions” | 【明文】用reward-dependent propensity和next-state shadow variable，在排除限制/相关性、positivity、completeness及其他正则条件下识别MNAR奖励并做OPE（Assumptions 3.1–3.4、Theorem 3.6）。【分析】没有这些结构时，幸存者校准不能识别失败奖励；不可把其MDP/OPE定理直接移到单次Math-Verify/组标准化训练。本稿应给识别界/敏感性，而非提出无条件“校准修复”。 |
+| [Wu, Nair & Candès, Efficient Evaluation of LLM Performance…, 2601.20251v3](https://arxiv.org/html/2601.20251v3)，§3.2、Appendix A.4（v3：2026-05-08） | “preserving coverage” | 【明文】有限题库视角下用有设计的自适应选题和推断构造区间；覆盖保证依正则条件为渐近结果，不是有限样本精确覆盖。预测模型用于提高效率。【分析】值得借鉴其区分finite-bank与superpopulation的做法；本稿[k/n,(k+u)/n]是已测行的补全范围，CP是另加二项工作模型。未设计随机审计就不能借其coverage保证。 |
 
 ## 已在现稿引用但本轮重新核实的边界
 
@@ -33,9 +33,9 @@
 3. **“长超时不是真值，且参考error被当普通零分，范围过窄。”** 成立。继续称limit-sensitive recovery；报告error-inclusive u=34和one-to-thirty-five范围。本轮逐行复算补了16个error零分的来源，但不证明这些是错判。若要讨论false negatives，先由独立数学审阅/oracle核对争议行，并保留不可判定状态。
 4. **“一个已预过滤语料、一次选答且孤立串行，不能给训练发生率。”** 成立。93,733是该固定回答帧，193,767全答有组内依赖；event co-occurrence不区分条件相关。最小补救是按问题cluster、按真实训练调度/worker采样预设另一个测量；在此前只给已实现补全范围，CP仍标为working model。
 5. **“重负载中Linux没有复现abort，平台解释混了control input。”** 成立。现有Linux替代control与原mac不是单因素；不能把一次差异判成平台因果。最小补救是同input、wrapper、版本、线程/资源设置、observer和调度trace的matched跨平台复跑；在此之前历史abort仅是指定诊断条件的存在性证据。
-6. **“72组优势图不等于梯度，更不等于学得更好。”** 成立。原稿边界正确；本轮真实135M LoRA试跑证明路径能改变参数，12臂完整结果没有一致收益。下一步要自由生成、真实scorer failure、独立clean test、足够seed和固定token预算，详见TRAINING_PROTOCOL；不能把本轮有限动作pilot包装为完整RLVR结论。
+6. **“72组优势图不等于梯度，更不等于学得更好。”** 成立。原稿边界正确；本轮真实135M LoRA试跑证明路径能改变参数，12臂完整结果没有一致收益。下一步要自由生成、真实scorer failure、独立clean test、足够seed和固定生成机会预算并记录实际token，详见TRAINING_PROTOCOL；不能把本轮有限动作pilot包装为完整RLVR结论。
 7. **“剔除和代填都有选择偏差，校准只是oracle leakage。”** 必须用设计回答。保留独立calibration分割、冻结特征/模型与失败标签隔离；pilot的校准器并未胜过常数Brier。正式MNAR实验需要随机抽审/外部真值或敏感性界，不承诺单靠存活者拟合能修复；AIPW奖励无偏也不推出组std/clip后的梯度无偏。
-8. **“统计量很多但有效独立单位很少，选最佳checkpoint和臂间分母不同。”** 必须固定最终checkpoint、题级/seed级单位、共同评测集与多重比较。无故障/记零/剔除/校准保持相同生成预算，另报实际损失token与wall time。3seed只能探索，不能通过更多抽样动作假装增加独立训练次数。
+8. **“统计量很多但有效独立单位很少，选最佳checkpoint和臂间分母不同。”** 必须固定最终checkpoint、题级/seed级单位、共同评测集与多重比较。无故障/记零/剔除/校准保持相同生成机会预算，另报实际损失token与wall time。3seed只能探索，不能通过更多抽样动作假装增加独立训练次数。
 
 ## 推荐的稿件行动（仅供后续作者采用）
 
