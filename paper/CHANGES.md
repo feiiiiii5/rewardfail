@@ -46,7 +46,6 @@ footnote adds a sentence on this AI-assisted revision.
 ## Citations
 
 The 35 originally cited works are unchanged. Their arXiv pages could not be re-checked from this environment
-(arxiv.org not reachable); the author's own 2 November reachability audit (`new-runs/2026-11-02-p1/refs/`)
-reports 25 of 28 URLs answering HTTP 200, one partial, one network failure (OpenR1 page) and one print-only
+(arxiv.org not reachable); the author's supplied 2 November reachability audit reports 25 of 28 URLs answering HTTP 200, one partial, one network failure (OpenR1 page) and one print-only
 reference. Added references were checked as follows: verl #6830/#6845 through the GitHub search API
 (2026-11-03); Open Instruct and NeMo RL documentation by reading the source files at the cited commits.

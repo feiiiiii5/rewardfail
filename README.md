@@ -87,7 +87,6 @@ This branch adds, without changing `paper.pdf` or the companion archive:
 - [`audit/experiments/e3_linux/`](audit/experiments/e3_linux/): a new, pre-specified Linux replay of the labelled answer set.
 - [`paper/`](paper/): an **editable LaTeX reconstruction from the public PDF** (not the original
   source), its revision log, build notes and the compiled revised PDF.
-- [`audit/THESIS_HANDOFF.md`](audit/THESIS_HANDOFF.md): items a dependent thesis must re-check.
 
 New executions ran on Linux x86-64 (CPython 3.12.8); they are additional verification, not a replay
 of the historical macOS environment. Recounting the distributed derived records is not an independent

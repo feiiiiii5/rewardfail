@@ -1,4 +1,4 @@
-# Remaining gaps (updated 2026-11-03, after the author inputs at `e29d296`)
+# Remaining research gaps (evidence assessment: 2026-11-03)
 
 Ordered by how much they limit the claims. Paths are relative to the original run directory
 `stage2/runs/main-20261007-202545/` unless stated otherwise. Details: `audit/MAIN_METRIC.md`.
@@ -9,7 +9,6 @@ Ordered by how much they limit the claims. Paths are relative to the original ru
 | G2 | Audit of the budget-attribution correction on real events | **partly closed**: old and new `analyze.py` versions available; synthetic test passes 18/18 on Linux | correction rule verified on synthetic events only | same files as G1 (old vs new `analyze.py` over identical events) |
 | G3 | Full eight-pass reproduction | open | limit2s/10s, replays, retest are report-only | all eight pass directories (≈2 GB) + `sample_map.tsv` + OpenR1 shards for re-execution |
 | G4 | Original LaTeX source | **closed**: `paper/main.tex`, `refs.bib` supplied and imported; build reproduces the public PDF | – | – |
-| G5 | `thesis_chain.py` driver (versions `3b3aa0…`, `6cce7c…`) | open | most of the thesis's 249 checks read driver-written flags; driver logic unauditable | `rewardfail/experiments/thesis_chain.py` at both hashes (Python source) |
 | G6 | Old test controls for `test_s2_flow.py` / `test_s2_stepguard.py` | open | two companion tests stop before their old-version comparison | `rewardfail/s2/report.py` at `42e4d63`; `rewardfail/s2/stepguard.py` at `99b086d` (single files) |
 | G7 | Redaction artifacts in author inputs | open (reported, not altered) | 7 row-id keys in `author-inputs/main-run/report.json` and one hash in `results/s2_e3/report.json` corrupted by the `<PHONE>` pattern | re-export those two files with a redactor that skips hex/id fields |
 | G8 | OpenR1-Math-220k not reachable here (Hugging Face blocked) | open | corpus replays, u18 diagnostics and dataset-control shared-pool scenes not re-executed on Linux | network access to `huggingface.co`, or the shards listed in `data_manifest.tsv` |
@@ -20,7 +19,6 @@ Ordered by how much they limit the claims. Paths are relative to the original ru
 | G13 | `naive` manager aborts on persistent worker death | open upstream | flag contract applies only with `rate_limited` | upstream decision |
 | G14 | Missing vs explicit `None` collapse | open | consumers cannot tell "no flag" from "flag = None" | presence mask or typed sentinel, if needed |
 | G15 | Validation misalignment not reported upstream | open (author's decision) | patch `0002` exists only here | an upstream issue/PR by the author |
-| G16 | Private planning notes and local folder names in the public author branch | open (author's decision) | privacy | move `context/` to a private repository; re-redact path segments after `<LOCAL_USER>` |
 
 ## Not run, and why
 
