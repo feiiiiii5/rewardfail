@@ -27,11 +27,10 @@ current manuscript are at commit
 [`da00bd6`](https://github.com/feiiiiii5/rewardfail/tree/da00bd6dfcad86526b81b5352384a23ae1731752);
 later commits change only documentation, front matter and release notes (see
 [`paper/CHANGES.md`](paper/CHANGES.md)). Some re-checks additionally read the author's
-input archive at the fixed commit
-[`e29d296`](https://github.com/feiiiiii5/rewardfail/tree/e29d296c3b08ed6922b4384df438fbfe0650b5c4)
+research input archive at the fixed commit
+[`4b3ca90`](https://github.com/feiiiiii5/rewardfail/tree/4b3ca90bdfa44254594f7d4916540c165bfafcb2)
 (branch `author-inputs-20261103`, not merged into `main`): the pre-correction main-run rows
-(recount of `k = 1`, `u = 9,573`), the heavy-input rows of the Linux scenes and the thesis-run
-records. That archive does not contain the reference-pass event files, so the reported
+(recount of `k = 1`, `u = 9,573`), the heavy-input rows used in the Linux scenes. That archive does not contain the reference-pass event files, so the reported
 `u = 18` remains a historical report value; it has not been independently rebuilt from raw
 events. See [`audit/REPRODUCE.md`](audit/REPRODUCE.md).
 
@@ -117,7 +116,6 @@ The audit adds, without changing the historical `paper.pdf` or the companion arc
   training result or a natural failure rate).
 - [`audit/scripts/check_paper_numbers.py`](audit/scripts/check_paper_numbers.py): checks manuscript numbers
   against their source files, with counter-tests.
-- [`audit/THESIS_HANDOFF.md`](audit/THESIS_HANDOFF.md): items a dependent thesis must re-check.
 
 New executions ran on Linux x86-64 (CPython 3.12.8); they are additional verification, not a replay
 of the historical macOS environment. Recounting the distributed derived records is not an independent

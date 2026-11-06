@@ -19,7 +19,6 @@ the companion archive, the historical `paper.pdf` and upstream material are unch
 | `audit/results/**` (JSON, logs, gz records) | measurement records produced by the scripts above | author, except embedded third-party text | Apache-2.0; excludes the texts below |
 | `audit/results/heavy_linux/*/spec.json` (S2–S6, S2f, S5a–S5c, S5f) | contain full answer/response texts of three OpenR1-Math-220k rows | OpenR1 / Hugging Face (data card: Apache-2.0) | keep under the dataset's terms; `audit/results/heavy_linux/NOTICE.md` already says so |
 | `audit/results/offline_policy/*`, `e3_linux/*` | statistics and per-id scores derived from the human-label CSV (MIT) and OpenR1 answers; no answer texts | author for the derived numbers | Apache-2.0 for the records; cite the MIT CSV and OpenR1 sources in NOTICE |
-| `audit/results/thesis_runs/*` | re-derivations from the author's input archive (`e29d296`) | author | same as other results |
 | `audit/*.md` (documentation) | written for this audit | author | Apache-2.0 with the code (covered by `audit/LICENSE`) |
 | `paper/` (manuscript source, PDFs, package, notes) | manuscript | author | CC BY 4.0, as stated in the manuscript (confirmed by the author) |
 

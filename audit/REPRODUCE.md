@@ -1,9 +1,11 @@
 # Reproducing the 2026-11-03 audit
 
 Pinned states: analysis code and results at commit `da00bd6` (unchanged by later documentation commits); author input
-archive at commit `e29d296` (branch `author-inputs-20261103`, read only, not merged into `main`).
+archive at commit `4b3ca90` (branch `author-inputs-20261103`, read only, not merged into `main`).
 
-Everything below ran on a **new Linux environment** (`audit/results/environment.json`):
+The original executions used the research files retained byte-for-byte in this input snapshot; the commands now select its current metadata and research-input location. No historical measurement is rerun by this documentation update.
+
+The original audit ran on a **new Linux environment** (`audit/results/environment.json`):
 Ubuntu 24.04 container, x86-64, 4 vCPU, 15.7 GiB RAM, no GPU, CPython 3.12.8 (uv-managed).
 The historical measurements used macOS arm64 / CPython 3.12.8; nothing here replays that host.
 
@@ -119,7 +121,7 @@ The script refuses a CSV whose SHA-256 is not `90fca106…` and a wrapper whose 
 Fetch the author inputs read-only into a fresh directory (never into the working tree):
 
 ```bash
-mkdir -p /tmp/rf/author && git archive e29d296c3b08ed6922b4384df438fbfe0650b5c4 author-inputs | tar -x -C /tmp/rf/author && chmod -R a-w /tmp/rf/author
+mkdir -p /tmp/rf/author && git archive 4b3ca90bdfa44254594f7d4916540c165bfafcb2 author-inputs | tar -x -C /tmp/rf/author && chmod -R a-w /tmp/rf/author
 ```
 
 Delivery manifest (hash, bytes, path):
@@ -134,18 +136,10 @@ Main metric from the supplied pre-correction rows (frozen `report.py` imported u
 python3 -I -B audit/scripts/recount_main_prefix.py /tmp/rf/author/author-inputs /tmp/rf/companion
 ```
 
-Report copies vs companion copies, and the thesis chain run:
+Report copies vs companion copies:
 
 ```bash
 python3 -I audit/scripts/compare_redacted_json.py /tmp/rf/companion/results/s2_e3/report.json /tmp/rf/author/author-inputs/results/s2_e3/report.json
-```
-
-```bash
-python3 -I audit/scripts/check_chain_manifest.py /tmp/rf/author/author-inputs/new-runs/2026-11-02-chain
-```
-
-```bash
-python3 -I audit/scripts/rederive_chain_exports.py /tmp/rf/author/author-inputs/new-runs/2026-11-02-chain
 ```
 
 Companion tests on Linux with the portability patch (in a copy of the extracted companion):
@@ -169,7 +163,7 @@ cd /tmp/rf/companion && bash tests/test_get_data.sh C.UTF-8 get_data.sh
 Heavy-input scenes (protocol `audit/experiments/heavy_linux/PROTOCOL.md`; about 7 minutes; needs ≥ 12 GiB free):
 
 ```bash
-/tmp/rf/venv/bin/python -B audit/experiments/heavy_linux/run_heavy_linux.py --companion /tmp/rf/companion --heavy /tmp/rf/author/author-inputs/new-runs/2026-11-02-p1/heavy/heavy_rows.json --base-verl /tmp/rf/companion/third_party/verl-pr8015 --fixed-verl /tmp/rf/verl-fixed --python /tmp/rf/venv/bin/python --out /tmp/rf/heavy_linux_new
+/tmp/rf/venv/bin/python -B audit/experiments/heavy_linux/run_heavy_linux.py --companion /tmp/rf/companion --heavy /tmp/rf/author/author-inputs/research-inputs/heavy_rows.json --base-verl /tmp/rf/companion/third_party/verl-pr8015 --fixed-verl /tmp/rf/verl-fixed --python /tmp/rf/venv/bin/python --out /tmp/rf/heavy_linux_new
 ```
 
 Manuscript: see `paper/BUILD.md`.

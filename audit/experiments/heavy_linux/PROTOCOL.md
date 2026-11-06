@@ -1,11 +1,13 @@
 # HL: Linux heavy-input batch scenes (protocol fixed before running, 2026-11-03)
 
+Input-location note (2026-11-06): the selected research rows are retained byte-for-byte at the location below; the original measurement protocol and results are unchanged.
+
 New verification on a different platform (Linux x86-64 container, 4 vCPU, 15.7 GiB, no swap,
 CPython 3.12.8). It is **not** a replay of the macOS E1 runs and **not** a frequency estimate.
 
 | Item | Fixed value |
 |---|---|
-| Heavy inputs | `author-inputs/new-runs/2026-11-02-p1/heavy/heavy_rows.json` (SHA-256 `297c3deb…`); rows `m-8364284f555502b7`, `m-ac45c2e3c4109182`, `m-2a2cbb703cd7d47a` ("three-IMO-first", positions 0–2) — the answer/response text pairs of the paper's D1 rows, each verified against its stored SHA-256 |
+| Heavy inputs | `author-inputs/research-inputs/heavy_rows.json` (SHA-256 `297c3deb…`); rows `m-8364284f555502b7`, `m-ac45c2e3c4109182`, `m-2a2cbb703cd7d47a` ("three-IMO-first", positions 0–2) — the answer/response text pairs of the paper's D1 rows, each verified against its stored SHA-256 |
 | Controls (**substitution**) | 8 synthetic score-one rows `\boxed{n}` vs `n` (n = 2…9) instead of the paper's 64 dataset rows (dataset unavailable here); 4 synthetic warm-up rows; a following batch of the same 8 controls |
 | Code | companion `experiments/s2_e1.py::scene` unchanged (real wrapper, real pool constructor with the companion's limit-setting initializer, real `naive`/`rate_limited` managers, real `compute_rm_score`); companion `rewardfail/s2/mem.py`/`guard.py` with the Linux port (`audit/companion_fixes/`) |
 | Wrappers | `pr` = verl PR #8015 `math_verify.py` @0c4c3d4 (SHA `f04f57d5…`); `main` = verl `acad987` copy (SHA `1242011c…`) |
