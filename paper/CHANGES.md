@@ -48,8 +48,7 @@ about AI assistance as the original, extended to this revision (condensed in the
 ## Citations
 
 The 35 originally cited works are unchanged. Their arXiv pages could not be re-checked from this environment
-(arxiv.org not reachable); the author's own 2 November reachability audit (`new-runs/2026-11-02-p1/refs/`)
-reports 25 of 28 URLs answering HTTP 200, one partial, one network failure (OpenR1 page) and one print-only
+(arxiv.org not reachable); the author's supplied 2 November reachability audit reports 25 of 28 URLs answering HTTP 200, one partial, one network failure (OpenR1 page) and one print-only
 reference. Added references were checked as follows: verl #6830/#6845 through the GitHub search API
 (2026-11-03); Open Instruct and NeMo RL documentation by reading the source files at the cited commits.
 
@@ -101,7 +100,7 @@ characterisations (`LITERATURE_CHECK.md`). Changes in this pass:
 | PDF, arXiv package | rebuilt (23 pages; package SHA-256 `fc21849f…`); `main.bbl` unchanged | `VALIDATION_FINAL_2026-11-03.md` |
 | `README.md` | top now links the current PDF and source package; `paper.pdf` labelled historical; reproduction snapshot `da00bd6` and author-input commit `e29d296` pinned; licence status stated as proposed | – |
 | `SUBMISSION_CHECKLIST.md` | category assessment (cs.SE primary with the author's endorsement, cs.LG cross-list, cs.AI optional), authorship check, CC BY 4.0 implications, code-licence proposal | – |
-| `audit/LICENSING_PLAN.md`, `audit/THESIS_SYNC.md` | new: licence/NOTICE proposal (not granted); thesis change list (not applied) | – |
+| `audit/LICENSING_PLAN.md` | new: licence/NOTICE proposal (not granted) | – |
 
 Analysis code, result files and the number checker are unchanged since `da00bd6`.
 

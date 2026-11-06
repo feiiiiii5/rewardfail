@@ -62,12 +62,7 @@ Companion paths are relative to the extracted `rewardfail-companion.zip` (audit 
 
 | # | Source | Claim | Evidence level | Our verification |
 |---|---|---|---|---|
-| 22 | thesis §5, `new-runs/2026-11-02-chain` | 12 recorded cases; fixed version keeps `error` on planned rows; original loses it / aborts | B (from exports and ledgers) | re-derived from `export/1.jsonl` + `ledger.jsonl` without driver flags: all 9 fixed cases and O4/O5 as claimed; O6 raise site driver-reported only (`audit/results/thesis_runs/`) |
-| 23 | thesis "249 checks, 0 failures" | – | A (author environment) | re-run on delivered files: 249 checks = 223 substantive passes + 2 vacuous passes (git status on absent directories) + 24 failures (all import-path checks; redacted prefix and relocated ROOT act together; recorded paths name the intended copies); most checks read driver-written flags; driver `thesis_chain.py` not delivered |
-| 24 | chain `manifest-all.json` | file hashes | – | 43 match; 30 differ consistently with path redaction (not provable); 1 self-reference; 7 missing, of which 6 reconstruct exactly from public sources and 1 (`thesis_chain.py`) is unavailable |
-| 25 | thesis/P1 None arithmetic | std 0.331, adv −2.646 / +0.378 | – | uses population std; verl GRPO uses sample std (`torch.std`): 0.354, −2.475, +0.354 |
-| 26 | thesis abstracts | "2 changes and 32 unresolved, 0.00103% and 0.01755%" | – | 0.01755% is 34/n (upper endpoint), not 32/n (0.01651%); per question 1 and 21 |
-| 27 | P1 heavy rows | 4 heavy inputs | B | texts hash-verified; used in Linux heavy scenes |
+| 27 | Author-supplied research heavy rows | 4 heavy inputs | B | texts hash-verified; used in Linux heavy scenes |
 | 28 | Author LaTeX | source of public PDF | build | compiled unchanged: 18 pages, identical `main.bbl`, same text modulo ligatures/hyphenation/floats |
 | 29 | §8.2, Table 10 | handling-policy comparison | offline | 72 complete groups, human labels, synthetic failures; estimator matches verl (max diff 2.9e-7); 9 unit tests; `audit/results/offline_policy/` |
 | 30 | whole manuscript | key numbers | check | rewritten `audit/scripts/check_paper_numbers.py`: 168/168 source-vs-printed comparisons (sentences and addressed table cells; scientific-notation tolerance scaled by the exponent; strict 18-row × 10-column table parsing); 21/21 counter-tests. The first version (30 string searches) is kept as `superseded_check_paper_numbers_v1.py`; it missed two double-rounded cells |
