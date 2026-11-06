@@ -36,8 +36,6 @@ technical checks:
    numbers are now generated from and checked against the result files. Your independent recheck (original label
    CSV, 72 complete groups, 720 means and Monte Carlo standard errors, max difference about 1.11e-16) is yours and
    was not repeated here; the real-verl estimator cross-check was run in this environment.
-10. **Thesis consistency.** The Chinese thesis has known mismatches with these results (`audit/THESIS_REVIEW.md`);
-    keep the two documents consistent in numbers and in what each claims.
 11. **Code licence — confirmed: Apache-2.0.** `audit/LICENSE` and `audit/NOTICE` are added. Third-party parts keep
     their own terms (verl code in patches 0001/0002, OpenR1 texts in the heavy-scene specs, the MIT human-label CSV);
     see `audit/LICENSING_PLAN.md`.
